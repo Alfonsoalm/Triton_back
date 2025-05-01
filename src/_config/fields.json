@@ -1,0 +1,39 @@
+{
+  "items": {
+    "en": [ "name", "price", "model", "description"],
+    "es": [ "nombre", "precio", "modelo", "descripcion"]
+  },
+  "centers": {
+    "en": ["name", "street", "location", "region", "mail", "phone", "photo_url"],
+    "es": ["nombre", "calle", "localidad", "provincia", "correo", "teléfono", "foto"]
+  },
+  "contacts": {
+    "en": ["name", "first_name", "mail", "phone", "nif", "nif_url", "address", "type", "id_account", "category", "banned"],
+    "es": ["nombre", "apellido", "correo", "teléfono", "dni", "url dni","dirección", "tipo", "cuenta", "categoría", "baneado"]
+  },
+  "machines":{
+    "en": [ "name", "model", "serial_number", "description", "price", "deposit", "available", "state"],
+    "es": [ "nombre", "modelo", "numero_serie", "descripcion", "precio", "fianza", "disponibilidad", "estado"]
+  },
+  "employees":{
+    "en": [ "name", "first_name", "dni", "mail", "phone", "role", "hire_date", "id_center","photo_url"],
+    "es": [ "nombre", "apellido", "dni", "correo", "telefono", "cargo", "fecha de contratacion", "id_centro","foto"]
+  },
+  "quotes":{
+    "en": [ "name", "id_contact", "creation_date", "payment_method", "status"],
+    "es": [ "nombre", "contacto", "fecha de creación", "metodo de pago", "estado"]
+  },
+  "quote_items":{
+    "en": [ "quote_id", "description", "quantity", "unit_price", "subtotal"],
+    "es": [ "presupuesto", "descripción", "cantidad", "precio unitario", "subtotal"]
+  },
+  "rents":{
+    "en": [ "name"],
+    "es": [ "nombre"]
+  },
+  "worklogs":{
+    "en": [],
+    "es": []
+  }
+
+}
