@@ -5,7 +5,7 @@ import { appRouter } from "./_routes/routes";
 export const app = express();
 
 app.use(cors({
-  origin: 'https://tritonfront-production.up.railway.app', // O usa '*' para permitir desde cualquier dominio (aunque no es recomendado en producción)
+  origin: 'https://tritonfront-production.up.railway.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));

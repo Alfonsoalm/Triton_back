@@ -2,7 +2,7 @@
 // server.ts
 import { app } from "./app";
 import { connectDB, sequelize } from "./_config/connection";
-const PORT = process.env.PORT || 3030;
+const PORT = process.env.PORT || 8080;
 
 (async () => {
   await connectDB(); // Se intenta la conexión a la base de datos
