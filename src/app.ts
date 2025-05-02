@@ -7,7 +7,13 @@ export const app = express();
 // Middleware
 app.use(express.json());
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://tritonfront-production.up.railway.app',  // Asegúrate de que esta URL sea correcta
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true // Si usas cookies o sesiones
+}));
+app.options('*', cors()); // Responde a los preflight requests con las cabeceras adecuadas
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "https://tritonfront-production.up.railway.app");
