@@ -6,7 +6,7 @@ export const createController = (centersService: ICentersService) => {
 		try {
 			const centerData = req.body;
 			if (!centerData.name || !centerData.mail) {
-					throw new Error('Los campos "name" y "mail" son obligatorios.');
+				throw new Error('Los campos "name" y "mail" son obligatorios.');
 			}
 			const center = await centersService.create(centerData);
 			res.status(200).json({
