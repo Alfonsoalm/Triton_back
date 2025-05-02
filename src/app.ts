@@ -4,14 +4,20 @@ import { appRouter } from "./_routes/routes";
 
 export const app = express();
 
-// Middleware
-app.use(express.json());
-
 app.use(cors({
-  origin: '*', // O usa '*' para permitir desde cualquier dominio (aunque no es recomendado en producción)
+  origin: 'https://tritonfront-production.up.railway.app', // O usa '*' para permitir desde cualquier dominio (aunque no es recomendado en producción)
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://tritonfront-production.up.railway.app");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
+
+app.use(express.json());
 
 // Rutas principales
 app.use('/api', appRouter); // Las rutas estarán bajo el prefijo '/api'
