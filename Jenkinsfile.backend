@@ -41,6 +41,7 @@ pipeline {
       steps {
         // Puedes usar rsync, scp, docker, etc.
         sh 'echo "Desplegar backend..."'
+        pm2 start dist/server.js --name backend || pm2 restart backend
       }
     }
 
