@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { IAuthService, IRefreshTokenService } from "../domain";
-import { CustomError } from "../../shared";
+import { CustomError } from "../../_utils";
 
 export const registerController = (authService: IAuthService, refreshTokenService: IRefreshTokenService) =>{
 

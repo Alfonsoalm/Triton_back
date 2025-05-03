@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import {sequelize} from '../databases'
+import { sequelize } from "../../../_config/connection";
 
 export class RefreshTokenModelSequelize extends Model {}
 
@@ -24,6 +24,6 @@ RefreshTokenModelSequelize.init({
     },
 }, {
     sequelize,
-    tableName: 'RefreshTokens',
+    tableName: 'refresh_tokens',
     timestamps: false, 
 });

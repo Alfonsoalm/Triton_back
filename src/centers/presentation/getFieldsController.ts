@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { ICentersService } from "../domain";
-import fieldsConfig from "../../_config/fields.json"; // Importa el archivo de configuración
 
 export const getFieldsController = (centersService: ICentersService) => {
   return async (req: Request, res: Response): Promise<void> => {

@@ -1,5 +1,5 @@
-import {AuthService, RefreshTokenService } from "../application";
-import {IAccessTokenService, IAuthService, IHashService, IIdService, IRefreshTokenGenerator, IRefreshTokenRepository, IRefreshTokenService, IUserRepository } from "../domain";
+import {AuthMiddleware, AuthService, RefreshTokenService } from "../application";
+import {IAccessTokenService, IAuthMiddleware, IAuthService, IHashService, IIdService, IRefreshTokenGenerator, IRefreshTokenRepository, IRefreshTokenService, IUserRepository } from "../domain";
 import {BcryptService, CryptoTokenGenerator, JwtService, SequelizeRefreshTokenRepository, SequelizeUserRepository, UuidGenerator } from "../infrastructure";
 
 const userRepository: IUserRepository = new SequelizeUserRepository()
@@ -16,4 +16,4 @@ const tokenGenerator: IRefreshTokenGenerator = new CryptoTokenGenerator();
 
 export const refreshTokenService: IRefreshTokenService = new RefreshTokenService(tokenRepository, tokenGenerator);
 
-// export const authMiddleware:IAuthMiddleware = new AuthMiddleware(tokenService);
+export const authMiddleware:IAuthMiddleware = new AuthMiddleware(tokenService);
