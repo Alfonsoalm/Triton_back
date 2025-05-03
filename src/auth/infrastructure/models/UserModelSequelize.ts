@@ -1,5 +1,5 @@
 import { DataTypes, Model } from "sequelize";
-import {sequelize} from '../databases'
+import { sequelize } from "../../../_config/connection";
 
 export class UserModelSequelize extends Model {}
 
@@ -23,7 +23,7 @@ UserModelSequelize.init(
   {
     sequelize,
     modelName: "User",
-    tableName: "Users",
+    tableName: "users",
     timestamps: true,
   }
 );

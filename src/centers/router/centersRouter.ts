@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createController, updateController, getAllController, getByIdController, getFieldsController, deleteController } from '../presentation';
+import { createController, updateController, getAllController, getByIdController, getFieldsController, deleteController } from './presentation';
 import { centersService } from '../config/config';
 import { employeesService } from '../../employees';
 const centersRouter = Router();
