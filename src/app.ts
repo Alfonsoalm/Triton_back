@@ -4,9 +4,13 @@ import { appRouter } from "./_routes/routes";
 
 export const app = express();
 
-// Middleware
-app.use(express.json());
+
 app.use(cors());
+
+
+app.use(express.json());
+
+
 
 // Rutas principales
 app.use('/api', appRouter); // Las rutas estarán bajo el prefijo '/api'
