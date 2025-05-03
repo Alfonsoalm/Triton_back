@@ -12,6 +12,7 @@ export * from './domain/services/secondary/IAccessTokenService ';
 export * from './domain/services/secondary/IHashService';
 export * from './domain/services/secondary/IIdService';
 export * from './domain/services/secondary/IRefreshTokenGenerator';
+export * from './infrastructure/databases/SequelizeConnection';
 export * from './infrastructure/models/RefreshTokenModelSequelize';
 export * from './infrastructure/models/UserModelSequelize';
 export * from './infrastructure/repositories/SequelizeRefreshTokenRepository';
