@@ -9,6 +9,7 @@ const storage: StorageEngine = multer.diskStorage({
     destination: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) => {
         const folder = req.params.folder;
         const uploadDir = path.join(UPLOAD_BASE_DIR, folder);
+        console.log("uploadDir", uploadDir);
 
         // Crear la carpeta si no existe (usando fs.promises para async/await sería mejor en un entorno real)
         fs.mkdirSync(uploadDir, { recursive: true });
