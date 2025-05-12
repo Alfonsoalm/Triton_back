@@ -4,9 +4,9 @@ import { IContactsService } from "../domain";
 export const createController = (contactsService: IContactsService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
-            const data = req.body;
-            console.log("data in controller",data);
-            const contact = await contactsService.create(data);
+            const contactData = req.body;
+            console.log("data in controller",contactData);
+            const contact = await contactsService.create(contactData);
             
             res.status(200).json({
                 message: "Contacts created successfully.",
