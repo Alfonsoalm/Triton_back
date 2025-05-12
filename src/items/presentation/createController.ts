@@ -4,9 +4,9 @@ import { IItemsService } from "../domain";
 export const createController = (itemsService: IItemsService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
-            const data = req.body;
-            console.log("data in controller",data);
-            const contact = await itemsService.create(data);
+            const itemData = req.body;
+            console.log("items/createController=> itemData:",itemData);
+            const contact = await itemsService.create(itemData);
             
             res.status(200).json({
                 message: "Items created successfully.",

@@ -6,7 +6,7 @@ export const updateController = (itemsService: IItemsService) => {
         try {
             const { itemId } = req.params;
             const { updates } = req.body;
-            console.log("itemId", itemId, "updates", updates)
+            console.log("items/updateController=> itemId", itemId, "updates", updates)
             const isDeleted = await itemsService.update(itemId, updates);
     
             res.status(200).json({
