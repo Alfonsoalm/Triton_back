@@ -6,7 +6,6 @@ export const updateController = (centersService: ICentersService) => {
         try {
             const { centerId } = req.params;
             const { updates } = req.body;
-            console.log("centers/updateController=> centerId", centerId, "updates", updates)
             const isUpdated = await centersService.update(centerId, updates);
     
             res.status(200).json({

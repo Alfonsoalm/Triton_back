@@ -6,7 +6,6 @@ export const updateController = (rentsService: IRentsService) => {
         try {
             const { rentId } = req.params;
             const { updates } = req.body;
-            console.log("rentId", rentId, "updates", updates)
             const isDeleted = await rentsService.update(rentId, updates);
     
             res.status(200).json({

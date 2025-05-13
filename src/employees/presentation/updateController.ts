@@ -6,7 +6,6 @@ export const updateController = (emmployeesService: IEmployeesService) => {
         try {
             const { employeeId } = req.params;
             const { updates } = req.body;
-            console.log("centerId", employeeId, "updates", updates)
             const isUpdated = await emmployeesService.update(employeeId, updates);
             res.status(200).json({
                 message: "Employee updated",

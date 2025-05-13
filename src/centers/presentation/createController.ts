@@ -5,7 +5,6 @@ export const createController = (centersService: ICentersService) => {
 	return async(req: Request, res: Response):Promise<void> => {
 		try {
 			const centerData = req.body;
-			console.log("centers/createController=> centerData:",centerData);
 			if (!centerData.name || !centerData.mail) {
 				throw new Error('Los campos "name" y "mail" son obligatorios.');
 			}

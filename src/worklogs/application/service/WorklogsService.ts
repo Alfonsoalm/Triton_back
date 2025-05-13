@@ -16,7 +16,6 @@ export class WorklogsService implements IWorklogsService{
     }
 
     async getById(worklogId: string): Promise<Worklog> {
-        console.log("Entro en get by id");
         const result = await this._repository.getById(worklogId);
         return result;
     }
@@ -49,8 +48,6 @@ export class WorklogsService implements IWorklogsService{
     }
 
     async update(worklogId: string, updates: any): Promise<Worklog> {
-
-        console.log("Entro en update", worklogId, updates);
         const result = await this._repository.update(worklogId, updates);
         return result;
     }

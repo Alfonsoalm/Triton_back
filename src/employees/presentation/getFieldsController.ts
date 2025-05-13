@@ -10,7 +10,6 @@ export const getFieldsController = (employeesService: IEmployeesService) => {
       const filteredFields = fields.filter((field: any) =>
         allowedFields.includes(field.Field)
       );
-			console.log("filteredFields",filteredFields)
 
       res.status(200).json({
         message: "Fields found",

@@ -4,9 +4,8 @@ import { IQuotesService } from "../domain";
 export const createController = (quotesService: IQuotesService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
-            const data = req.body;
-            console.log("data in controller",data);
-            const quote = await quotesService.create(data);
+            const quoteData = req.body;
+            const quote = await quotesService.create(quoteData);
             
             res.status(200).json({
                 message: "Quote created successfully.",

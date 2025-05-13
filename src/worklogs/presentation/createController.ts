@@ -4,9 +4,8 @@ import { IWorklogsService } from "../domain";
 export const createController = (worklogsService: IWorklogsService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
-            const data = req.body;
-            console.log("data in controller",data);
-            const quote = await worklogsService.create(data);
+            const worklogData = req.body;
+            const quote = await worklogsService.create(worklogData);
             
             res.status(200).json({
                 message: "Worklog created successfully.",

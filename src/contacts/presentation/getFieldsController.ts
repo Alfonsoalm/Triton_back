@@ -4,10 +4,7 @@ import { IContactsService } from "../domain";
 export const getFieldsController = (contactsService: IContactsService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
-            console.log("getFieldsController")
             const fields = await contactsService.getFields();
-            console.log("fields", fields)
-    
             res.status(200).json({
                 message: "Fields found",
                 data: fields

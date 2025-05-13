@@ -10,7 +10,6 @@ export class MysqlCentersRepository implements ICentersRepository{
    * @returns {Promise<any[]>} - Devuelve una lista de empleados con los datos procesados.
    */
   async getAll(filters: Record<string, any> = {}): Promise<Center[]> {
-    console.log("Obteniendo centros", filters);
     const centersData = await SequelizeCenterModel.findAll({ where: filters });
     const centers = centersData.map(center => {
       const { 
@@ -42,7 +41,6 @@ export class MysqlCentersRepository implements ICentersRepository{
    * @returns {Promise<any>} - Devuelve los datos del empleado insertado.
    */
   async getById(centerId: string): Promise<Center> {
-    console.log("Obteniendo centro ", centerId);
     const center = await SequelizeCenterModel.findOne({ where: { id: centerId } });
 
     if (!center) {
@@ -87,7 +85,6 @@ export class MysqlCentersRepository implements ICentersRepository{
    */
   async create(centerN: Center): Promise<Center> {
     const newCenter = await SequelizeCenterModel.create(centerN.toJSON() as any);
-    console.log("Insertando centro", newCenter);
     const centerData = newCenter.get();
     const {
       id,
@@ -117,7 +114,6 @@ export class MysqlCentersRepository implements ICentersRepository{
    * @returns {Promise<void>} - No devuelve nada.
    */
   async delete(centerId: string): Promise<boolean> {
-    console.log("Eliminado centros", centerId);
     await SequelizeCenterModel.destroy({ where: {id: centerId} });
     return true;
   }
@@ -128,7 +124,6 @@ export class MysqlCentersRepository implements ICentersRepository{
    * @returns {Promise<void>} - No devuelve nada.
    */
   async update(centerId: string, updates: Record<string, any>): Promise<any> {
-    console.log("Actualizando centros", updates, centerId);
     return await SequelizeCenterModel.update(updates, {
       where: {id: centerId},
     });

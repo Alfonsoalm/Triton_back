@@ -16,7 +16,6 @@ export class ItemsService implements IItemsService{
     }
 
     async getById(contactId: string): Promise<Item> {
-        console.log("Entro en get by id");
         const result = await this._repository.getById(contactId);
         return result;
     }
@@ -39,8 +38,6 @@ export class ItemsService implements IItemsService{
     }
 
     async update(itemId: string, updates: any): Promise<Item> {
-
-        console.log("Entro en update", itemId, updates);
         const result = await this._repository.update(itemId, updates);
 
         return result;

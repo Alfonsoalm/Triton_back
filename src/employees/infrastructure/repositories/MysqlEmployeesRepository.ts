@@ -61,7 +61,6 @@ export class MysqlEmployeesRepository implements IEmployeesRepository{
  * @returns {Promise<any>} - Devuelve los datos del empleado insertado.
  */
   async getById(employeeId: string): Promise<Employee> {
-    console.log("Obteniendo centro ", employeeId);
     const employee = await SequelizeEmployeeModel.findOne({ where: { id: employeeId } });
 
     if (!employee) {
@@ -117,7 +116,6 @@ export class MysqlEmployeesRepository implements IEmployeesRepository{
 	 * @returns {Promise<void>} - No devuelve nada.
 	 */
 	async delete(employeeId: string): Promise<boolean> {
-		console.log("Eliminado centros", employeeId);
 		await SequelizeEmployeeModel.destroy({ where: {id: employeeId} });
 		return true;
 	}
@@ -128,7 +126,6 @@ export class MysqlEmployeesRepository implements IEmployeesRepository{
 	 * @returns {Promise<void>} - No devuelve nada.
 	 */
 	async update(employeeId: string, updates: Record<string, any>): Promise<any> {
-		console.log("Actualizando empleados", updates, employeeId);
 		return await SequelizeEmployeeModel.update(updates, {
 			where: {id: employeeId},
 		});

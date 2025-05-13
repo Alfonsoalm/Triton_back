@@ -6,7 +6,6 @@ export const updateController = (machinesService: IMachinesService) => {
         try {
             const { machineId } = req.params;
             const { updates } = req.body;
-            console.log("machines/updateController=> machineId", machineId, "updates", updates)
             const isDeleted = await machinesService.update(machineId, updates);
     
             res.status(200).json({

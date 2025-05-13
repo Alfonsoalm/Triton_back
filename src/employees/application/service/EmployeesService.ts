@@ -35,13 +35,11 @@ export class EmployeesService implements IEmployeesService{
 	}
 
 	async delete(employeeId: string): Promise<boolean> {
-		console.log("Entro en delete", employeeId);
 		const result = await this._repository.delete(employeeId);
 		return result;
 	}
 
 	async update(employeeId: string, updates: any): Promise<Employee> {
-		console.log("Entro en update", employeeId, updates);
 		const result = await this._repository.update(employeeId, updates);
 		return result;
 	}

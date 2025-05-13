@@ -40,7 +40,6 @@ export class MysqlQuotesRepository implements IQuotesRepository{
    * @returns {Promise<any>} - Devuelve los datos del empleado insertado.
    */
   async getById(quoteId: string): Promise<Quote> {
-    console.log("Obteniendo contacto ", quoteId);
     const quote = await SequelizeQuoteModel.findOne({ where: { id: quoteId } });
     if (!quote) {
         throw new Error(`No se encontró un presupuesto con el id ${quoteId}`);
@@ -101,7 +100,6 @@ export class MysqlQuotesRepository implements IQuotesRepository{
    * @returns {Promise<void>} - No devuelve nada.
    */
   async delete(quoteId: string): Promise<boolean> {
-    console.log("Eliminado contacto: ", quoteId);
     await SequelizeQuoteModel.destroy({ where: {id: quoteId} });
     return true;
   }
@@ -112,7 +110,6 @@ export class MysqlQuotesRepository implements IQuotesRepository{
    * @returns {Promise<void>} - No devuelve nada.
    */
   async update(quoteId: string, updates: Record<string, any>): Promise<any> {
-    console.log("Actualizando contactos", updates, quoteId);
     return await SequelizeQuoteModel.update(updates, {
       where: {id: quoteId},
     });

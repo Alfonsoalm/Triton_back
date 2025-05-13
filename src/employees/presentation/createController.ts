@@ -5,7 +5,6 @@ export const createController = (employeesService: IEmployeesService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
             const employeeData = req.body;
-            console.log("employees/createController=> employeeData:",employeeData);
             const employee = await employeesService.create(employeeData);
             res.status(200).json({
                 message: "Employee created successfully.",

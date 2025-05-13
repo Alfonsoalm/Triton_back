@@ -4,9 +4,8 @@ import { IRentsService } from "../domain";
 export const createController = (rentsService: IRentsService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
-            const data = req.body;
-            console.log("data in controller",data);
-            const rent = await rentsService.create(data);
+            const rentData = req.body;
+            const rent = await rentsService.create(rentData);
             
             res.status(200).json({
                 message: "Rents created successfully.",

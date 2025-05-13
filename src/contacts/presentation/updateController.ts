@@ -6,7 +6,6 @@ export const updateController = (contactsService: IContactsService) => {
         try {
             const  { contactId }  = req.params;
             const  { updates }  = req.body;
-            console.log("contacts/updateController=> centerId:", contactId, "updates", updates)
             const isUpdated = await contactsService.update(contactId, updates);
             
             res.status(200).json({

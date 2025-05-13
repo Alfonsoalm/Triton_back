@@ -35,7 +35,6 @@ export class MysqlItemsRepository implements IItemsRepository{
    * @returns {Promise<Item>} - Devuelve los datos del empleado insertado.
    */
   async getById(itemId: string): Promise<Item> {
-    console.log("Obteniendo contacto ", itemId);
     const contact = await SequelizeItemModel.findOne({ where: { id: itemId } });
     if (!contact) {
         throw new Error(`No se encontró un contacto con el id ${itemId}`);
@@ -94,7 +93,6 @@ export class MysqlItemsRepository implements IItemsRepository{
    * @returns {Promise<Boolean>} - No devuelve nada.
    */
   async delete(itemId: string): Promise<boolean> {
-    console.log("Eliminado contacto: ", itemId);
     await SequelizeItemModel.destroy({ where: {id: itemId} });
     return true;
   }
@@ -105,7 +103,6 @@ export class MysqlItemsRepository implements IItemsRepository{
    * @returns {Promise<void>} - No devuelve nada.
    */
   async update(itemId: string, updates: Record<string, any>): Promise<any> {
-    console.log("Actualizando contactos", updates, itemId);
     return await SequelizeItemModel.update(updates, {
       where: {id: itemId},
     });

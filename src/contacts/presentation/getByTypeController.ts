@@ -4,11 +4,8 @@ import { IContactsService } from "../domain";
 export const getByTypeController = (contactsService: IContactsService) => {
 	return async(req: Request, res: Response):Promise<void> => {
 		try {
-			console.log("getByTypeController");
 			const { type } = req.params;
 			const contacts = await contactsService.getByType(type);
-			console.log("contacts", contacts);
-			
 			res.status(200).json({
 				message: "Contacts retrieved successfully.",
 				data: contacts ? contacts.map(c => c.toJSON()) : []

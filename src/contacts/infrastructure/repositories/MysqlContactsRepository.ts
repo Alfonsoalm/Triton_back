@@ -63,7 +63,6 @@ export class MysqlContactsRepository implements IContactsRepository{
    * @returns {Promise<Contact>} - Devuelve los datos del contact insertado.
    */
   async getById(contactId: string): Promise<Contact> {
-    console.log("Obteniendo contacto ", contactId);
     const contact = await SequelizeContactModel.findOne({ where: { id: contactId } });
     if (!contact) throw new Error(`No se encontró un contacto con el id ${contactId}`);
     const { id, name, first_name, nif, nif_url, mail, phone, type, category, address, id_account, banned } = contact.dataValues;
@@ -100,7 +99,6 @@ export class MysqlContactsRepository implements IContactsRepository{
    */
   async create(contactN: Contact): Promise<Contact> {
     const newContact = await SequelizeContactModel.create(contactN.toJSON() as any);
-    console.log("Insertando cliente", newContact);
     const contactData = newContact.get();
     const {id, name, first_name, type, mail, phone, nif, nif_url, address, id_account, category,
       banned} = contactData;
@@ -125,7 +123,6 @@ export class MysqlContactsRepository implements IContactsRepository{
    * @returns {Promise<boolean>} - boolean devuelto que indica borrado (1) o no (0)
    */
   async delete(contactId: string): Promise<boolean> {
-    console.log("Eliminado contacto: ", contactId);
     await SequelizeContactModel.destroy({ where: {id: contactId} });
     return true;
   }

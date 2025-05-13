@@ -6,7 +6,6 @@ export const updateController = (worklogsService: IWorklogsService) => {
         try {
             const { worklogId } = req.params;
             const { updates } = req.body;
-            console.log("worklogId", worklogId, "updates", updates)
             const isDeleted = await worklogsService.update(worklogId, updates);
     
             res.status(200).json({

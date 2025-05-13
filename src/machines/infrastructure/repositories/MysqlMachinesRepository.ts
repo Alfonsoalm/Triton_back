@@ -10,7 +10,6 @@ export class MysqlMachinesRepository implements IMachinesRepository{
    * @returns {Promise<any[]>} - Devuelve una lista de empleados con los datos procesados.
    */
   async getAll(filters: Record<string, any> = {}): Promise<Machine[]> {
-    console.log("Obteniendo maquinas", filters);
     const machinesData = await SequelizeMachineModel.findAll({ where: filters });
 
     const machines = machinesData.map(machine => {
@@ -46,7 +45,6 @@ export class MysqlMachinesRepository implements IMachinesRepository{
    * @returns {Promise<any>} - Devuelve los datos del empleado insertado.
    */
   async getById(machineId: string): Promise<Machine> {
-    console.log("Obteniendo maquina ", machineId);
     const contact = await SequelizeMachineModel.findOne({ where: { id: machineId } });
     if (!contact) {
         throw new Error(`No se encontró una maquina con el id ${machineId}`);
@@ -121,7 +119,6 @@ export class MysqlMachinesRepository implements IMachinesRepository{
    * @returns {Promise<void>} - No devuelve nada.
    */
   async delete(machineId: string): Promise<boolean> {
-    console.log("Eliminada maquina: ", machineId);
     await SequelizeMachineModel.destroy({ where: {id: machineId} });
     return true;
   }
@@ -132,7 +129,6 @@ export class MysqlMachinesRepository implements IMachinesRepository{
    * @returns {Promise<void>} - No devuelve nada.
    */
   async update(machineId: string, updates: Record<string, any>): Promise<any> {
-    console.log("Actualizando maquina", updates, machineId);
     return await SequelizeMachineModel.update(updates, {
       where: {id: machineId},
     });

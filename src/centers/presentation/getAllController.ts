@@ -5,7 +5,6 @@ export const getAllController = (centersService: ICentersService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
             const centers = await centersService.getAll();
-            console.log("getAll", centers);
             res.status(200).json({
                 message: "Centers retrieved successfully.",
                 data: centers ? centers.map(c => c.toJSON()) : []

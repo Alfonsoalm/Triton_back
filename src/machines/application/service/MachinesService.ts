@@ -16,7 +16,6 @@ export class MachinesService implements IMachinesService{
     }
 
     async getById(contactId: string): Promise<Machine> {
-        console.log("Entro en get by id");
         const result = await this._repository.getById(contactId);
         return result;
     }
@@ -39,8 +38,6 @@ export class MachinesService implements IMachinesService{
     }
 
     async update(machineId: string, updates: any): Promise<Machine> {
-
-        console.log("Entro en update", machineId, updates);
         const result = await this._repository.update(machineId, updates);
 
         return result;

@@ -37,7 +37,6 @@ export class MysqlWorklogsRepository implements IWorklogsRepository{
    * @returns {Promise<any>} - Devuelve los datos del empleado insertado.
    */
   async getById(worklogId: string): Promise<Worklog> {
-    console.log("Obteniendo contacto ", worklogId);
     const worklog = await SequelizeWorklogModel.findOne({ where: { id: worklogId } });
     if (!worklog) {
         throw new Error(`No se encontró un presupuesto con el id ${worklogId}`);
@@ -94,7 +93,6 @@ export class MysqlWorklogsRepository implements IWorklogsRepository{
    * @returns {Promise<void>} - No devuelve nada.
    */
   async delete(worklogId: string): Promise<boolean> {
-    console.log("Eliminado contacto: ", worklogId);
     await SequelizeWorklogModel.destroy({ where: {id: worklogId} });
     return true;
   }
@@ -105,7 +103,6 @@ export class MysqlWorklogsRepository implements IWorklogsRepository{
    * @returns {Promise<void>} - No devuelve nada.
    */
   async update(worklogId: string, updates: Record<string, any>): Promise<any> {
-    console.log("Actualizando contactos", updates, worklogId);
     return await SequelizeWorklogModel.update(updates, {
       where: {id: worklogId},
     });

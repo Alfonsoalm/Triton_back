@@ -21,7 +21,6 @@ export class ContactsService implements IContactsService{
     }
 
     async getById(contactId: string): Promise<Contact> {
-        console.log("Entro en get by id");
         const result = await this._repository.getById(contactId);
         return result;
     }
@@ -42,7 +41,6 @@ export class ContactsService implements IContactsService{
     }
 
     async update(contactId: string, updates: any): Promise<Contact> {
-        console.log("Entro en update", contactId, updates);
         const result = await this._repository.update(contactId, updates);
         return result;
     }

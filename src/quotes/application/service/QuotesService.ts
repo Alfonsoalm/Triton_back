@@ -16,7 +16,6 @@ export class QuotesService implements IQuotesService{
     }
 
     async getById(quoteId: string): Promise<Quote> {
-        console.log("Entro en get by id");
         const result = await this._repository.getById(quoteId);
         return result;
     }
@@ -52,8 +51,6 @@ export class QuotesService implements IQuotesService{
     }
 
     async update(quoteId: string, updates: any): Promise<Quote> {
-
-        console.log("Entro en update", quoteId, updates);
         const result = await this._repository.update(quoteId, updates);
         return result;
     }
