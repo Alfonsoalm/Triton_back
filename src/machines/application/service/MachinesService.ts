@@ -2,44 +2,44 @@ import { Machine, MachineDTO, IMachinesRepository, IMachinesService, IIdService}
 
 export class MachinesService implements IMachinesService{
 
-    private readonly _repository: IMachinesRepository;
-    private readonly _idService: IIdService;
+  private readonly _repository: IMachinesRepository;
+  private readonly _idService: IIdService;
 
-    constructor(repository: IMachinesRepository, idService: IIdService) {
-        this._repository = repository;
-        this._idService = idService;
-    }
+  constructor(repository: IMachinesRepository, idService: IIdService) {
+    this._repository = repository;
+    this._idService = idService;
+  }
 
-    async getAll(filters: Record<string, any> = {}): Promise<Machine[]> {
-        const result = await this._repository.getAll();
-        return result;
-    }
+  async getAll(): Promise<Machine[]> {
+    const result = await this._repository.getAll();
+    return result;
+  }
 
-    async getById(contactId: string): Promise<Machine> {
-        const result = await this._repository.getById(contactId);
-        return result;
-    }
+  async getById(machineId: string): Promise<Machine> {
+    const result = await this._repository.getById(machineId);
+    return result;
+  }
 
-    async delete(contactId: string): Promise<boolean> {
-        const result = await this._repository.delete(contactId);
-        return result;
-    }
+  async delete(machineId: string): Promise<boolean> {
+    const result = await this._repository.delete(machineId);
+    return result;
+  }
 
-    async getFields(): Promise<unknown[]> {
-        return await this._repository.getFields();
-    }
+  async getFields(): Promise<unknown[]> {
+    return await this._repository.getFields();
+  }
 
-    async create(machineData: Omit<MachineDTO, "id">): Promise<Machine> {
+  async create(machineData: Omit<MachineDTO, "id">): Promise<Machine> {
 
-        const {name, model, serial_number, description, price, deposit, available, state} = machineData;
-        const newItem = await Machine.createNewItem(this._idService, name, model, serial_number, description, price, deposit, available, state);
-    
-        return await this._repository.create(newItem);
-    }
+    const {type, model, brand, serial_number, description, price, deposit, available, state} = machineData;
+    const newMachine = await Machine.createNewItem(this._idService, type, model, brand, serial_number, description, price, deposit, available, state);
 
-    async update(machineId: string, updates: any): Promise<Machine> {
-        const result = await this._repository.update(machineId, updates);
+    return await this._repository.create(newMachine);
+  }
 
-        return result;
-    }
+  async update(machineId: string, updates: any): Promise<Machine> {
+    const result = await this._repository.update(machineId, updates);
+
+    return result;
+  }
 }

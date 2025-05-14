@@ -2,44 +2,44 @@ import { Item, ItemDTO, IItemsRepository, IItemsService, IIdService} from "../..
 
 export class ItemsService implements IItemsService{
 
-    private readonly _repository: IItemsRepository;
-    private readonly _idService: IIdService;
+  private readonly _repository: IItemsRepository;
+  private readonly _idService: IIdService;
 
-    constructor(repository: IItemsRepository, idService: IIdService) {
-        this._repository = repository;
-        this._idService = idService;
-    }
+  constructor(repository: IItemsRepository, idService: IIdService) {
+    this._repository = repository;
+    this._idService = idService;
+  }
 
-    async getAll(): Promise<Item[]> {
-        const result = await this._repository.getAll();
-        return result;
-    }
+  async getAll(): Promise<Item[]> {
+    const result = await this._repository.getAll();
+    return result;
+  }
 
-    async getById(contactId: string): Promise<Item> {
-        const result = await this._repository.getById(contactId);
-        return result;
-    }
+  async getById(itemId: string): Promise<Item> {
+    const result = await this._repository.getById(itemId);
+    return result;
+  }
 
-    async delete(contactId: string): Promise<boolean> {
-        const result = await this._repository.delete(contactId);
-        return result;
-    }
+  async delete(itemId: string): Promise<boolean> {
+    const result = await this._repository.delete(itemId);
+    return result;
+  }
 
-    async getFields(): Promise<unknown[]> {
-        return await this._repository.getFields();
-    }
+  async getFields(): Promise<unknown[]> {
+    return await this._repository.getFields();
+  }
 
-    async create(itemData: Omit<ItemDTO, "id">): Promise<Item> {
+  async create(itemData: Omit<ItemDTO, "id">): Promise<Item> {
 
-        const {name, model, description, price} = itemData;
-        const newItem = await Item.createNewItem(this._idService, name, model, description, price);
-    
-        return await this._repository.create(newItem);
-    }
+    const {type, model, brand, description, price} = itemData;
+    const newItem = await Item.createNewItem(this._idService, type, model, brand, description, price);
 
-    async update(itemId: string, updates: any): Promise<Item> {
-        const result = await this._repository.update(itemId, updates);
+    return await this._repository.create(newItem);
+  }
 
-        return result;
-    }
+  async update(itemId: string, updates: any): Promise<Item> {
+    const result = await this._repository.update(itemId, updates);
+
+    return result;
+  }
 }
