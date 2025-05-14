@@ -104,13 +104,19 @@ export class MysqlRentsRepository implements IRentsRepository{
    * @param {Record<string, any>} filters - Filtros para identificar los empleados a actualizar.
    * @returns {Promise<void>} - No devuelve nada.
    */
-   async update(rentId: string, updates: Record<string, any>): Promise<any> {
+  async update(rentId: string, updates: Record<string, any>): Promise<any> {
     await SequelizeRentModel.update(updates, {
-      where: { id : rentId },
+      where: { id: rentId },
     });
-    updates.rentItems.map( async (rentItem: RentItem) => {
-      await SequelizeRentItemModel.update(rentItem, { where: {id: rentItem.id}});
-    })
+
+    if (updates.rentItems) {
+      const itemsToUpdate = Array.isArray(updates.rentItems) ? updates.rentItems : [updates.rentItems];
+      await Promise.all(
+        itemsToUpdate.map(async (rentItem: RentItem) => {
+          await SequelizeRentItemModel.update(rentItem, { where: { id: rentItem.id } });
+        })
+      );
+    }
     return true;
   }
 }
