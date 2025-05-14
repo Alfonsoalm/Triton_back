@@ -1,61 +1,65 @@
-// contactsRepository.ts
+// itemsRepository.ts
 import { sequelize } from '../../../_config/connection'; // Asegúrate de importar la conexión a la BD
 import { Item, IItemsRepository} from "../../domain";
 import SequelizeItemModel from '../models/SequelizeItemModel';
 
 export class MysqlItemsRepository implements IItemsRepository{
   /**
-   * Obtiene empleados con filtros opcionales y aplica un mapeo para procesar los datos.
-   * @returns {Promise<Item[]>} - Devuelve una lista de empleados con los datos procesados.
+   * Obtiene items con filtros opcionales y aplica un mapeo para procesar los datos.
+   * @returns {Promise<Item[]>} - Devuelve una lista de items con los datos procesados.
    */
   async getAll(): Promise<Item[]> {
     const itemsData = await SequelizeItemModel.findAll();
 
     const items = itemsData.map(item => {
-      const { 
-        id, 
-        name, 
+      const {
+        id,
+        type,
         model,
+        brand,
         description,
         price} = item.dataValues;
       return Item.createExistingItem(
         id,
-        name,
+        type,
         model,
+        brand,
         description,
-        price
+        price,
       );
     })
     return items;
   }
 
     /**
-   * Inserta un nuevo empleado en la base de datos.
-   * @param {string} itemId - Datos del empleado a insertar.
-   * @returns {Promise<Item>} - Devuelve los datos del empleado insertado.
+   * Inserta un nuevo item en la base de datos.
+   * @param {string} itemId - Datos del item a insertar.
+   * @returns {Promise<Item>} - Devuelve los datos del item insertado.
    */
   async getById(itemId: string): Promise<Item> {
-    const contact = await SequelizeItemModel.findOne({ where: { id: itemId } });
-    if (!contact) {
-        throw new Error(`No se encontró un contacto con el id ${itemId}`);
+    const item = await SequelizeItemModel.findOne({ where: { id: itemId } });
+    if (!item) {
+      throw new Error(`No se encontró un item con el id ${itemId}`);
     }
-    const { 
-      name, 
+    const {
+      type,
       model,
+      brand, 
       description,
       price
-    } = contact.dataValues;
+    } = item.dataValues;
     return Item.createExistingItem(
       itemId,
-      name,
+      type,
       model,
+      brand,
       description,
-      price
+      price,
     );
   }
 
   /**
-   * Obtiene los metadatos de la tabla employees.
+   * Obtiene los metadatos de la tabla items.
    * @returns {Promise<any[]>} - Devuelve la lista de campos de la tabla.
    */
   async getFields(): Promise<unknown[]> {
@@ -65,30 +69,32 @@ export class MysqlItemsRepository implements IItemsRepository{
   }
 
   /**
-   * Inserta un nuevo empleado en la base de datos.
-   * @param {Item} itemN - Datos del empleado a insertar.
-   * @returns {Promise<Item>} - Devuelve los datos del empleado insertado.
+   * Inserta un nuevo item en la base de datos.
+   * @param {Item} itemN - Datos del item a insertar.
+   * @returns {Promise<Item>} - Devuelve los datos del item insertado.
    */
   async create(itemN: Item): Promise<Item> {
     const newItem = await SequelizeItemModel.create(itemN.toJSON() as any);
     const itemData = newItem.get();
     const {
       id,
-      name,
+      type, 
       model,
+      brand, 
       description,
       price
     } = itemData;
     return Item.createExistingItem(
       id,
-      name,
+      type,
       model,
+      brand,
       description,
       price,
     );
   }
   /**
-   * Elimina empleados que coincidan con los filtros proporcionados.
+   * Elimina items que coincidan con los filtros proporcionados.
    * @param {string} itemId - Objeto con los filtros para la eliminación.
    * @returns {Promise<Boolean>} - No devuelve nada.
    */
@@ -97,9 +103,9 @@ export class MysqlItemsRepository implements IItemsRepository{
     return true;
   }
   /**
-   * Actualiza contactos que coincidan con los filtros proporcionados.
+   * Actualiza items que coincidan con los filtros proporcionados.
    * @param {Record<string, any>} updates - Datos a actualizar.
-   * @param {string} itemId - Filtros para identificar los empleados a actualizar.
+   * @param {string} itemId - Filtros para identificar los items a actualizar.
    * @returns {Promise<void>} - No devuelve nada.
    */
   async update(itemId: string, updates: Record<string, any>): Promise<any> {
@@ -108,4 +114,3 @@ export class MysqlItemsRepository implements IItemsRepository{
     });
   }
 }
-

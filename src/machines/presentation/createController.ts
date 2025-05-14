@@ -6,7 +6,6 @@ export const createController = (machinesService: IMachinesService) => {
         try {
             const machineData = req.body;
             const contact = await machinesService.create(machineData);
-            
             res.status(200).json({
                 message: "Machine created successfully.",
                 data: contact.toJSON()

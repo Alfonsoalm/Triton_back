@@ -1,7 +1,8 @@
 export interface MachineDTO{
     id: string;
-    name: string;
+    type: string;
     model: string;
+    brand: string;
     serial_number: string;
     description: string;
     price?: number;

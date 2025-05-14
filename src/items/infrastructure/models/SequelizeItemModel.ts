@@ -9,15 +9,18 @@ SequelizeItemModel.init({
     primaryKey: true,
     allowNull: false,
   },
-  name: {
+  type: {
     type: DataTypes.STRING(50),
     allowNull: false,
-    unique: true,
   },
   model: {
     type: DataTypes.STRING(50),
     allowNull: false,
     unique: true,
+  },
+  brand: { // Nueva columna 'brand'
+    type: DataTypes.STRING(50),
+    allowNull: true,
   },
   description: {
     type: DataTypes.STRING(255),
@@ -28,10 +31,10 @@ SequelizeItemModel.init({
     allowNull: true,
   },
 }, {
-    sequelize,
-    modelName: "Item",
-    tableName: "items",
-    timestamps: false,
+  sequelize,
+  modelName: "Item",
+  tableName: "items",
+  timestamps: false,
 });
 
 export default SequelizeItemModel;

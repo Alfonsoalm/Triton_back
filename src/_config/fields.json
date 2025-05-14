@@ -1,7 +1,7 @@
 {
   "items": {
-    "en": [ "name", "price", "model", "description"],
-    "es": [ "nombre", "precio", "modelo", "descripcion"]
+    "en": [ "type", "price", "model", "brand", "description"],
+    "es": [ "tipo", "precio", "modelo", "marca", "descripcion"]
   },
   "centers": {
     "en": ["name", "street", "location", "region", "mail", "phone", "photo_url"],
@@ -12,8 +12,8 @@
     "es": ["nombre", "apellido", "correo", "teléfono", "dni", "url dni","dirección", "tipo", "cuenta", "categoría", "baneado"]
   },
   "machines":{
-    "en": [ "name", "model", "serial_number", "description", "price", "deposit", "available", "state"],
-    "es": [ "nombre", "modelo", "numero_serie", "descripcion", "precio", "fianza", "disponibilidad", "estado"]
+    "en": [ "type", "model", "brand", "serial_number", "description", "price", "deposit", "available", "state"],
+    "es": [ "tipo", "modelo", "marca", "numero_serie", "descripcion", "precio", "fianza", "disponibilidad", "estado"]
   },
   "employees":{
     "en": [ "name", "first_name", "dni", "mail", "phone", "role", "hire_date", "id_center","photo_url"],
