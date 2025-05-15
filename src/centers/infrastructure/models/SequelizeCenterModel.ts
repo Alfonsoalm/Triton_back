@@ -10,9 +10,9 @@ SequelizeCenterModel.init({
         allowNull: false,
     },
     name: {
-    type: DataTypes.STRING(50),
-    allowNull: false,
-    unique: true,
+        type: DataTypes.STRING(50),
+        allowNull: false,
+        unique: true,
     },
     street: {
         type: DataTypes.STRING(50),

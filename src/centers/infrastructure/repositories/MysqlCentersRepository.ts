@@ -14,22 +14,22 @@ export class MysqlCentersRepository implements ICentersRepository{
     const centers = centersData.map(center => {
       const { 
         id,
-        name,
+        photo_url,name,
         street,
         location,
         region,
         mail,
         phone,
-        photo_url,} = center.dataValues;
+        } = center.dataValues;
       return Center.createExistingCenter(
         id,
-        name,
+        photo_url,name,
         street,
         location,
         region,
         mail,
         phone,
-        photo_url,
+        
       );
     })
     return centers;

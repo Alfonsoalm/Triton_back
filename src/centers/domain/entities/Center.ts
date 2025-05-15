@@ -20,13 +20,13 @@ export class Center{
         region: string, mail: string,
         phone?: string, photo_url?: string) {
         this._id = id;
+        this._photo_url = photo_url;
         this._name = name;
         this._street = street;
         this._location = location;
         this._region = region;
         this._mail = mail;
         this._phone = phone;
-        this._photo_url = photo_url;
     }
     
     public static async createNewCenter( idGenerator: IIdService,
@@ -50,13 +50,13 @@ export class Center{
     public toJSON(): object {
         return {
             id: this._id,
+            photo_url: this._photo_url,
             name: this._name,
             street: this._street,
             location: this._location,
             region: this._region,
             mail: this._mail,
             phone: this._phone,
-            photo_url: this._photo_url
         }
     }
 }
