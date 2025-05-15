@@ -50,13 +50,13 @@ export class Center{
     public toJSON(): object {
         return {
             id: this._id,
-            photo_url: this._photo_url,
             name: this._name,
             street: this._street,
             location: this._location,
             region: this._region,
             mail: this._mail,
             phone: this._phone,
+            photo_url: this._photo_url
         }
     }
 }
