@@ -4,8 +4,8 @@
     "es": [ "tipo", "precio", "modelo", "marca", "descripcion"]
   },
   "centers": {
-    "en": ["name", "street", "location", "region", "mail", "phone", "photo_url"],
-    "es": ["nombre", "calle", "localidad", "provincia", "correo", "teléfono", "foto"]
+    "en": ["photo_url", "name", "street", "location", "region", "mail", "phone"],
+    "es": ["foto", "nombre", "calle", "localidad", "provincia", "correo", "teléfono"]
   },
   "contacts": {
     "en": ["name", "first_name", "mail", "phone", "nif", "nif_url", "address", "type", "id_account", "category", "banned"],
@@ -16,8 +16,8 @@
     "es": [ "tipo", "modelo", "marca", "numero_serie", "descripcion", "precio", "fianza", "disponibilidad", "estado"]
   },
   "employees":{
-    "en": [ "name", "first_name", "dni", "mail", "phone", "role", "hire_date", "id_center","photo_url"],
-    "es": [ "nombre", "apellido", "dni", "correo", "telefono", "cargo", "fecha de contratacion", "id_centro","foto"]
+    "en": [ "photo_url","name", "first_name", "dni", "mail", "phone", "role", "hire_date", "id_center"],
+    "es": [ "foto","nombre", "apellido", "dni", "correo", "telefono", "cargo", "fecha de contratacion", "id_centro"]
   },
   "quotes":{
     "en": [ "name", "id_contact", "creation_date", "payment_method", "status"],
