@@ -46,6 +46,26 @@ SequelizeMachineModel.init({
     type: DataTypes.STRING(50),
     allowNull: false,
   },
+  cost: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
+  id_supplier: {
+    type: DataTypes.STRING(36),
+    allowNull: true,
+  },
+  reference: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+  tax: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
+  id_center: {
+    type: DataTypes.STRING(36),
+    allowNull: true,
+  },
 }, {
   sequelize,
   modelName: "Machine",

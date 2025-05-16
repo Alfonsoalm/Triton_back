@@ -1,8 +1,7 @@
 import { CustomError } from "../../../_utils";
 
-
-export class InvalidEmailFormatError extends CustomError{
-    constructor(){
-        super("Invalid email format", 400);
-    }
+export class InvalidEmailFormatError extends CustomError {
+  constructor() {
+    super("Invalid email format", 400);
+  }
 }
