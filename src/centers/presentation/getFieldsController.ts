@@ -5,21 +5,11 @@ import fieldsConfig from "../../_config/fields.json"; // Importa el archivo de c
 export const getFieldsController = (centersService: ICentersService) => {
   return async (req: Request, res: Response): Promise<void> => {
     try {
-      const entityType = "centers"; // Definimos directamente el tipo de entidad
-      const language = req.query.language as keyof typeof fieldsConfig.centers | 'en' | 'es' || 'es'; // Obtén el idioma, 'es' por defecto
-
-      if (!fieldsConfig[entityType]) {
-        // Aunque 'centers' está definido, es bueno tener una comprobación por si acaso
-        console.error(`Fields configuration not found for entity type: ${entityType}`);
-        res.status(500).json({ message: "Internal server configuration error." });
-        return;
-      }
-
-      const orderedFields = fieldsConfig[entityType][language] || fieldsConfig[entityType]['en'] || [];
+      const fields = await centersService.getFields();
 
       res.status(200).json({
         message: "Fields for centers found",
-        data: orderedFields,
+        data: fields,
       });
 
     } catch (error) {
