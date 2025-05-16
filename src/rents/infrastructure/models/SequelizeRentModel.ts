@@ -14,15 +14,15 @@ SequelizeRentModel.init({
         allowNull: false,
         unique: true,
     },
-    contactId: {
+    id_contact: {
         type: DataTypes.STRING(36),
         allowNull: false,
     },
-    beginDate: {
+    begin_date: {
         type: DataTypes.DATE,
         allowNull: false,
     },
-    endDate: {
+    end_date: {
         type: DataTypes.DATE,
         allowNull: false,
     },
