@@ -12,47 +12,49 @@ export class MysqlQuotesRepository implements IQuotesRepository{
    */
   async getAll(): Promise<Quote[]> {
     const quotesData = await SequelizeQuoteModel.findAll();
-    const quotes = quotesData.map( async (quote) => {
-      const { 
-        id, 
-        name, 
-        id_contact, 
-        creation_date, 
-        payment_method,
-        status,
-      } = quote.dataValues;
-      const quoteId = id;
-      const quoteItemsData = await SequelizeQuoteItemModel.findAll({ where: { "quote_id" : quoteId}});
-      const quoteItemsArray: QuoteItem[] = [];
-      quoteItemsData.map( async (quoteItem) => {
-        const {
-          id,
-          quote_id,
-          position,
-          type,
-          item_id,
-          description,
-          quantity,
-        } = quoteItem.dataValues;
-        quoteItemsArray.push({
-          id: id,
-          position: position,
-          type: type,
-          item_id: item_id,
-          description: description,
-          quantity: quantity,
+    const quotes = await Promise.all(
+      quotesData.map( async (quote) => {
+        const { 
+          id, 
+          name, 
+          id_contact, 
+          creation_date, 
+          payment_method,
+          status,
+        } = quote.dataValues;
+        const quoteId = id;
+        const quoteItemsData = await SequelizeQuoteItemModel.findAll({ where: { "quote_id" : quoteId}});
+        const quoteItemsArray: QuoteItem[] = [];
+        quoteItemsData.map( async (quoteItem) => {
+          const {
+            id,
+            quote_id,
+            position,
+            type,
+            item_id,
+            description,
+            quantity,
+          } = quoteItem.dataValues;
+          quoteItemsArray.push({
+            id: id,
+            position: position,
+            type: type,
+            item_id: item_id,
+            description: description,
+            quantity: quantity,
+          })
         })
+        return Quote.createExistingQuote(
+          id,
+          name,
+          id_contact, 
+          creation_date, 
+          status,
+          quoteItemsArray,
+          payment_method
+        );
       })
-      return Quote.createExistingQuote(
-        id,
-        name,
-        id_contact, 
-        creation_date, 
-        status,
-        quoteItemsArray,
-        payment_method
-      );
-    })
+    );
     return quotes;
   }
 

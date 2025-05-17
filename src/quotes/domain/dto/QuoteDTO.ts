@@ -1,8 +1,11 @@
+import { QuoteItem, QuoteStatus } from "../entities";
+
 export interface QuoteDTO {
     id: string;
     name: string;
     id_contact: string;
     creation_date: Date;
-    payment_method: string;
-    status: string;
+    status: QuoteStatus;
+    quote_items: QuoteItem[];
+    payment_method?: string;
 }
