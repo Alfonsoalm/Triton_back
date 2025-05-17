@@ -22,7 +22,7 @@ export class MysqlQuotesRepository implements IQuotesRepository{
         status,
       } = quote.dataValues;
       const quoteId = id;
-      const quoteItemsData = await SequelizeQuoteItemModel.findAll({ where: { "rentId" : rentId}});
+      const quoteItemsData = await SequelizeQuoteItemModel.findAll({ where: { "quote_id" : quoteId}});
       const quoteItemsArray: QuoteItem[] = [];
       quoteItemsData.map( async (quoteItem) => {
         const {
