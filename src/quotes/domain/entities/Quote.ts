@@ -1,29 +1,50 @@
 import { IIdService } from "../services";
 
 // Quote.ts
+export enum QuoteStatus {
+    Pending = "pending",
+    Approved = "approved",
+    Rejected = "rejected",
+}
+
+export interface QuoteItem {
+    id: string;
+    position: number;
+    type: string;
+    item_id: string;
+    quantity: number;
+    description: string;
+}
+
 export class Quote{
     // Requeridos
     private _id: string = '';
     private _name: string = '';
     private _id_contact: string = '';
     private _creation_date: Date;
-    private _payment_method: string;
-    private _status: string;
+    private _status: QuoteStatus;
+
+    // Opcionales
+    private _payment_method?: string;
+
+    private _items: QuoteItem[] = [];
 
     private constructor(
         id: string,
         name: string, 
         id_contact: string, 
         creation_date: Date, 
-        payment_method: string,
-        status: string,
+        status: QuoteStatus,
+        items: QuoteItem[],
+        payment_method?: string,
     ) {
         this._id = id;
         this._name = name;
         this._id_contact = id_contact;
-        this._creation_date = creation_date;
-        this._payment_method = payment_method;
+        this._creation_date = creation_date; 
         this._status = status;
+        this._payment_method = payment_method;
+        this._items = items;
     }
 
     public static async createNewQuote( 
@@ -31,8 +52,9 @@ export class Quote{
         name: string, 
         id_contact: string, 
         creation_date: Date, 
-        payment_method: string,
-        status: string,
+        status: QuoteStatus,
+        items: QuoteItem[],
+        payment_method?: string,
     ): Promise<Quote> {
         const id = idGenerator.generate();
         return new Quote(
@@ -40,8 +62,9 @@ export class Quote{
         name, 
         id_contact, 
         creation_date, 
-        payment_method,
         status,
+        items,
+        payment_method,
         );
     }
 
@@ -50,16 +73,18 @@ export class Quote{
         name: string, 
         id_contact: string, 
         creation_date: Date, 
+        status: QuoteStatus,
+        items: QuoteItem[],
         payment_method: string,
-        status: string
     ): Quote {
         return new Quote(
         id, 
         name, 
         id_contact, 
         creation_date, 
-        payment_method,
         status,
+        items,
+        payment_method,
         );
     }
 
@@ -69,8 +94,34 @@ export class Quote{
         name: this._name,
         id_contact: this._id_contact,
         creation_date: this._creation_date,
-        payment_method: this._payment_method,
         status: this._status,
+        items: this._items,
+        payment_method: this._payment_method,
         }
     }
+
+    public addItem(item: QuoteItem) {
+        this._items.push(item);
+    }
+
+    public get items(): QuoteItem[] { // Añade este getter
+        return this._items;
+    }
+
+    public get id_contact(): string {
+        return this._id_contact;
+    }
+
+    public set id_contact(value: string) {
+        this._id_contact = value;
+    }
+
+    public get creation_date(): Date {
+        return this._creation_date;
+    }
+
+    public set creation_date(value: Date) {
+        this._creation_date = value;
+    }
+
 }

@@ -17,6 +17,10 @@ SequelizeQuoteItemModel.init({
       type: DataTypes.INTEGER,
       allowNull: false,
   },
+  type: {
+      type: DataTypes.ENUM("product", "service", "other"),
+      allowNull: true,
+  },
   item_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -28,14 +32,6 @@ SequelizeQuoteItemModel.init({
   quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
-  },
-  unit_price: {
-      type: DataTypes.DECIMAL(10,2),
-      allowNull: false,
-  },
-  subtotal: {
-    type: DataTypes.DECIMAL(10,2),
-    allowNull: false,
   },
 }, {
   sequelize,

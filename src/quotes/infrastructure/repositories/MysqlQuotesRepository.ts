@@ -1,6 +1,7 @@
 // contactsRepository.ts
 import { sequelize } from '../../../_config/connection'; // Asegúrate de importar la conexión a la BD
-import { Quote, IQuotesRepository} from "../../domain";
+import { Quote, IQuotesRepository, QuoteItem} from "../../domain";
+import SequelizeQuoteItemModel from '../models/SequelizeQuoteItemModel';
 import SequelizeQuoteModel from '../models/SequelizeQuoteModel';
 
 export class MysqlQuotesRepository implements IQuotesRepository{
@@ -10,10 +11,8 @@ export class MysqlQuotesRepository implements IQuotesRepository{
    * @returns {Promise<any[]>} - Devuelve una lista de empleados con los datos procesados.
    */
   async getAll(): Promise<Quote[]> {
-
     const quotesData = await SequelizeQuoteModel.findAll();
-
-    const quotes = quotesData.map(quote => {
+    const quotes = quotesData.map( async (quote) => {
       const { 
         id, 
         name, 
@@ -22,13 +21,36 @@ export class MysqlQuotesRepository implements IQuotesRepository{
         payment_method,
         status,
       } = quote.dataValues;
+      const quoteId = id;
+      const quoteItemsData = await SequelizeQuoteItemModel.findAll({ where: { "rentId" : rentId}});
+      const quoteItemsArray: QuoteItem[] = [];
+      quoteItemsData.map( async (quoteItem) => {
+        const {
+          id,
+          quote_id,
+          position,
+          type,
+          item_id,
+          description,
+          quantity,
+        } = quoteItem.dataValues;
+        quoteItemsArray.push({
+          id: id,
+          position: position,
+          type: type,
+          item_id: item_id,
+          description: description,
+          quantity: quantity,
+        })
+      })
       return Quote.createExistingQuote(
         id,
         name,
         id_contact, 
         creation_date, 
-        payment_method,
         status,
+        quoteItemsArray,
+        payment_method
       );
     })
     return quotes;
@@ -40,25 +62,49 @@ export class MysqlQuotesRepository implements IQuotesRepository{
    * @returns {Promise<any>} - Devuelve los datos del empleado insertado.
    */
   async getById(quoteId: string): Promise<Quote> {
-    const quote = await SequelizeQuoteModel.findOne({ where: { id: quoteId } });
+    const quote = await SequelizeQuoteModel.findOne({ where: { "id": quoteId } });
     if (!quote) {
         throw new Error(`No se encontró un presupuesto con el id ${quoteId}`);
     }
     const { 
+      id,
       name,
       id_contact, 
-      creation_date, 
-      payment_method,
+      creation_date,
       status,
+      items,
+      payment_method,
     } = quote.dataValues;
+    const quoteItemsData = await SequelizeQuoteModel.findAll({ where: { "quote_id" : quoteId}})
+    const quoteItemsArray: QuoteItem[] = [];
+    quoteItemsData.map( async (quoteItem) => {
+      const { 
+        id,
+        quote_id,
+        position,
+        type,
+        item_id,
+        description,
+        quantity,
+      } = quoteItem.dataValues;
+      quoteItemsArray.push({
+        id: id,
+        position: position,
+        type: type,
+        item_id: item_id,
+        description: description,
+        quantity: quantity,
+      });
+    })
     return Quote.createExistingQuote(
-      quoteId,
-      name,
-      id_contact, 
-      creation_date, 
-      payment_method,
-      status,
-    );
+        quoteId,
+        name,
+        id_contact, 
+        creation_date, 
+        status,
+        quoteItemsArray,
+        payment_method
+      );
   }
   /**
    * Obtiene los metadatos de la tabla employees.
@@ -75,6 +121,7 @@ export class MysqlQuotesRepository implements IQuotesRepository{
    * @returns {Promise<any>} - Devuelve los datos del empleado insertado.
    */
   async create(quoteN: Quote): Promise<Quote> {
+    const quoteWithoutItems = quoteN.toJSON();
     const newQuote = await SequelizeQuoteModel.create(quoteN.toJSON() as any);
     const quoteData = newQuote.get();
     const {
@@ -85,13 +132,28 @@ export class MysqlQuotesRepository implements IQuotesRepository{
       payment_method,
       status,
     } = quoteData;
+    const quoteId = id;
+    const quoteItems: QuoteItem[] = quoteN.items;
+    if (quoteItems !== undefined)
+      quoteItems.map( async (quoteItem: QuoteItem) => {
+        const newQuoteItem = await SequelizeQuoteItemModel.create({
+          'id': quoteItem.id,
+          'quote_id': quoteId,
+          'type': quoteItem.type,
+          'itemId': quoteItem.item_id,
+          'quantity': quoteItem.quantity,
+          'description': quoteItem.description,
+        });
+      });
+
     return Quote.createExistingQuote(
       id,
       name,
       id_contact, 
       creation_date, 
-      payment_method,
       status,
+      quoteItems,
+      payment_method,
     );
   }
   /**
@@ -101,6 +163,7 @@ export class MysqlQuotesRepository implements IQuotesRepository{
    */
   async delete(quoteId: string): Promise<boolean> {
     await SequelizeQuoteModel.destroy({ where: {id: quoteId} });
+    await SequelizeQuoteItemModel.destroy({ where: {quote_id: quoteId}});
     return true;
   }
   /**
@@ -110,9 +173,19 @@ export class MysqlQuotesRepository implements IQuotesRepository{
    * @returns {Promise<void>} - No devuelve nada.
    */
   async update(quoteId: string, updates: Record<string, any>): Promise<any> {
-    return await SequelizeQuoteModel.update(updates, {
+    await SequelizeQuoteModel.update(updates, {
       where: {id: quoteId},
     });
+
+    if (updates.quoteItems) {
+      const itemsToUpdate = Array.isArray(updates.quoteItems) ? updates.quoteItems : [updates.quoteItems];
+      await Promise.all(
+        itemsToUpdate.map(async (quoteItem: QuoteItem) => {
+          await SequelizeQuoteItemModel.update(quoteItem, { where: {id: quoteItem.id}});
+        })
+      );
+    }
+    return true; 
   }
 }
 

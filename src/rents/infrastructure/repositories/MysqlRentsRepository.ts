@@ -13,19 +13,40 @@ export class MysqlRentsRepository implements IRentsRepository{
    */
   async getAll(filters: Record<string, any> = {}): Promise<Rent[]> {
     const rentsData = await SequelizeRentModel.findAll({ where: filters });
-    
     const rents = await Promise.all(
       rentsData.map( async (rent) => {
-        const { id, name, id_contact, begin_date, status, end_date, observations } = rent.dataValues;
+        const { 
+          id, 
+          name, 
+          id_contact, 
+          begin_date, 
+          status, 
+          end_date, 
+          observations
+        } = rent.dataValues;
         const rentId = id;
         const rentItemsData = await SequelizeRentItemModel.findAll({ where: { "rentId" : rentId}});
         const rentItemsArray: RentItem[] = [];
         rentItemsData.map( async (rentItem) => {
-            const { id, rentItemId, rentId, itemId, quantity, description } = rentItem.dataValues;
+            const {
+              id,
+              rentItemId,
+              rentId,
+              itemId,
+              quantity,
+              description 
+            } = rentItem.dataValues;
             rentItemsArray.push({id: id, itemId: itemId, quantity: quantity, description: description });
         });
         return Rent.createExistingRent(
-            id, name, id_contact, begin_date, status, rentItemsArray, end_date, observations, 
+            rentId,
+            name,
+            id_contact,
+            begin_date,
+            status,
+            rentItemsArray,
+            end_date,
+            observations, 
         );
       })
     );
@@ -37,16 +58,42 @@ export class MysqlRentsRepository implements IRentsRepository{
     if (!rent) {
         throw new Error(`No se encontró un alquiler con el id ${rentId}`);
     }
-    const { name, id_contact, begin_date, status, end_date, observations } = rent.dataValues;
+    const { 
+      name,
+      id_contact,
+      begin_date,
+      status,
+      end_date,
+      observations
+    } = rent.dataValues;
     const rentItemsData = await SequelizeRentItemModel.findAll({ where: { "rentId" : rentId}});
     const rentItemsArray: RentItem[] = [];
     rentItemsData.map( async (rentItem) => {
-      const { id, rentItemId, rentId, itemId, quantity, description } = rentItem.dataValues;
-      rentItemsArray.push({ id: id, itemId: itemId, quantity: quantity, description: description });
+      const { 
+        id,
+        rentItemId,
+        rentId,
+        itemId,
+        quantity,
+        description
+      } = rentItem.dataValues;
+      rentItemsArray.push({
+        id: id,
+        itemId: itemId,
+        quantity: quantity,
+        description: description
+      });
     });
 
     return Rent.createExistingRent(
-          rentId, name, id_contact, begin_date, status, rentItemsArray, end_date, observations,
+        rentId,
+        name,
+        id_contact,
+        begin_date,
+        status,
+        rentItemsArray,
+        end_date,
+        observations,
     );
   }
 
@@ -69,7 +116,15 @@ async create(rentN: Rent): Promise<Rent> {
     const rentWithoutItems = rentN.toJSON();
     const newRent = await SequelizeRentModel.create(rentWithoutItems as any);
     const rentData = newRent.get();
-    const {id, name, id_contact, begin_date, status, end_date, observations} = rentData;
+    const {
+      id,
+      name,
+      id_contact,
+      begin_date,
+      status,
+      end_date,
+      observations
+    } = rentData;
     const rentId = id;
     const rentItems: RentItem[] = rentN.items; 
     if (rentItems !== undefined)
@@ -84,7 +139,14 @@ async create(rentN: Rent): Promise<Rent> {
       });
 
     return Rent.createExistingRent(
-      id, name, id_contact, begin_date, status, rentItems, end_date, observations
+      id,
+      name,
+      id_contact,
+      begin_date,
+      status,
+      rentItems,
+      end_date,
+      observations
     );
   }
 
