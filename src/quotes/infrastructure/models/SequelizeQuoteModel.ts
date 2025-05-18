@@ -1,4 +1,4 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes } from "sequelize";
 import { sequelize } from '../../../_config/connection';
 
 class SequelizeQuoteModel extends Model {}

@@ -141,10 +141,11 @@ export class MysqlQuotesRepository implements IQuotesRepository{
         const newQuoteItem = await SequelizeQuoteItemModel.create({
           'id': quoteItem.id,
           'quote_id': quoteId,
+          'position': quoteItem.position,
           'type': quoteItem.type,
-          'itemId': quoteItem.item_id,
-          'quantity': quoteItem.quantity,
+          'item_id': quoteItem.item_id,
           'description': quoteItem.description,
+          'quantity': quoteItem.quantity,
         });
       });
 
