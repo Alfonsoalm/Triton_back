@@ -74,7 +74,6 @@ export class MysqlQuotesRepository implements IQuotesRepository{
       id_contact, 
       creation_date,
       status,
-      items,
       payment_method,
     } = quote.dataValues;
     const quoteItemsData = await SequelizeQuoteModel.findAll({ where: { "quote_id" : quoteId}})

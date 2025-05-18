@@ -28,7 +28,7 @@ export class Rent {
     private _end_date?: Date;
     private _observations?: string = "";
 
-    private _items: RentItem[] = [];
+    private _rent_items: RentItem[] = [];
 
     private constructor(
         id: string,
@@ -47,7 +47,7 @@ export class Rent {
         this._status = status;
         this._end_date = end_date;
         this._observations = observations;
-        this._items = items;
+        this._rent_items = items;
     }
 
     public static async createNewRent(
@@ -106,16 +106,16 @@ export class Rent {
             status: this._status,
             end_date: this._end_date,
             observations: this._observations,
-            items: this._items,
+            rentItems: this._rent_items,
         };
     }
 
     public addItem(item: RentItem) {
-        this._items.push(item);
+        this._rent_items.push(item);
     }
 
     public get items(): RentItem[] { // Añade este getter
-        return this._items;
+        return this._rent_items;
     }
 
     public get id_contact(): string {

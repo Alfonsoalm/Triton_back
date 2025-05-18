@@ -27,7 +27,7 @@ export class Quote{
     // Opcionales
     private _payment_method?: string;
 
-    private _items: QuoteItem[] = [];
+    private _quote_items: QuoteItem[] = [];
 
     private constructor(
         id: string,
@@ -44,7 +44,7 @@ export class Quote{
         this._creation_date = creation_date; 
         this._status = status;
         this._payment_method = payment_method;
-        this._items = items;
+        this._quote_items = items;
     }
 
     public static async createNewQuote( 
@@ -95,17 +95,17 @@ export class Quote{
         id_contact: this._id_contact,
         creation_date: this._creation_date,
         status: this._status,
-        items: this._items,
+        quote_items: this._quote_items,
         payment_method: this._payment_method,
         }
     }
 
     public addItem(item: QuoteItem) {
-        this._items.push(item);
+        this._quote_items.push(item);
     }
 
     public get items(): QuoteItem[] { // Añade este getter
-        return this._items;
+        return this._quote_items;
     }
 
     public get id_contact(): string {
