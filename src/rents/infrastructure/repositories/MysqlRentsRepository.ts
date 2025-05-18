@@ -34,9 +34,18 @@ export class MysqlRentsRepository implements IRentsRepository{
               rentId,
               itemId,
               quantity,
-              description 
+              description,
+              begin_date,
+              end_date, 
             } = rentItem.dataValues;
-            rentItemsArray.push({id: id, itemId: itemId, quantity: quantity, description: description });
+            rentItemsArray.push({
+              id: id, 
+              itemId: itemId,
+              quantity: quantity, 
+              description: description,
+              begin_date: begin_date,
+              end_date: end_date,
+             });
         });
         return Rent.createExistingRent(
             rentId,
@@ -75,13 +84,17 @@ export class MysqlRentsRepository implements IRentsRepository{
         rentId,
         itemId,
         quantity,
-        description
+        description,
+        begin_date,
+        end_date,
       } = rentItem.dataValues;
       rentItemsArray.push({
         id: id,
         itemId: itemId,
         quantity: quantity,
-        description: description
+        description: description,
+        begin_date: begin_date,
+        end_date: end_date,
       });
     });
 
@@ -134,7 +147,9 @@ async create(rentN: Rent): Promise<Rent> {
           'rentId': rentId,
           'itemId': rentItem.itemId,
           'quantity': rentItem.quantity,
-          'description': rentItem.description
+          'description': rentItem.description,
+          'begin_date': rentItem.begin_date,
+          'end_date': rentItem.end_date,
         });
       });
 

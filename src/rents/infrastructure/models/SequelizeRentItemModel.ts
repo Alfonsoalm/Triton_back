@@ -24,7 +24,15 @@ SequelizeRentItemModel.init({
     quantity: {
         type: DataTypes.INTEGER,
         allowNull: false,
-    }
+    },
+    begin_date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
+    end_date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
 }, {
     sequelize,
     modelName: 'RentItem',

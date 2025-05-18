@@ -14,6 +14,8 @@ export interface RentItem {
     itemId: string;
     quantity: number;
     description: string;
+    begin_date: Date;
+    end_date: Date;
 }
 
 export class Rent {
