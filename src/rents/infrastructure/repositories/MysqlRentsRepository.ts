@@ -11,8 +11,8 @@ export class MysqlRentsRepository implements IRentsRepository{
    * @param {Record<string, any>} filters - Objeto con los filtros para la consulta.
    * @returns {Promise<any[]>} - Devuelve una lista de empleados con los datos procesados.
    */
-  async getAll(filters: Record<string, any> = {}): Promise<Rent[]> {
-    const rentsData = await SequelizeRentModel.findAll({ where: filters });
+  async getAll(): Promise<Rent[]> {
+    const rentsData = await SequelizeRentModel.findAll();
     const rents = await Promise.all(
       rentsData.map( async (rent) => {
         const { 

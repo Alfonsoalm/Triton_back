@@ -10,7 +10,7 @@ export class QuotesService implements IQuotesService{
         this._idService = idService;
     }
 
-    async getAll(filters: Record<string, any> = {}): Promise<Quote[]> {
+    async getAll(): Promise<Quote[]> {
         const result = await this._repository.getAll();
         return result;
     }
