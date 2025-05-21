@@ -1,4 +1,4 @@
-export interface CenterDTO{
+export interface BillDTO{
     id: string;
     name: string;
     street: string;
