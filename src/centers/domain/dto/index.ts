@@ -1,1 +1,1 @@
-export * from './CenterDTO';
+export * from './BillDTO';
