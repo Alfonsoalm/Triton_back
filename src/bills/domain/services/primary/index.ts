@@ -1,1 +1,1 @@
-export * from './ICentersService';
+export * from './IBillsService';
