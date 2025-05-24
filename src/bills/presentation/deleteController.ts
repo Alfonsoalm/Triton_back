@@ -6,16 +6,6 @@ export const deleteController = (billsService: IBillsService) => {
         try {
             const { billId } = req.params;
 
-            const bills = await billsService.getById(billId);
-            if (bills.length > 0) {
-                await Promise.all(
-                    bills.map((bill => {
-                        const id = bill.getId();
-                        return billsService.update(id, { id: null });
-                    })
-                );
-            }
-
             const isDeleted = await billsService.delete(billId);
             res.status(200).json({
                 message: "Bill deleted",
