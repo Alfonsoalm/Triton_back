@@ -1,6 +1,7 @@
 // contactsRepository.ts
 import { sequelize } from '../../../_config/connection';
-import { Bill, IBillsRepository} from "../../domain";
+import { Bill, BillItem, IBillsRepository} from "../../domain";
+import SequelizeBillItemModel from '../models/SequelizeBillItemModel';
 import SequelizeBillModel from '../models/SequelizeBillModel';
 
 export class MysqlBillsRepository implements IBillsRepository{
@@ -9,32 +10,66 @@ export class MysqlBillsRepository implements IBillsRepository{
    * @param {Record<string, any>} filters - Objeto con los filtros para la consulta.
    * @returns {Promise<any[]>} - Devuelve una lista de empleados con los datos procesados.
    */
-  async getAll(filters: Record<string, any> = {}): Promise<Bill[]> {
-    const billsData = await SequelizeBillModel.findAll({ where: filters });
-    const bills = billsData.map(bill => {
-      const { 
-        id,
-        bill_code,
-        bill_type,
-        doc_code,
-        creation_date,
-        deposit,
-        total,
-        units,
-        payment_method,
-      } = bill.dataValues;
-      return Bill.createExistingBill(
-        id,
-        bill_code,
-        bill_type,
-        doc_code,
-        creation_date,
-        deposit,
-        total,
-        units,
-        payment_method,
-      );
-    })
+  async getAll(): Promise<Bill[]> {
+    const billsData = await SequelizeBillModel.findAll();
+    const bills = await Promise.all(
+      billsData.map( async(bill) => {
+        const {
+          id,
+          bill_ref,
+          bill_type,
+          doc_ref,
+          customer_id,
+          creation_date,
+          due_date,
+          deposit,
+          subtotal,
+          total,
+          monetary_units,
+          payment_method,
+          payment_status
+        } = bill.dataValues;
+        const billId = id;
+        const billItemsData = await SequelizeBillItemModel.findAll({ where: { "bill_id" : billId}});
+        const billItemsArray: BillItem[] = [];
+        billItemsData.map( async (billItem) => {
+          const {
+            id,
+            bill_id,
+            position,
+            description,
+            quantity,
+            unit_price,
+            item_subtotal,
+            item_total,
+            monetary_units,
+          } = billItem.dataValues;
+          billItemsArray.push({
+            id: id,
+            position: position,
+            description: description,
+            quantity: quantity,
+            unit_price: unit_price,
+            item_subtotal: item_subtotal,
+            item_total: item_total,
+            monetary_units: monetary_units,
+          })
+        })   
+        return Bill.createExistingBill(
+          billId,
+          bill_ref,
+          bill_type,
+          doc_ref,
+          customer_id,
+          creation_date,
+          due_date,
+          deposit,
+          payment_method,
+          payment_status,
+          billItemsArray,
+        );
+      })
+    );
     return bills;
   }
 
@@ -52,25 +87,54 @@ export class MysqlBillsRepository implements IBillsRepository{
     
     const { 
         id,           
-        bill_code,
+        bill_ref,
         bill_type,
-        doc_code,
+        doc_ref,
+        customer_id,
         creation_date,
+        due_date,
         deposit,
         total,
-        units,
         payment_method,
+        payment_status,
       } = bill.dataValues;
+      const billItemsData = await SequelizeBillItemModel.findAll({ where: { "bill_id" : billId}});
+      const billItemsArray: BillItem[] = [];
+      billItemsData.map( async (billItem) => {
+        const {
+          id,
+          bill_id,
+          position,
+          description,
+          quantity,
+          unit_price,
+          item_subtotal,
+          item_total,
+          monetary_units,
+        } = billItem.dataValues;
+        billItemsArray.push({
+          id: id,
+          position: position,
+          description: description,
+          quantity: quantity,
+          unit_price: unit_price,
+          item_subtotal: item_subtotal,
+          item_total: item_total,
+          monetary_units: monetary_units,
+        })
+      }) 
     return Bill.createExistingBill(
-      billId,
-      bill_code,
-      bill_type,
-      doc_code,
-      creation_date,
-      deposit,
-      total,
-      units,
-      payment_method,
+          billId,
+          bill_ref,
+          bill_type,
+          doc_ref,
+          customer_id,
+          creation_date,
+          due_date,
+          deposit,
+          payment_method,
+          payment_status,
+          billItemsArray,
     );
   }
 
@@ -94,25 +158,47 @@ export class MysqlBillsRepository implements IBillsRepository{
     const billData = newBill.get();
     const {
         id,
-        bill_code,
+        bill_ref,
         bill_type,
-        doc_code,
+        doc_ref,
+        customer_id,
         creation_date,
+        due_date,
         deposit,
-        total,
-        units,
         payment_method,
+        payment_status,
     } = billData;
+    const billId = id;
+    const billItemsData = await SequelizeBillItemModel.findAll({ where: { "bill_id" : billId}});
+    const billItemsArray: BillItem[] = billN.items;
+
+    if (billItemsArray !== undefined)
+      billItemsArray.map( async (billItem: BillItem) => {
+        const newBillItem = await SequelizeBillItemModel.create({
+          'id': billItem.id,
+          'bill_id': billId,
+          'position': billItem.position,
+          'description': billItem.description,
+          'quantity': billItem.quantity,
+          'unit_price': billItem.unit_price,
+          'item_subtotal': billItem.item_subtotal,
+          'item_total': billItem.item_total,
+          'monetary_units': billItem.monetary_units,
+        });
+      });
+
     return Bill.createExistingBill(
-        id,
-        bill_code,
-        bill_type,
-        doc_code,
-        creation_date,
-        deposit,
-        total,
-        units,
-        payment_method,
+          billId,
+          bill_ref,
+          bill_type,
+          doc_ref,
+          customer_id,
+          creation_date,
+          due_date,
+          deposit,
+          payment_method,
+          payment_status,
+          billItemsArray,
     );
   }
 
@@ -123,6 +209,7 @@ export class MysqlBillsRepository implements IBillsRepository{
    */
   async delete(billId: string): Promise<boolean> {
     await SequelizeBillModel.destroy({ where: {id: billId} });
+    await SequelizeBillItemModel.destroy({ where: {bill_id: billId}});
     return true;
   }
   /**
@@ -132,9 +219,19 @@ export class MysqlBillsRepository implements IBillsRepository{
    * @returns {Promise<void>} - No devuelve nada.
    */
   async update(billId: string, updates: Record<string, any>): Promise<any> {
-    return await SequelizeBillModel.update(updates, {
+    await SequelizeBillModel.update(updates, {
       where: {id: billId},
     });
+
+    if (updates.billItems) {
+      const itemsToUpdate = Array.isArray(updates.billItems) ? updates.billItems : [updates.billItems];
+      await Promise.all(
+        itemsToUpdate.map(async (billItem: BillItem) => {
+          await SequelizeBillItemModel.update(billItem, { where: {id: billItem.id}});
+        })
+      );
+    }
+    return true; 
   }
 }
 
