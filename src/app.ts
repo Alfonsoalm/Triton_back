@@ -4,18 +4,12 @@ import { appRouter } from "./_routes/routes";
 
 export const app = express();
 
-
 app.use(cors());
-
 
 app.use(express.json());
 
+app.use('/api', appRouter);
 
-
-// Rutas principales
-app.use('/api', appRouter); // Las rutas estarán bajo el prefijo '/api'
-
-// Ruta base para verificar el estado del servidor
 app.get("/", (req, res) => {
   res.send("API funcionando");
 });
