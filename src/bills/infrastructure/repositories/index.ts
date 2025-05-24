@@ -1,1 +1,1 @@
-export * from './MysqlCentersRepository';
+export * from './MysqlBillsRepository';

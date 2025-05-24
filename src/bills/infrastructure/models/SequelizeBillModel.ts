@@ -12,31 +12,33 @@ SequelizeBillModel.init({
     bill_code: {
         type: DataTypes.STRING(50),
         allowNull: false,
-        unique: true,
     },
-    street: {
+    bill_type: {
+        type: DataTypes.ENUM("quote", "rent", "other"),
+        allowNull: false,
+    },
+    doc_code: {
         type: DataTypes.STRING(50),
-        allowNull: true,
-        unique: true,
+        allowNull: false,
     },
-    location: {
-        type: DataTypes.STRING(50),
-        allowNull: true,
+    creation_date: {
+        type: DataTypes.Date,
+        allowNull: false,
     },
-    region: {
-        type: DataTypes.STRING(50),
-        allowNull: true,
-    },
-    mail: {
+    deposit: {
         type: DataTypes.STRING(100),
         allowNull: true,
     },
-    phone: {
-        type: DataTypes.STRING(20),
+    total: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+    },
+    units: {
+        type: DataTypes.STRING(5),
         allowNull: true,
     },
-    photo_url: {
-        type: DataTypes.STRING(255),
+    payment_method: {
+        type: DataTypes.ENUM("cash", "credit_card", "bank_transfer", "paypal"),
         allowNull: true,
     },
 }, {
