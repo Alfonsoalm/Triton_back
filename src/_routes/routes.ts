@@ -10,6 +10,7 @@ import { contactsRouter } from '../contacts/router/contactsRouter';
 import { quotesRouter } from '../quotes/router/quotesRouter';
 import { employeesRouter } from '../employees/router/employeesRouter';
 import { imagesRouter } from './imagesRouter';
+import { billsRouter } from '../bills';
 
 const appRouter = express.Router();
 
@@ -30,6 +31,8 @@ appRouter.use('/contacts', contactsRouter);
 appRouter.use('/quotes', quotesRouter);
 
 appRouter.use('/images', imagesRouter);
+
+appRouter.use('/bills', billsRouter);
 
 export { appRouter };
 
