@@ -37,25 +37,34 @@ export class BillsService implements IBillsService{
 
     async create(billData: Omit<BillDTO, "id">): Promise<Bill> {
         
-        const { bill_code,
+        const { bill_ref,
                 bill_type,
-                doc_code, 
-                creation_date, 
+                doc_ref, 
+                customer_id,
+                creation_date,
+                due_date, 
                 deposit, 
+                subtotal,
                 total,
-                units,
-                payment_method } = billData;
+                monetary_units,
+                payment_method,
+                payment_status,
+                bill_items,
+        } = billData;
 
         const newBill = await Bill.createNewBill(
             this._idService,
-            bill_code,
+            bill_ref,
             bill_type,
-            doc_code,
+            doc_ref,
+            customer_id,
             creation_date,
+            due_date,
             deposit,
-            total,
-            units,
-            payment_method)
+            payment_method,
+            payment_status,
+            bill_items,
+        )
 
         return await this._repository.create(newBill);
     }
