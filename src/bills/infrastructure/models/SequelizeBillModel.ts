@@ -22,7 +22,7 @@ SequelizeBillModel.init({
         allowNull: false,
     },
     creation_date: {
-        type: DataTypes.Date,
+        type: DataTypes.DATE,
         allowNull: false,
     },
     deposit: {
