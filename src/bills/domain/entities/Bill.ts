@@ -77,7 +77,7 @@ export class Bill{
 
         this._subtotal = this.calculateSubtotal();
         this._total = this.calculateTotal();
-        if (bill_items)
+        if (bill_items[0] !== undefined)
             this._monetary_units = bill_items[0].monetary_units;
         else 
             this._monetary_units = '€';
