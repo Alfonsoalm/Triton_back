@@ -4,3 +4,4 @@ export * from './getFieldsController';
 export * from './getByIdController';
 export * from './deleteController';
 export * from './updateController';
+export * from './createFromRentController';

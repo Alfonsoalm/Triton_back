@@ -7,5 +7,5 @@ export interface IRentsService{
     create(rentData: Omit<RentDTO, "id">): Promise<Rent>,
     getById(rentId: string): Promise<Rent>,
     update(rentId: string, updates: any): Promise<Rent>,
-    delete(rentId: string): Promise<boolean>
+    delete(rentId: string): Promise<boolean>,
 }
