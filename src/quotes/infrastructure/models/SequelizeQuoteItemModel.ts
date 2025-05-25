@@ -14,25 +14,36 @@ SequelizeQuoteItemModel.init({
     allowNull: false,
   },
   position: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+    type: DataTypes.INTEGER,
+    allowNull: false,
   },
   type: {
-      type: DataTypes.ENUM("product", "service", "other"),
-      allowNull: true,
+    type: DataTypes.ENUM("product", "service", "other"),
+    allowNull: true,
   },
   item_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
+    type: DataTypes.INTEGER,
+    allowNull: true,
   },
   description: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   quantity: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+    type: DataTypes.INTEGER,
+    allowNull: false,
   },
+  price: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+    defaultValue: 0.00,
+  },
+  tax: {
+    type: DataTypes.DECIMAL(5, 2),
+    allowNull: false,
+    defaultValue: 0.00,
+  },
+
 }, {
   sequelize,
   modelName: "QuoteItems",
