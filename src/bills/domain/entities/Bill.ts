@@ -77,7 +77,10 @@ export class Bill{
 
         this._subtotal = this.calculateSubtotal();
         this._total = this.calculateTotal();
-        this._monetary_units = bill_items[1].monetary_units;
+        if (bill_items)
+            this._monetary_units = bill_items[0].monetary_units;
+        else 
+            this._monetary_units = '€';
     }
     
     public static async createNewBill(
