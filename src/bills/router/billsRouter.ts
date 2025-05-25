@@ -16,6 +16,6 @@ billsRouter.put("/:billId", updateController(billsService));
 
 billsRouter.delete("/:billId", deleteController(billsService));
 
-billsRouter.post("/", createFromRentController(billsService));
+billsRouter.post("/fromRents", createFromRentController(billsService));
 
 export { billsRouter };
