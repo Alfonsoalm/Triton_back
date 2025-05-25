@@ -112,4 +112,21 @@ export class Machine {
       id_center: this._id_center,
     };
   }
+
+  public get model(): string { // Añade este getter
+      return this._model;
+  }
+
+  public get serial_number(): string { // Añade este getter
+      return this._serial_number ? this._serial_number : '';
+  }
+
+  public get brand(): string { // Añade este getter
+      return this._brand ? this._brand : '';
+  }
+
+  public get price(): number { // Añade este getter
+      return this._price ? this._price : 0;
+  }
+
 }

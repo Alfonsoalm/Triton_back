@@ -1,1 +1,2 @@
-export * from './UUIDService'
+export * from './UUIDService';
+export * from './RefService';

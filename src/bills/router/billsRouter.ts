@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createController, updateController, getAllController, getByIdController, getFieldsController, deleteController } from '../presentation';
+import { createController, updateController, getAllController, getByIdController, getFieldsController, deleteController, createFromRentController } from '../presentation';
 import { billsService } from '../config/config';
 
 const billsRouter = Router();
@@ -12,8 +12,10 @@ billsRouter.get("/:contactId", getByIdController(billsService));
 
 billsRouter.post("/", createController(billsService));
 
-billsRouter.put("/:billId", updateController(billsService))
+billsRouter.put("/:billId", updateController(billsService));
 
-billsRouter.delete("/:billId", deleteController(billsService))
+billsRouter.delete("/:billId", deleteController(billsService));
+
+billsRouter.post("/", createFromRentController(billsService));
 
 export { billsRouter };
