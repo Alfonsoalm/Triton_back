@@ -11,7 +11,7 @@ export enum BillType {
 
 export enum BillPaymentStatus {
     Paid = "paid",
-    NotPaid = "not paid",
+    NotPaid = "not_paid",
 }
 
 export interface BillItem {
