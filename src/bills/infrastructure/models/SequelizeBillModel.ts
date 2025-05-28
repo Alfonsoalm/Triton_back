@@ -54,7 +54,7 @@ SequelizeBillModel.init({
         allowNull: true,
     },
     payment_status: {
-        type: DataTypes.ENUM("paid", "not paid"),
+        type: DataTypes.ENUM("paid", "not_paid"),
         allowNull: false,
     }
 }, {
