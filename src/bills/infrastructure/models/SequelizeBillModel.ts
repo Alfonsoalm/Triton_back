@@ -21,7 +21,7 @@ SequelizeBillModel.init({
         type: DataTypes.STRING(50),
         allowNull: false,
     },
-    customer_id: {
+    id_customer: {
         type: DataTypes.STRING(255),
         allowNull: false,
     },

@@ -5,7 +5,7 @@ export interface BillDTO{
     bill_ref: string;
     bill_type: BillType;
     doc_ref: string;
-    customer_id: string;
+    id_customer: string;
     creation_date: Date;
     due_date: Date;
     deposit: number;
