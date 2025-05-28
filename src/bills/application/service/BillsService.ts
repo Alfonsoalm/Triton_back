@@ -102,8 +102,9 @@ export class BillsService implements IBillsService{
             const itemTotal = itemSubtotal;
 
             const description = `Alquiler de máquina ${machine.model} - ${machine.brand} ` +
-                                `con SN ${machine.serial_number} del ${ri.begin_date.toLocaleDateString()} ` +
-                                `al ${ri.end_date.toLocaleDateString()}`;
+                `con SN ${machine.serial_number} del ${new Date(ri.begin_date).toLocaleDateString()} ` +
+                `al ${new Date(ri.end_date).toLocaleDateString()}`;
+
 
             return {
                 id: `${rentId}-${index + 1}`,
