@@ -1,0 +1,56 @@
+pipeline {
+  agent any
+
+  environment {
+    BACKEND_REPO = 'https://github.com/Alfonsoalm/Triton_back.git'
+    BRANCH = 'main'
+    CREDENTIALS_ID = 'github-token'
+  }
+
+  stages {
+    stage('Clonar Repos') {
+      steps {
+        git branch: "${BRANCH}", url: "${BACKEND_REPO}", credentialsId: "${CREDENTIALS_ID}"
+      }
+    }
+
+    stage('Instalar Dependencias') {
+      steps {
+        sh 'npm install'
+      }
+    }
+
+    stage('Build') {
+      steps {
+        sh 'npm run build'
+      }
+    }
+
+    // stage('Test') {
+    //   steps {
+    //     dir('backend') {
+    //       sh 'npm test'
+    //     }
+    //     dir('frontend') {
+    //       sh 'npm test'
+    //     }
+    //   }
+    // }
+
+    stage('Despliegue') {
+      steps {
+        // Puedes usar rsync, scp, docker, etc.
+        sh 'echo "Desplegar backend..."'
+        pm2 start dist/server.js --name backend || pm2 restart backend
+      }
+    }
+
+    // stage('Migraciones DB') {
+    //   steps {
+    //     dir('backend') {
+    //       sh 'npx prisma migrate deploy' // o el sistema que uses
+    //     }
+    //   }
+    // }
+  }
+}

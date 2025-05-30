@@ -6,6 +6,7 @@ import { itemsRouter } from '../items';
 import { servicesRouter } from '../services';
 import { centersRouter } from '../centers';
 import { imagesRouter } from './imagesRouter';
+import { authRouter } from '../auth';
 import { billsRouter } from '../bills';
 import { worklogsRouter } from '../worklogs';
 import { employeesRouter } from '../employees';
@@ -34,6 +35,8 @@ appRouter.use('/contacts', contactsRouter);
 appRouter.use('/quotes', quotesRouter);
 
 appRouter.use('/images', imagesRouter);
+
+appRouter.use('/auth', authRouter);
 
 appRouter.use('/bills', billsRouter);
 

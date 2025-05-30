@@ -1,15 +1,16 @@
-import { Request, Response } from "express"
+import { Request, Response } from "express";
 import { ICentersService } from "../../domain";
 
-export const getByIdController = (centersService: ICentersService) => {
+export const getFieldsController = (centersService: ICentersService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
-            const { contactId } = req.params;
-            const center = await centersService.getById(contactId);
+            const fields = await centersService.getFields();
+    
             res.status(200).json({
-                message: "Center retrieved successfully.",
-                data: center ? center: []
+                message: "Fields found",
+                data: fields
             });
+            
         } catch (error) {
             if (error instanceof Error) {
                 console.error(error);

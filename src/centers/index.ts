@@ -8,6 +8,6 @@ export * from './domain/services/secondary/IIdService';
 export * from './infrastructure/models/SequelizeCenterModel';
 export * from './infrastructure/repositories/MysqlCentersRepository';
 export * from './infrastructure/services/UUIDService';
-export * from './presentation/getAllController';
-export * from './presentation/getFieldsController';
+export * from './router/presentation/getAllController';
+export * from './router/presentation/getFieldsController';
 export * from './router/centersRouter';

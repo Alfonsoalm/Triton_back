@@ -1,15 +1,19 @@
 import { Request, Response } from "express"
 import { ICentersService } from "../../domain";
 
-export const getByIdController = (centersService: ICentersService) => {
+export const updateController = (centersService: ICentersService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
-            const { contactId } = req.params;
-            const center = await centersService.getById(contactId);
+            const { centerId } = req.params;
+            const { updates } = req.body;
+            console.log("centerId", centerId, "updates", updates)
+            const isUpdated = await centersService.update(centerId, updates);
+    
             res.status(200).json({
-                message: "Center retrieved successfully.",
-                data: center ? center: []
+                message: "Center updated",
+                data: isUpdated
             });
+            
         } catch (error) {
             if (error instanceof Error) {
                 console.error(error);
