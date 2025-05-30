@@ -10,7 +10,7 @@ SequelizeQuoteItemModel.init({
     allowNull: false,
   },
   quote_id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
   },
   position: {
@@ -22,7 +22,7 @@ SequelizeQuoteItemModel.init({
     allowNull: true,
   },
   item_id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: true,
   },
   description: {
