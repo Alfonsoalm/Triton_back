@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { ICentersService } from "../../domain";
+import { ICentersService } from "../domain";
 
 export const getAllController = (centersService: ICentersService) => {
     return async(req: Request, res: Response):Promise<void> => {

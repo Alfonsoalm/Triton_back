@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
-import { ICentersService } from "../../domain";
-import { IEmployeesService } from "../../../employees";
+import { ICentersService } from "../domain";
+import { IEmployeesService } from "../../employees";
 
 export const deleteController = (centersService: ICentersService, employeesServices: IEmployeesService) => {
     return async(req: Request, res: Response):Promise<void> => {

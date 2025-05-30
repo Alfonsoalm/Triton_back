@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { createController, updateController, getAllController, getByIdController, getFieldsController, deleteController, createFromRentController } from '../presentation';
-import { billsService } from '../config/config';
-
+import { billsService } from '../config';
+               
 const billsRouter = Router();
 
 billsRouter.get("/",getAllController(billsService));
