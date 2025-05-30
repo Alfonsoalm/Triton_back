@@ -5,6 +5,7 @@ export enum QuoteStatus {
   Pending = "pending",
   Approved = "approved",
   Rejected = "rejected",
+  Completed = "finished"
 }
 
 export interface QuoteItem {
