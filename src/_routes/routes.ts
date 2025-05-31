@@ -2,7 +2,7 @@
 // routes.ts
 import express from 'express';
 import { machinesRouter } from '../machines';
-import { itemsRouter } from '../items';
+import { productsRouter } from '../products';
 import { servicesRouter } from '../services';
 import { centersRouter } from '../centers';
 import { imagesRouter } from './imagesRouter';
@@ -26,7 +26,7 @@ appRouter.use('/rents', rentsRouter);
 
 appRouter.use('/machines', machinesRouter);
 
-appRouter.use('/items', itemsRouter);
+appRouter.use('/products', productsRouter);
 
 appRouter.use('/services', servicesRouter);
 
