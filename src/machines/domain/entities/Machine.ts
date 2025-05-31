@@ -1,6 +1,15 @@
 import { IIdService } from "../services";
 
 // Machine.ts
+export enum MachineStatus {
+  Available = 'available',
+  Repairing = 'repairing',
+  Broken = 'broken',
+  Rented = 'rented',
+  Sold = 'sold',
+}
+
+
 export class Machine {
   private _id: string = '';
   private _type: string = '';
@@ -11,12 +20,13 @@ export class Machine {
   private _price?: number;
   private _deposit?: number;
   private _available?: boolean;
-  private _state?: string;
+  private _status?: MachineStatus;
   private _cost?: number;
   private _id_supplier?: string;
   private _reference?: string;
   private _tax?: number;
   private _id_center?: string;
+  private _owner?: string;
 
   private constructor(
     id: string,
@@ -28,12 +38,13 @@ export class Machine {
     price?: number,
     deposit?: number,
     available?: boolean,
-    state?: string,
+    status?: MachineStatus,
     cost?: number,
     id_supplier?: string,
     reference?: string,
     tax?: number,
     id_center?: string,
+    owner?: string,
   ) {
     this._id = id;
     this._type = type;
@@ -44,12 +55,13 @@ export class Machine {
     this._price = price;
     this._deposit = deposit;
     this._available = available;
-    this._state = state;
+    this._status = status;
     this._cost = cost;
     this._id_supplier = id_supplier;
     this._reference = reference;
     this._tax = tax;
     this._id_center = id_center;
+    this._owner = owner;
   }
 
   public static async createNewItem(
@@ -62,15 +74,16 @@ export class Machine {
     price?: number,
     deposit?: number,
     available?: boolean,
-    state?: string,
+    status?: MachineStatus,
     cost?: number,
     id_supplier?: string,
     reference?: string,
     tax?: number, 
     id_center?: string,
+    owner?: string,
   ): Promise<Machine> {
     const id = idGenerator.generate();
-    return new Machine(id, type, model, brand, serial_number, description, price, deposit, available, state, cost, id_supplier, reference, tax, id_center);
+    return new Machine(id, type, model, brand, serial_number, description, price, deposit, available, status, cost, id_supplier, reference, tax, id_center, owner);
   }
 
   public static createExistingItem(
@@ -83,14 +96,15 @@ export class Machine {
     price?: number,
     deposit?: number,
     available?: boolean,
-    state?: string,
+    status?: MachineStatus,
     cost?: number,
     id_supplier?: string,
     reference?: string,
     tax?: number,
     id_center?: string,
+    owner?: string,
   ): Machine {
-    return new Machine(id, type, model, brand, serial_number, description, price, deposit, available, state, cost, id_supplier, reference, tax, id_center);
+    return new Machine(id, type, model, brand, serial_number, description, price, deposit, available, status, cost, id_supplier, reference, tax, id_center, owner);
   }
 
   public toJSON(): object {
@@ -104,12 +118,13 @@ export class Machine {
       price: this._price,
       deposit: this._deposit,
       available: this._available,
-      state: this._state,
+      status: this._status,
       cost: this._cost,
       id_supplier: this._id_supplier,
       reference: this._reference,
       tax: this._tax,
       id_center: this._id_center,
+      owner: this._owner,
     };
   }
 
