@@ -1,3 +1,5 @@
+import { MachineStatus } from "../entities";
+
 export interface MachineDTO {
   id: string;
   type: string;
@@ -8,10 +10,11 @@ export interface MachineDTO {
   price?: number;
   deposit?: number;
   available?: boolean;
-  state?: string;
+  status?: MachineStatus;
   cost?: number; // Añadido cost
   id_supplier?: string; // Añadido id_supplier
   reference?: string; // Añadido reference
   tax?: number; // Añadido tax
   id_center?: string; // Añadido id_center
+  owner?: string;
 }

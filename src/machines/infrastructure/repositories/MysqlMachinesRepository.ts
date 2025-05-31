@@ -17,12 +17,13 @@ export class MysqlMachinesRepository implements IMachinesRepository{
         price,
         deposit,
         available,
-        state,
+        status,
         cost,
         id_supplier,
         reference,
         tax,
         id_center,
+        owner,
       } = machine.dataValues;
       return Machine.createExistingItem(
         id,
@@ -34,12 +35,13 @@ export class MysqlMachinesRepository implements IMachinesRepository{
         price,
         deposit,
         available,
-        state,
+        status,
         cost,
         id_supplier,
         reference,
         tax,
         id_center,
+        owner
       );
     });
   }
@@ -59,12 +61,13 @@ export class MysqlMachinesRepository implements IMachinesRepository{
       price,
       deposit,
       available,
-      state,
+      status,
       cost,
       id_supplier,
       reference,
       tax,
       id_center,
+      owner
     } = machine.dataValues;
     return Machine.createExistingItem(
       id,
@@ -76,12 +79,13 @@ export class MysqlMachinesRepository implements IMachinesRepository{
       price,
       deposit,
       available,
-      state,
+      status,
       cost,
       id_supplier,
       reference,
       tax,
       id_center,
+      owner
     );
   }
 
@@ -103,12 +107,13 @@ export class MysqlMachinesRepository implements IMachinesRepository{
       price,
       deposit,
       available,
-      state,
+      status,
       cost,
       id_supplier,
       reference,
       tax,
       id_center,
+      owner
     } = newMachine.get();
     return Machine.createExistingItem(
       id,
@@ -120,12 +125,13 @@ export class MysqlMachinesRepository implements IMachinesRepository{
       price,
       deposit,
       available,
-      state,
+      status,
       cost,
       id_supplier,
       reference,
       tax,
       id_center,
+      owner
     );
   }
   async delete(machineId: string): Promise<boolean> {

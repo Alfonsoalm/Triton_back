@@ -42,8 +42,8 @@ SequelizeMachineModel.init({
     type: DataTypes.BOOLEAN,
     allowNull: true,
   },
-  state: {
-    type: DataTypes.STRING(50),
+  status: {
+    type: DataTypes.ENUM("available", "repairing", "broken", "rented", "sold"),
     allowNull: false,
   },
   cost: {
@@ -66,6 +66,10 @@ SequelizeMachineModel.init({
     type: DataTypes.STRING(36),
     allowNull: true,
   },
+  owner: {
+    type: DataTypes.STRING(36),
+    allowNull: true,
+  }
 }, {
   sequelize,
   modelName: "Machine",
