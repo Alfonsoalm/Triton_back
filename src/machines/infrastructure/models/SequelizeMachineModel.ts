@@ -42,7 +42,7 @@ SequelizeMachineModel.init({
     type: DataTypes.BOOLEAN,
     allowNull: true,
   },
-  stause: {
+  status: {
     type: DataTypes.ENUM("available", "repairing", "broken", "rented", "sold"),
     allowNull: false,
   },
