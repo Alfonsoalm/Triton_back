@@ -8,12 +8,12 @@ servicesRouter.get("/",getAllController(servicesService));
 
 servicesRouter.get('/fields', getFieldsController(servicesService));
 
-servicesRouter.get("/:itemId", getByIdController(servicesService));
+servicesRouter.get("/:serviceId", getByIdController(servicesService));
 
 servicesRouter.post("/", createController(servicesService));
 
-servicesRouter.put("/:itemId", updateController(servicesService))
+servicesRouter.put("/:serviceId", updateController(servicesService))
 
-servicesRouter.delete("/:itemId", deleteController(servicesService))
+servicesRouter.delete("/:serviceId", deleteController(servicesService))
 
 export { servicesRouter };

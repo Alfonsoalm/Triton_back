@@ -5,6 +5,7 @@ export const createController = (contactsService: IContactsService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
             const contactData = req.body;
+            console.log("contactData",contactData);
             const contact = await contactsService.create(contactData);
             
             res.status(200).json({

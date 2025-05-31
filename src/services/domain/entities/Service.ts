@@ -1,7 +1,6 @@
 // Assuming this file is located at: src/features/inventory/domain/service.ts
 import { IIdService } from "../services";
 
-// Interface for a Service entity
 export interface Service {
   id: string;
   description: string;
@@ -10,7 +9,7 @@ export interface Service {
   tax?: number;
   reference?: string;
 }
-// Class representing a Service domain entity
+
 export class Service {
   private _id: string;
   private _description: string;
