@@ -54,13 +54,13 @@ SequelizeProductModel.init(
     quantity: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
-      defaultValue: 0, // Set a default value if needed
+      defaultValue: 0,
     },
   },
   {
     sequelize,
-    modelName: "Product",
-    tableName: "product",
+    modelName: "Products",
+    tableName: "products",
     timestamps: false,
   }
 );
