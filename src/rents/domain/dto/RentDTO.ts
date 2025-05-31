@@ -7,7 +7,7 @@ export interface RentDTO{
     id_contact: string;
     begin_date: Date;
     status: RentStatus;
-    rentItems: RentItem[]; // Include the rent items
+    rentItems: RentItem[];
     end_date?: Date;
     observations?: string;
 }

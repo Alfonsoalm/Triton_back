@@ -74,7 +74,7 @@ export class MysqlProductsRepository implements IProductsRepository {
   }
 
   async getFields(): Promise<unknown[]> {
-    const query = `DESCRIBE items;`;
+    const query = `DESCRIBE products;`;
     const [fields] = await sequelize.query(query);
     return fields;
   }
