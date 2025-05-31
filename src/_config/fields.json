@@ -1,5 +1,5 @@
 {
-  "products": {
+  "items": {
     "en": [ "type", "price", "model", "brand", "description"],
     "es": [ "tipo", "precio", "modelo", "marca", "descripcion"]
   },
@@ -12,8 +12,8 @@
     "es": ["nombre", "apellido", "correo", "teléfono", "dni", "url dni","dirección", "tipo", "cuenta", "categoría", "baneado"]
   },
   "machines":{
-    "en": [ "type", "model", "brand", "serial_number", "description", "price", "deposit", "available", "status"],
-    "es": [ "tipo", "modelo", "marca", "numero_serie", "descripcion", "precio", "fianza", "disponibilidad", "estado"]
+    "en": [ "type", "model", "brand", "serial_number", "description", "price", "deposit", "available", "status", "owner"],
+    "es": [ "tipo", "modelo", "marca", "numero_serie", "descripcion", "precio", "fianza", "disponibilidad", "estado", "propiedad"]
   },
   "employees":{
     "en": [ "name", "first_name", "dni", "mail", "phone", "role", "hire_date", "id_center","photo_url"],
