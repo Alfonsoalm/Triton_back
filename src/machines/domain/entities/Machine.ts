@@ -26,7 +26,7 @@ export class Machine {
   private _reference?: string;
   private _tax?: number;
   private _id_center?: string;
-  private _owner?: string;
+  private _id_owner?: string;
 
   private constructor(
     id: string,
@@ -44,7 +44,7 @@ export class Machine {
     reference?: string,
     tax?: number,
     id_center?: string,
-    owner?: string,
+    id_owner?: string,
   ) {
     this._id = id;
     this._type = type;
@@ -61,7 +61,7 @@ export class Machine {
     this._reference = reference;
     this._tax = tax;
     this._id_center = id_center;
-    this._owner = owner;
+    this._id_owner = id_owner;
   }
 
   public static async createNewItem(
@@ -80,10 +80,10 @@ export class Machine {
     reference?: string,
     tax?: number, 
     id_center?: string,
-    owner?: string,
+    id_owner?: string,
   ): Promise<Machine> {
     const id = idGenerator.generate();
-    return new Machine(id, type, model, brand, serial_number, description, price, deposit, available, status, cost, id_supplier, reference, tax, id_center, owner);
+    return new Machine(id, type, model, brand, serial_number, description, price, deposit, available, status, cost, id_supplier, reference, tax, id_center, id_owner);
   }
 
   public static createExistingItem(
@@ -102,9 +102,9 @@ export class Machine {
     reference?: string,
     tax?: number,
     id_center?: string,
-    owner?: string,
+    id_owner?: string,
   ): Machine {
-    return new Machine(id, type, model, brand, serial_number, description, price, deposit, available, status, cost, id_supplier, reference, tax, id_center, owner);
+    return new Machine(id, type, model, brand, serial_number, description, price, deposit, available, status, cost, id_supplier, reference, tax, id_center, id_owner);
   }
 
   public toJSON(): object {
@@ -124,7 +124,7 @@ export class Machine {
       reference: this._reference,
       tax: this._tax,
       id_center: this._id_center,
-      owner: this._owner,
+      id_owner: this._id_owner,
     };
   }
 

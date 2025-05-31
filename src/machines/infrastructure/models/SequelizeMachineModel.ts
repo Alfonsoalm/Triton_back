@@ -66,7 +66,7 @@ SequelizeMachineModel.init({
     type: DataTypes.STRING(36),
     allowNull: true,
   },
-  owner: {
+  id_owner: {
     type: DataTypes.STRING(36),
     allowNull: true,
   }

@@ -23,7 +23,7 @@ export class MysqlMachinesRepository implements IMachinesRepository{
         reference,
         tax,
         id_center,
-        owner,
+        id_owner,
       } = machine.dataValues;
       return Machine.createExistingItem(
         id,
@@ -41,7 +41,7 @@ export class MysqlMachinesRepository implements IMachinesRepository{
         reference,
         tax,
         id_center,
-        owner
+        id_owner
       );
     });
   }
@@ -67,7 +67,7 @@ export class MysqlMachinesRepository implements IMachinesRepository{
       reference,
       tax,
       id_center,
-      owner
+      id_owner
     } = machine.dataValues;
     return Machine.createExistingItem(
       id,
@@ -85,7 +85,7 @@ export class MysqlMachinesRepository implements IMachinesRepository{
       reference,
       tax,
       id_center,
-      owner
+      id_owner
     );
   }
 
@@ -113,7 +113,7 @@ export class MysqlMachinesRepository implements IMachinesRepository{
       reference,
       tax,
       id_center,
-      owner
+      id_owner
     } = newMachine.get();
     return Machine.createExistingItem(
       id,
@@ -131,7 +131,7 @@ export class MysqlMachinesRepository implements IMachinesRepository{
       reference,
       tax,
       id_center,
-      owner
+      id_owner
     );
   }
   async delete(machineId: string): Promise<boolean> {
