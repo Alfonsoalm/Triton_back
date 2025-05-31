@@ -12,7 +12,7 @@
     "es": ["nombre", "apellido", "correo", "teléfono", "dni", "url dni","dirección", "tipo", "cuenta", "categoría", "baneado"]
   },
   "machines":{
-    "en": [ "type", "model", "brand", "serial_number", "description", "price", "deposit", "available", "status", "owner"],
+    "en": [ "type", "model", "brand", "serial_number", "description", "price", "deposit", "available", "status", "id_owner"],
     "es": [ "tipo", "modelo", "marca", "numero_serie", "descripcion", "precio", "fianza", "disponibilidad", "estado", "propiedad"]
   },
   "employees":{
