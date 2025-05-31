@@ -44,7 +44,7 @@ SequelizeContactModel.init({
         allowNull: true,
     },
     id_account: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(255),
         allowNull: true,
     },
     category: {
