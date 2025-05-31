@@ -16,5 +16,5 @@ export interface MachineDTO {
   reference?: string; // Añadido reference
   tax?: number; // Añadido tax
   id_center?: string; // Añadido id_center
-  owner?: string;
+  id_owner?: string;
 }

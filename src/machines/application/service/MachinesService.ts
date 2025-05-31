@@ -31,7 +31,7 @@ export class MachinesService implements IMachinesService{
 
   async create(machineData: Omit<MachineDTO, "id">): Promise<Machine> {
 
-    const {type, model, brand, serial_number, description, price, deposit, available, status, cost, id_supplier, reference, tax, id_center, owner } = machineData;
+    const {type, model, brand, serial_number, description, price, deposit, available, status, cost, id_supplier, reference, tax, id_center, id_owner } = machineData;
     const newMachine = await Machine.createNewItem(this._idService, 
       type,
       model,
@@ -47,7 +47,7 @@ export class MachinesService implements IMachinesService{
       reference,
       tax,
       id_center,
-      owner);
+      id_owner);
 
     return await this._repository.create(newMachine);
   }
