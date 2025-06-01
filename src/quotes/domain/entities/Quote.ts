@@ -5,7 +5,7 @@ export enum QuoteStatus {
   Pending = "pending",
   Approved = "approved",
   Rejected = "rejected",
-  Completed = "finished"
+  Completed = "finished",
 }
 
 export interface QuoteItem {
@@ -97,6 +97,7 @@ export class Quote {
       creation_date: this._creation_date,
       status: this._status,
       payment_method: this._payment_method,
+      quote_items: this._quote_items,
     };
   }
 
