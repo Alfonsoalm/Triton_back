@@ -11,7 +11,7 @@ export class MysqlContactsRepository implements IContactsRepository{
   async getAll(): Promise<Contact[]> {
     const contactsData = await SequelizeContactModel.findAll();
     const contacts = contactsData.map(contact => {     
-      const { id, name, first_name, nif, nif_url, mail, phone, type, category, address, id_account, banned } = contact.dataValues;
+      const { id, name, first_name, nif, nif_url, mail, phone, type, category, address, id_account, access } = contact.dataValues;
       return Contact.createExistingContact(
         id,
         name,
@@ -24,7 +24,7 @@ export class MysqlContactsRepository implements IContactsRepository{
         address,
         id_account,
         category ? category as ContactCategory: undefined,
-        banned
+        access
       );
     })
     return contacts;
@@ -38,7 +38,7 @@ export class MysqlContactsRepository implements IContactsRepository{
   async getByType(type: string): Promise<Contact[]> {
     const contactsData = await SequelizeContactModel.findAll({ where: { type: type } });
     const contacts = contactsData.map(contact => {     
-      const { id, name, first_name, nif, nif_url, mail, phone, type, category, address, id_account, banned } = contact.dataValues;
+      const { id, name, first_name, nif, nif_url, mail, phone, type, category, address, id_account, access } = contact.dataValues;
       return Contact.createExistingContact(
         id,
         name,
@@ -51,7 +51,7 @@ export class MysqlContactsRepository implements IContactsRepository{
         address,
         id_account,
         category ? category as ContactCategory: undefined,
-        banned
+        access
       );
     })
     return contacts;
@@ -65,7 +65,7 @@ export class MysqlContactsRepository implements IContactsRepository{
   async getById(contactId: string): Promise<Contact> {
     const contact = await SequelizeContactModel.findOne({ where: { id: contactId } });
     if (!contact) throw new Error(`No se encontró un contacto con el id ${contactId}`);
-    const { id, name, first_name, nif, nif_url, mail, phone, type, category, address, id_account, banned } = contact.dataValues;
+    const { id, name, first_name, nif, nif_url, mail, phone, type, category, address, id_account, access } = contact.dataValues;
     return Contact.createExistingContact(
       contactId,
       name,
@@ -78,7 +78,7 @@ export class MysqlContactsRepository implements IContactsRepository{
       address,
       id_account,
       category ? category as ContactCategory: undefined,
-      banned
+      access
     );
   }
 
@@ -101,7 +101,7 @@ export class MysqlContactsRepository implements IContactsRepository{
     const newContact = await SequelizeContactModel.create(contactN.toJSON() as any);
     const contactData = newContact.get();
     const {id, name, first_name, type, mail, phone, nif, nif_url, address, id_account, category,
-      banned} = contactData;
+      access} = contactData;
     return Contact.createExistingContact(
       id,
       name,
@@ -114,7 +114,7 @@ export class MysqlContactsRepository implements IContactsRepository{
       address,
       id_account,
       category ? category as ContactCategory: undefined,
-      banned
+      access
     );
   }
   /**

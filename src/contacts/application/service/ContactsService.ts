@@ -35,8 +35,8 @@ export class ContactsService implements IContactsService{
     }
 
     async create(contactData: Omit<ContactDTO, "id">): Promise<Contact> {
-        const {name, first_name, type, mail, phone, nif, nif_url, address, id_account, category, banned} = contactData;
-        const newContact = await Contact.createNewContact(this._idService, name, first_name, type, mail, phone, nif, nif_url, address, id_account, category, banned)
+        const {name, first_name, type, mail, phone, nif, nif_url, address, id_account, category, access} = contactData;
+        const newContact = await Contact.createNewContact(this._idService, name, first_name, type, mail, phone, nif, nif_url, address, id_account, category, access)
         return await this._repository.create(newContact);
     }
 

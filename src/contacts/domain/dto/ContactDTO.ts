@@ -12,5 +12,5 @@ export interface ContactDTO{
     address?: string;
     id_account?: string;
     category?: ContactCategory;
-    banned?: boolean;
+    access?: boolean;
 }

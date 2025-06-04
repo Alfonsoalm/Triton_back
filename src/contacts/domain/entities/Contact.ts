@@ -35,7 +35,7 @@ export class Contact{
 
     private constructor(id: string, name: string, first_name: string, type: ContactType, mail?: string,
         phone?: string, nif?: string, nif_url?: string, address?: string, id_account?: string, 
-        category?: ContactCategory, banned?: boolean) {
+        category?: ContactCategory, access?: boolean) {
             this._id = id;
             this._name = name;
             this._firstName = first_name;
@@ -47,13 +47,13 @@ export class Contact{
             this._address = address;
             this._idAccount = id_account;
             this._category = category;
-            this._banned = banned;
+            this._banned = access;
     }
     
     public static async createNewContact( idGenerator: IIdService,
         name: string, first_name: string, type: ContactType, mail?: string, phone?: string, 
         nif?: string, nif_url?: string, address?: string, id_account?: string, 
-        category?: ContactCategory, banned?: boolean
+        category?: ContactCategory, access?: boolean
     ): Promise<Contact> {
         // Valida el email
         if (mail) {
@@ -65,16 +65,16 @@ export class Contact{
         const id = idGenerator.generate();
         // Crea una nueva instancia de Contact
         return new Contact(id, name, first_name, type, mail, phone, nif, nif_url, address, id_account,
-            category, banned);
+            category, access);
     }
 
     public static createExistingContact( 
         id: string, name: string, first_name: string, type: ContactType, mail?: string, 
         phone?: string, nif?: string, nif_url?: string, address?: string, id_account?: string, 
-        category?: ContactCategory, banned?: boolean): Contact {
+        category?: ContactCategory, access?: boolean): Contact {
         
         return new Contact(id, name, first_name, type, mail, phone, nif, nif_url, address, id_account,
-            category, banned);
+            category, access);
             
     }
 
@@ -95,7 +95,7 @@ export class Contact{
             address: this._address,
             id_account: this._idAccount,
             category: this._category,
-            banned: this._banned,
+            access: this._banned,
         }
     }
 }

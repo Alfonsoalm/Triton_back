@@ -51,7 +51,7 @@ SequelizeContactModel.init({
         type: DataTypes.ENUM('particular', 'professional'),
         allowNull: true,
     },
-    banned: {
+    access: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
     },

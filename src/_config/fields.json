@@ -8,7 +8,7 @@
     "es": ["nombre", "calle", "localidad", "provincia", "correo", "teléfono", "foto"]
   },
   "contacts": {
-    "en": ["name", "first_name", "mail", "phone", "nif", "nif_url", "address", "type", "id_account", "category", "banned"],
+    "en": ["name", "first_name", "mail", "phone", "nif", "nif_url", "address", "type", "id_account", "category", "access"],
     "es": ["nombre", "apellido", "correo", "teléfono", "dni", "url dni","dirección", "tipo", "cuenta", "categoría", "baneado"]
   },
   "machines":{
