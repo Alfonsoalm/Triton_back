@@ -7,5 +7,7 @@ export interface QuoteDTO {
     creation_date: Date;
     status: QuoteStatus;
     quote_items: QuoteItem[];
+    total: number;
+    subtotal: number;
     payment_method?: string;
 }

@@ -29,6 +29,14 @@ SequelizeQuoteModel.init({
     type: DataTypes.ENUM("pending", "approved", "rejected"),
     allowNull: false,
   },
+  total: {
+    type: DataTypes.FLOAT,
+    defaultValue: 0,
+  },
+  subtotal: {
+    type: DataTypes.FLOAT,
+    defaultValue: 0,
+  },
 }, {
   sequelize,
   modelName: "Quotes",
