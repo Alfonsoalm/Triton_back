@@ -20,6 +20,8 @@ export class MysqlQuotesRepository implements IQuotesRepository {
           creation_date,
           payment_method,
           status,
+          total,
+          subtotal,
         } = quote.dataValues;
 
         const quoteItemsData = await SequelizeQuoteItemModel.findAll({ where: { "quote_id": id } }); // Usamos 'id' directamente
@@ -55,7 +57,7 @@ export class MysqlQuotesRepository implements IQuotesRepository {
           creation_date,
           status,
           quoteItemsArray,
-          payment_method
+          payment_method,
         );
       })
     );
@@ -77,6 +79,8 @@ export class MysqlQuotesRepository implements IQuotesRepository {
       name,
       id_contact,
       creation_date,
+      total,
+      subtotal,
       status,
       payment_method,
     } = quote.dataValues;
@@ -152,11 +156,23 @@ export class MysqlQuotesRepository implements IQuotesRepository {
       name,
       id_contact,
       creation_date,
+      total,
+      subtotal,
       payment_method,
       status,
-    } = quoteData;
+    } = quoteData;  
 
-    const quoteItems: QuoteItem[] = quoteN.items; // ¡Usamos el getter 'items' aquí!
+    const quoteItems: QuoteItem[] = quoteN.items;
+    const quoteEntity = Quote.createExistingQuote(
+      id,
+      name,
+      id_contact,
+      creation_date,
+      status,
+      quoteItems,
+      payment_method,
+    );
+    
     if (quoteItems && quoteItems.length > 0) {
       await Promise.all(
         quoteItems.map(async (quoteItem: QuoteItem) => {
@@ -170,20 +186,14 @@ export class MysqlQuotesRepository implements IQuotesRepository {
             'quantity': quoteItem.quantity,
             'price': quoteItem.price,
             'tax': quoteItem.tax,
+            'total': quoteEntity.total,
+            'subtotal': quoteEntity.subtotal,
           });
         })
       );
     }
 
-    return Quote.createExistingQuote(
-      id,
-      name,
-      id_contact,
-      creation_date,
-      status,
-      quoteItems,
-      payment_method,
-    );
+    return quoteEntity;
   }
 
   /**
@@ -212,9 +222,28 @@ export class MysqlQuotesRepository implements IQuotesRepository {
         quoteUpdates[key] = updates[key];
       }
     }
+    const quoteEntity = Quote.createExistingQuote(
+      quoteId,
+      quoteUpdates.name,
+      quoteUpdates.id_contact,
+      quoteUpdates.creation_date,
+      quoteUpdates.status,
+      quoteUpdates.quoteItems,
+      quoteUpdates.payment_method,
+    );
+
+    const quoteUpdatesWithTotal = {
+      'name': quoteUpdates.name,
+      'id_contact': quoteUpdates.id_contact,
+      'creation_date': quoteUpdates.creation_date,
+      'payment_method': quoteUpdates.payment_method,
+      'status': quoteUpdates.status,
+      'total': quoteEntity.total,
+      'subtotal': quoteEntity.subtotal
+    }
 
     if (Object.keys(quoteUpdates).length > 0) {
-      await SequelizeQuoteModel.update(quoteUpdates, {
+      await SequelizeQuoteModel.update(quoteUpdatesWithTotal, {
         where: { id: quoteId },
       });
     }

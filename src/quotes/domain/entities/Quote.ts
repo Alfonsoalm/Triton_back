@@ -26,9 +26,19 @@ export class Quote {
   private _id_contact: string = "";
   private _creation_date: Date;
   private _status: QuoteStatus;
-
+  private _total: number;
+  private _subtotal: number;
   private _payment_method?: string;
   private _quote_items: QuoteItem[] = [];
+
+  private static calculateTotals(items: QuoteItem[]): { subtotal: number; total: number } {
+    const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const total = items.reduce(
+      (sum, item) => sum + item.price * item.quantity * (1 + item.tax / 100),
+      0
+    );
+    return { subtotal, total };
+  }
 
   private constructor(
     id: string,
@@ -36,6 +46,8 @@ export class Quote {
     id_contact: string,
     creation_date: Date,
     status: QuoteStatus,
+    total: number,
+    subtotal: number,
     items: QuoteItem[],
     payment_method?: string
   ) {
@@ -44,6 +56,8 @@ export class Quote {
     this._id_contact = id_contact;
     this._creation_date = creation_date;
     this._status = status;
+    this._total = total;
+    this._subtotal = subtotal;
     this._payment_method = payment_method;
     this._quote_items = items;
   }
@@ -58,12 +72,15 @@ export class Quote {
     payment_method?: string
   ): Promise<Quote> {
     const id = idGenerator.generate();
+    const { subtotal, total } = this.calculateTotals(items);
     return new Quote(
       id,
       name,
       id_contact,
       creation_date,
       status,
+      total,
+      subtotal,
       items,
       payment_method
     );
@@ -78,12 +95,15 @@ export class Quote {
     items: QuoteItem[],
     payment_method?: string
   ): Quote {
+    const { subtotal, total } = this.calculateTotals(items);
     return new Quote(
       id,
       name,
       id_contact,
       creation_date,
       status,
+      total,
+      subtotal,
       items,
       payment_method
     );
@@ -96,6 +116,8 @@ export class Quote {
       id_contact: this._id_contact,
       creation_date: this._creation_date,
       status: this._status,
+      total: this._total,
+      subtotal: this._subtotal,
       payment_method: this._payment_method,
       quote_items: this._quote_items,
     };
@@ -136,5 +158,13 @@ export class Quote {
 
   public set creation_date(value: Date) {
     this._creation_date = value;
+  }
+
+  public get subtotal(): number {
+    return this._subtotal;
+  }
+
+  public get total(): number {
+    return this._total;
   }
 }
