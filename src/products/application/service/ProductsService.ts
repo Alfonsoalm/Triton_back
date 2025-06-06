@@ -1,7 +1,12 @@
-import { Product, ProductDTO, IProductsRepository, IProductsService, IIdService} from "../../domain";
+import {
+  Product,
+  ProductDTO,
+  IProductsRepository,
+  IProductsService,
+  IIdService,
+} from "../../domain";
 
-export class ProductsService implements IProductsService{
-
+export class ProductsService implements IProductsService {
   private readonly _repository: IProductsRepository;
   private readonly _idService: IIdService;
 
@@ -15,13 +20,13 @@ export class ProductsService implements IProductsService{
     return result;
   }
 
-  async getById(itemId: string): Promise<Product> {
-    const result = await this._repository.getById(itemId);
+  async getById(productId: string): Promise<Product> {
+    const result = await this._repository.getById(productId);
     return result;
   }
 
-  async delete(itemId: string): Promise<boolean> {
-    const result = await this._repository.delete(itemId);
+  async delete(productId: string): Promise<boolean> {
+    const result = await this._repository.delete(productId);
     return result;
   }
 
@@ -29,16 +34,30 @@ export class ProductsService implements IProductsService{
     return await this._repository.getFields();
   }
 
-  async create(itemData: Omit<ProductDTO, "id">): Promise<Product> {
-
-    const {type, model, brand, description, price} = itemData;
-    const newItem = await Product.createNewProduct(this._idService, type, model, brand, description, price);
+  async create(productData: Omit<ProductDTO, "id">): Promise<Product> {
+    const {
+      type,
+      model,
+      brand,
+      description,
+      price,
+      quantity,
+    } = productData;
+    const newItem = await Product.createNewProduct(
+      this._idService,
+      type,
+      model,
+      brand,
+      description,
+      price,
+      quantity,
+    );
 
     return await this._repository.create(newItem);
   }
 
-  async update(itemId: string, updates: any): Promise<Product> {
-    const result = await this._repository.update(itemId, updates);
+  async update(productId: string, updates: any): Promise<Product> {
+    const result = await this._repository.update(productId, updates);
 
     return result;
   }

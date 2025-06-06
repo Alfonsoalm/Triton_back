@@ -6,13 +6,13 @@ export class Product {
   private _model: string = '';
   private _brand: string = '';
   private _description?: string;
+  private _quantity?: number;
   private _price?: number;
   private _id_supplier?: string;
   private _cost?: number;
   private _tax?: number;
   private _reference?: string;
   private _id_center?: string;
-  private _quantity?: number;
 
   private constructor(
     id: string,
@@ -21,12 +21,12 @@ export class Product {
     brand: string,
     description?: string,
     price?: number,
+    quantity?: number,
     id_supplier?: string,
     cost?: number,
     tax?: number,
     reference?: string,
     id_center?: string,
-    quantity?: number
   ) {
     this._id = id;
     this._type = type;
@@ -49,12 +49,12 @@ export class Product {
     brand: string,
     description?: string,
     price?: number,
+    quantity?: number,
     id_supplier?: string,
     cost?: number,
     tax?: number,
     reference?: string,
     id_center?: string,
-    quantity?: number
   ): Promise<Product> {
     const id = idGenerator.generate();
     return new Product(
@@ -64,12 +64,12 @@ export class Product {
       brand,
       description,
       price,
+      quantity,
       id_supplier,
       cost,
       tax,
       reference,
       id_center,
-      quantity
     );
   }
 
@@ -80,12 +80,12 @@ export class Product {
     brand: string,
     description?: string,
     price?: number,
+    quantity?: number,
     id_supplier?: string,
     cost?: number,
     tax?: number,
     reference?: string,
     id_center?: string,
-    quantity?: number
   ): Product {
     return new Product(
       id,
@@ -94,12 +94,12 @@ export class Product {
       brand,
       description,
       price,
+      quantity,
       id_supplier,
       cost,
       tax,
       reference,
       id_center,
-      quantity
     );
   }
 
@@ -111,12 +111,12 @@ export class Product {
       brand: this._brand,
       description: this._description,
       price: this._price,
+      quantity: this._quantity,
       id_supplier: this._id_supplier,
       cost: this._cost,
       tax: this._tax,
       reference: this._reference,
       id_center: this._id_center,
-      quantity: this._quantity,
     };
   }
 }

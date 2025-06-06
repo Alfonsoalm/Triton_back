@@ -39,10 +39,12 @@ export class MysqlProductsRepository implements IProductsRepository {
     return items;
   }
 
-  async getById(itemId: string): Promise<Product> {
-    const productInstance = await SequelizeProductModel.findOne({ where: { id: itemId } });
+  async getById(productId: string): Promise<Product> {
+    const productInstance = await SequelizeProductModel.findOne({
+      where: { id: productId },
+    });
     if (!productInstance) {
-      throw new Error(`No se encontró un Product con el id ${itemId}`);
+      throw new Error(`No se encontró un Product con el id ${productId}`);
     }
     const {
       type,
@@ -58,7 +60,7 @@ export class MysqlProductsRepository implements IProductsRepository {
       quantity,
     } = productInstance.dataValues;
     return Product.createExistingProduct(
-      itemId,
+      productId,
       type,
       model,
       brand,
@@ -81,7 +83,7 @@ export class MysqlProductsRepository implements IProductsRepository {
 
   async create(itemN: Product): Promise<Product> {
     const newItem = await SequelizeProductModel.create(itemN.toJSON() as any);
-    const itemData = newItem.get();
+    const productData = newItem.get();
     const {
       id,
       type,
@@ -95,7 +97,7 @@ export class MysqlProductsRepository implements IProductsRepository {
       reference,
       id_center,
       quantity,
-    } = itemData;
+    } = productData;
     return Product.createExistingProduct(
       id,
       type,
@@ -112,14 +114,14 @@ export class MysqlProductsRepository implements IProductsRepository {
     );
   }
 
-  async delete(itemId: string): Promise<boolean> {
-    await SequelizeProductModel.destroy({ where: { id: itemId } });
+  async delete(productId: string): Promise<boolean> {
+    await SequelizeProductModel.destroy({ where: { id: productId } });
     return true;
   }
 
-  async update(itemId: string, updates: Record<string, any>): Promise<any> {
+  async update(productId: string, updates: Record<string, any>): Promise<any> {
     return await SequelizeProductModel.update(updates, {
-      where: { id: itemId },
+      where: { id: productId },
     });
   }
 }

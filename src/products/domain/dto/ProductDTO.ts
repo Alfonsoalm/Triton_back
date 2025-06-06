@@ -5,10 +5,10 @@ export interface ProductDTO {
   brand: string;
   description?: string;
   price?: number;
+  quantity?: number;
   id_supplier?: string;
   cost?: number;
   tax?: number;
   reference?: string;
   id_center?: string;
-  quantity: number;
 }
