@@ -12,7 +12,7 @@ export class Product {
   private _tax?: number;
   private _reference?: string;
   private _id_center?: string;
-  private _quantity: number = 0;
+  private _quantity?: number;
 
   private constructor(
     id: string,
@@ -39,7 +39,7 @@ export class Product {
     this._tax = tax;
     this._reference = reference;
     this._id_center = id_center;
-    this._quantity = quantity !== undefined ? quantity : 0;
+    this._quantity = quantity;
   }
 
   public static async createNewProduct(
@@ -54,7 +54,7 @@ export class Product {
     tax?: number,
     reference?: string,
     id_center?: string,
-    quantity: number = 0
+    quantity?: number
   ): Promise<Product> {
     const id = idGenerator.generate();
     return new Product(
@@ -85,7 +85,7 @@ export class Product {
     tax?: number,
     reference?: string,
     id_center?: string,
-    quantity: number = 0
+    quantity?: number
   ): Product {
     return new Product(
       id,

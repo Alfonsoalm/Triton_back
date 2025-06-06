@@ -52,9 +52,8 @@ SequelizeProductModel.init(
       allowNull: true,
     },
     quantity: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false,
-      defaultValue: 0,
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
   },
   {
