@@ -6,7 +6,7 @@ export const updateController = (productsService: IProductsService) => {
     try {
       const { productId } = req.params;
       const { updates } = req.body;
-      const isDeleted = await productsService.update(productIdproductIdtes);
+      const isDeleted = await productsService.update(productId, updates);
 
       res.status(200).json({
         message: "Product updated",

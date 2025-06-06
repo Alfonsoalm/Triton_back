@@ -11,7 +11,7 @@ export enum RentStatus {
 
 export interface RentItem {
   id: string;
-  productId: string;
+  itemId: string;
   quantity: number;
   description: string;
   begin_date: Date;
