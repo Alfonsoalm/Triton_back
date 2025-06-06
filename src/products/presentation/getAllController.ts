@@ -5,6 +5,7 @@ export const getAllController = (productsService: IProductsService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
             const items = await productsService.getAll();
+            console.log("items", items)
 
             res.status(200).json({
                 message: "Products retrieved successfully.",
