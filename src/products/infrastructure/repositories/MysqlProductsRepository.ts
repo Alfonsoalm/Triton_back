@@ -4,9 +4,13 @@ import { Product, IProductsRepository } from "../../domain";
 import SequelizeProductModel from "../models/SequelizeProductModel";
 
 export class MysqlProductsRepository implements IProductsRepository {
+
   async getAll(): Promise<Product[]> {
-    const itemsData = await SequelizeProductModel.findAll();
-    const items = itemsData.map((productInstance) => {
+    const productsData = await SequelizeProductModel.findAll();
+    console.log("############## productsData #################")
+    console.log(productsData)
+    console.log("############## productsData #################")
+    const products = productsData.map((product) => {
       const {
         id,
         type,
@@ -14,13 +18,13 @@ export class MysqlProductsRepository implements IProductsRepository {
         brand,
         description,
         price,
+        quantity,
         id_supplier,
         cost,
         tax,
         reference,
         id_center,
-        quantity,
-      } = productInstance.dataValues;
+      } = product.dataValues;
       return Product.createExistingProduct(
         id,
         type,
@@ -28,15 +32,15 @@ export class MysqlProductsRepository implements IProductsRepository {
         brand,
         description,
         price,
+        quantity,
         id_supplier,
         cost,
         tax,
         reference,
         id_center,
-        quantity
       );
     });
-    return items;
+    return products;
   }
 
   async getById(productId: string): Promise<Product> {
@@ -81,9 +85,9 @@ export class MysqlProductsRepository implements IProductsRepository {
     return fields;
   }
 
-  async create(itemN: Product): Promise<Product> {
-    const newItem = await SequelizeProductModel.create(itemN.toJSON() as any);
-    const productData = newItem.get();
+  async create(productN: Product): Promise<Product> {
+    const newProduct = await SequelizeProductModel.create(productN.toJSON() as any);
+    const productData = newProduct.get();
     const {
       id,
       type,
@@ -91,12 +95,12 @@ export class MysqlProductsRepository implements IProductsRepository {
       brand,
       description,
       price,
+      quantity,
       id_supplier,
       cost,
       tax,
       reference,
       id_center,
-      quantity,
     } = productData;
     return Product.createExistingProduct(
       id,
@@ -105,12 +109,12 @@ export class MysqlProductsRepository implements IProductsRepository {
       brand,
       description,
       price,
+      quantity,
       id_supplier,
       cost,
       tax,
       reference,
       id_center,
-      quantity
     );
   }
 

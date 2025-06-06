@@ -34,12 +34,12 @@ export class Product {
     this._brand = brand;
     this._description = description;
     this._price = price;
+    this._quantity = quantity;
     this._id_supplier = id_supplier;
     this._cost = cost;
     this._tax = tax;
     this._reference = reference;
     this._id_center = id_center;
-    this._quantity = quantity;
   }
 
   public static async createNewProduct(
