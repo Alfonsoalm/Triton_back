@@ -34,7 +34,9 @@ export class MysqlQuotesRepository implements IQuotesRepository {
             description,
             quantity,
             price,    // Incluimos price
+            subtotal,
             tax,      // Incluimos tax
+            total,
           } = quoteItem.dataValues;
           return {
             id: id,
@@ -46,7 +48,9 @@ export class MysqlQuotesRepository implements IQuotesRepository {
             description: description,
             quantity: quantity,
             price: parseFloat(price), // Convertimos DECIMAL a number
+            subtotal: parseFloat(subtotal),
             tax: parseFloat(tax),     // Convertimos DECIMAL a number
+            total: parseFloat(total),
           };
         });
 
@@ -96,7 +100,9 @@ export class MysqlQuotesRepository implements IQuotesRepository {
         description,
         quantity,
         price,    // Incluimos price
+        subtotal,
         tax,      // Incluimos tax
+        total,
       } = quoteItem.dataValues;
       return {
         id: id,
@@ -108,7 +114,9 @@ export class MysqlQuotesRepository implements IQuotesRepository {
         description: description,
         quantity: quantity,
         price: parseFloat(price), // Convertimos DECIMAL a number
+        subtotal: parseFloat(subtotal),
         tax: parseFloat(tax),     // Convertimos DECIMAL a number
+        total: parseFloat(total),
       };
     });
 
@@ -186,8 +194,8 @@ export class MysqlQuotesRepository implements IQuotesRepository {
             'quantity': quoteItem.quantity,
             'price': quoteItem.price,
             'tax': quoteItem.tax,
-            'total': quoteEntity.total,
-            'subtotal': quoteEntity.subtotal,
+            'total': quoteItem.total,
+            'subtotal': quoteItem.subtotal,
           });
         })
       );
@@ -264,7 +272,9 @@ export class MysqlQuotesRepository implements IQuotesRepository {
             'description': quoteItem.description,
             'quantity': quoteItem.quantity,
             'price': quoteItem.price,
+            'subtotal': quoteItem.subtotal,
             'tax': quoteItem.tax,
+            'total': quoteItem.total,
           });
         })
       );

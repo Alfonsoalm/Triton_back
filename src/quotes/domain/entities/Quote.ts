@@ -18,6 +18,8 @@ export interface QuoteItem {
   tax: number;
   price: number;
   description: string;
+  total: number;
+  subtotal: number;
 }
 
 export class Quote {
