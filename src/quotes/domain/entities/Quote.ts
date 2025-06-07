@@ -11,7 +11,6 @@ export enum QuoteStatus {
 export interface QuoteItem {
   id: string;
   position: number;
-  key?: string;
   type: "product" | "service" | "other";
   item_id?: string;
   quantity: number;
@@ -34,6 +33,7 @@ export class Quote {
   private _quote_items: QuoteItem[] = [];
 
   private static calculateTotals(items: QuoteItem[]): { subtotal: number; total: number } {
+    console.log('items en calculateTotals', items);
     const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const total = items.reduce(
       (sum, item) => sum + item.price * item.quantity * (1 + item.tax / 100),
