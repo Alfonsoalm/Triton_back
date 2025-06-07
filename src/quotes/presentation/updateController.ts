@@ -7,7 +7,7 @@ export const updateController = (quotesService: IQuotesService) => {
             const { quoteId } = req.params;
             const { updates } = req.body;
             const isDeleted = await quotesService.update(quoteId, updates);
-    
+            console.log("updateController en quotes", updates)
             res.status(200).json({
                 message: "Quote updated",
                 data: isDeleted
