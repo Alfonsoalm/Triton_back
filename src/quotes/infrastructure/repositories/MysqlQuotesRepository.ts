@@ -223,7 +223,7 @@ export class MysqlQuotesRepository implements IQuotesRepository {
    */
   async update(quoteId: string, updates: Record<string, any>): Promise<any> {
     const quoteUpdates: Record<string, any> = {};
-    const quoteItemsUpdates: QuoteItem[] | undefined = updates.quoteItems;
+    const quoteItemsUpdates: QuoteItem[] | undefined = updates.quote_items;
 
     for (const key in updates) {
       if (key !== 'quoteItems') {
