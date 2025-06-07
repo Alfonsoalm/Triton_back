@@ -170,7 +170,7 @@ export class MysqlQuotesRepository implements IQuotesRepository {
       status,
     } = quoteData;  
 
-    const quoteItems: QuoteItem[] = quoteN.items;
+    const quoteItems: QuoteItem[] = quoteN.quote_items;
     const quoteEntity = Quote.createExistingQuote(
       id,
       name,
