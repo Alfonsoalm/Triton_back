@@ -33,7 +33,6 @@ export class Quote {
   private _quote_items: QuoteItem[] = [];
 
   private static calculateTotals(items: QuoteItem[] = []): { subtotal: number; total: number } {
-    // Verificar si items es realmente un array
     if (!Array.isArray(items)) {
       console.error("Error: 'items' no es un array válido", items);
       return { subtotal: 0, total: 0 };

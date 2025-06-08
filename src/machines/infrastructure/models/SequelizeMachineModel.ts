@@ -21,16 +21,26 @@ SequelizeMachineModel.init({
     type: DataTypes.STRING(50),
     allowNull: true,
   },
+
   serial_number: {
     type: DataTypes.STRING(255),
     allowNull: false,
     unique: true,
   },
+  reference: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
   description: {
     type: DataTypes.STRING(255),
     allowNull: true,
   },
-  price: {
+
+  daily_rental_price: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
+  sale_price: {
     type: DataTypes.FLOAT,
     allowNull: true,
   },
@@ -38,6 +48,15 @@ SequelizeMachineModel.init({
     type: DataTypes.FLOAT,
     allowNull: true,
   },
+  cost: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
+  tax: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
+  
   available: {
     type: DataTypes.BOOLEAN,
     allowNull: true,
@@ -46,20 +65,9 @@ SequelizeMachineModel.init({
     type: DataTypes.ENUM("available", "repairing", "broken", "rented", "sold"),
     allowNull: false,
   },
-  cost: {
-    type: DataTypes.FLOAT,
-    allowNull: true,
-  },
+
   id_supplier: {
     type: DataTypes.STRING(36),
-    allowNull: true,
-  },
-  reference: {
-    type: DataTypes.STRING(255),
-    allowNull: true,
-  },
-  tax: {
-    type: DataTypes.FLOAT,
     allowNull: true,
   },
   id_center: {

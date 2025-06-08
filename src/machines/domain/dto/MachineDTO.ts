@@ -5,16 +5,21 @@ export interface MachineDTO {
   type: string;
   model: string;
   brand?: string;
+
   serial_number?: string;
+  reference?: string;
   description?: string;
-  price?: number;
+
+  daily_rental_price?: number;
+  sale_price?: number;
   deposit?: number;
+  cost?: number;
+  tax?: number;
+
   available?: boolean;
   status?: MachineStatus;
-  cost?: number; // Añadido cost
-  id_supplier?: string; // Añadido id_supplier
-  reference?: string; // Añadido reference
-  tax?: number; // Añadido tax
-  id_center?: string; // Añadido id_center
+
+  id_supplier?: string;
+  id_center?: string;
   id_owner?: string;
 }

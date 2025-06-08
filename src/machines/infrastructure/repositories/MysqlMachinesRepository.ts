@@ -12,34 +12,45 @@ export class MysqlMachinesRepository implements IMachinesRepository{
         type,
         model,
         brand,
+
         serial_number,
+        reference,
         description,
-        price,
+
+        daily_rental_price,
+        sale_price,
         deposit,
+        cost,
+        tax,
+
         available,
         status,
-        cost,
+
         id_supplier,
-        reference,
-        tax,
         id_center,
         id_owner,
+
       } = machine.dataValues;
       return Machine.createExistingItem(
         id,
         type,
         model,
         brand,
+
         serial_number,
+        reference,
         description,
-        price,
+
+        daily_rental_price,
+        sale_price,
         deposit,
+        cost,
+        tax,
+
         available,
         status,
-        cost,
+
         id_supplier,
-        reference,
-        tax,
         id_center,
         id_owner
       );
@@ -56,16 +67,20 @@ export class MysqlMachinesRepository implements IMachinesRepository{
       type,
       model,
       brand,
+
       serial_number,
+      reference,
       description,
+      
       price,
       deposit,
+      cost,
+      tax,
+
       available,
       status,
-      cost,
+
       id_supplier,
-      reference,
-      tax,
       id_center,
       id_owner
     } = machine.dataValues;
@@ -74,16 +89,20 @@ export class MysqlMachinesRepository implements IMachinesRepository{
       type,
       model,
       brand,
+
       serial_number,
+      reference,
       description,
+
       price,
       deposit,
+      cost,
+      tax,
+
       available,
       status,
-      cost,
+
       id_supplier,
-      reference,
-      tax,
       id_center,
       id_owner
     );
@@ -102,16 +121,20 @@ export class MysqlMachinesRepository implements IMachinesRepository{
       type,
       model,
       brand,
+
       serial_number,
+      reference,
       description,
+
       price,
       deposit,
+      cost,
+      tax,
+
       available,
       status,
-      cost,
+
       id_supplier,
-      reference,
-      tax,
       id_center,
       id_owner
     } = newMachine.get();
@@ -120,16 +143,20 @@ export class MysqlMachinesRepository implements IMachinesRepository{
       type,
       model,
       brand,
+
       serial_number,
+      reference,
       description,
+
       price,
       deposit,
+      cost,
+      tax,
+
       available,
       status,
-      cost,
+
       id_supplier,
-      reference,
-      tax,
       id_center,
       id_owner
     );

@@ -1,7 +1,12 @@
-import { Machine, MachineDTO, IMachinesRepository, IMachinesService, IIdService} from "../../domain";
+import {
+  Machine,
+  MachineDTO,
+  IMachinesRepository,
+  IMachinesService,
+  IIdService,
+} from "../../domain";
 
-export class MachinesService implements IMachinesService{
-
+export class MachinesService implements IMachinesService {
   private readonly _repository: IMachinesRepository;
   private readonly _idService: IIdService;
 
@@ -30,31 +35,57 @@ export class MachinesService implements IMachinesService{
   }
 
   async create(machineData: Omit<MachineDTO, "id">): Promise<Machine> {
-
-    const {type, model, brand, serial_number, description, price, deposit, available, status, cost, id_supplier, reference, tax, id_center, id_owner } = machineData;
-    const newMachine = await Machine.createNewItem(this._idService, 
+    const {
       type,
       model,
       brand,
+
       serial_number,
+      reference,
       description,
-      price,
+
+      daily_rental_price,
+      sale_price,
       deposit,
+      cost,
+      tax,
+
       available,
       status,
-      cost,
+
       id_supplier,
-      reference,
-      tax,
       id_center,
-      id_owner);
+      id_owner,
+    } = machineData;
+    const newMachine = await Machine.createNewItem(
+      this._idService,
+      type,
+      model,
+      brand,
+
+      serial_number,
+      reference,
+      description,
+
+      daily_rental_price,
+      sale_price,
+      deposit,
+      cost,
+      tax,
+
+      available,
+      status,
+
+      id_supplier,
+      id_center,
+      id_owner
+    );
 
     return await this._repository.create(newMachine);
   }
 
   async update(machineId: string, updates: any): Promise<Machine> {
     const result = await this._repository.update(machineId, updates);
-
     return result;
   }
 }

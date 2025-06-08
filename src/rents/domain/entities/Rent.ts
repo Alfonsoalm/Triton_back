@@ -1,6 +1,4 @@
-import { InvalidConnectionError } from "sequelize";
 import { IIdService } from "../services";
-import { stat } from "fs";
 
 // Rent.ts
 export enum RentStatus {
@@ -16,19 +14,24 @@ export interface RentItem {
   description: string;
   begin_date: Date;
   end_date: Date;
+  subtotal: number;
+  total: number;
 }
 
 export class Rent {
-  // Requeridos
   private _id: string = "";
   private _name: string = "";
   private _id_contact: string = "";
-  private _begin_date: Date;
-  private _status: RentStatus;
 
-  // Opcionales
-  private _end_date?: Date;
-  private _observations?: string = "";
+  private _begin_date: Date;
+  private _end_date: Date;
+
+  private _status: RentStatus;
+  private _observations: string = "";
+
+  private _payment_method: string;
+  private _subtotal: number;
+  private _total: number;
 
   private _rent_items: RentItem[] = [];
 
@@ -36,19 +39,33 @@ export class Rent {
     id: string,
     name: string,
     id_contact: string,
+
     begin_date: Date,
+    end_date: Date,
+
     status: RentStatus,
+    observations: string,
+
+    payment_method: string,
+    subtotal: number,
+    total: number,
+
     items: RentItem[],
-    end_date?: Date,
-    observations?: string
   ) {
     this._id = id;
     this._name = name;
     this._id_contact = id_contact;
+
     this._begin_date = begin_date;
-    this._status = status;
     this._end_date = end_date;
+
     this._observations = observations;
+    this._status = status;
+
+    this._payment_method = payment_method,
+    this._subtotal = subtotal,
+    this._total = total,
+
     this._rent_items = items;
   }
 
@@ -56,22 +73,34 @@ export class Rent {
     idGenerator: IIdService,
     name: string,
     id_contact: string,
+
     begin_date: Date,
+    end_date: Date,
+
     status: RentStatus,
+    observations: string,
+
+    payment_method: string,
+    subtotal: number,
+    total: number,
     items: RentItem[],
-    end_date?: Date,
-    observations?: string
   ): Promise<Rent> {
     const id = idGenerator.generate();
     return new Rent(
       id,
       name,
       id_contact,
+
       begin_date,
-      status,
-      items,
       end_date,
-      observations
+
+      status,
+      observations,
+
+      payment_method,
+      subtotal,
+      total,
+      items,
     );
   }
 
@@ -79,21 +108,35 @@ export class Rent {
     id: string,
     name: string,
     id_contact: string,
+
     begin_date: Date,
+    end_date: Date,
+
     status: RentStatus,
+    observations: string,
+
+    payment_method: string,
+    subtotal: number,
+    total: number,
+
     items: RentItem[],
-    end_date?: Date,
-    observations?: string
   ): Rent {
     return new Rent(
       id,
       name,
       id_contact,
+
       begin_date,
-      status,
-      items,
       end_date,
-      observations
+
+      status,
+      observations,
+
+      payment_method,
+      subtotal,
+      total,
+
+      items,
     );
   }
 
@@ -101,11 +144,18 @@ export class Rent {
     return {
       id: this._id,
       name: this._name,
+
       id_contact: this._id_contact,
       begin_date: this._begin_date,
-      status: this._status,
       end_date: this._end_date,
+
+      status: this._status,
       observations: this._observations,
+
+      payment_method: this._payment_method,
+      subtotal: this._subtotal,
+      total: this._total,
+
       rentItems: this._rent_items,
     };
   }
@@ -115,7 +165,6 @@ export class Rent {
   }
 
   public get items(): RentItem[] {
-    // Añade este getter
     return this._rent_items;
   }
 
@@ -135,11 +184,11 @@ export class Rent {
     this._begin_date = value;
   }
 
-  public get end_date(): Date | undefined {
+  public get end_date(): Date {
     return this._end_date;
   }
 
-  public set end_date(value: Date | undefined) {
+  public set end_date(value: Date) {
     this._end_date = value;
   }
 }
