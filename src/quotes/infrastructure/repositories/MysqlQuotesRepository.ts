@@ -5,10 +5,7 @@ import SequelizeQuoteItemModel from '../models/SequelizeQuoteItemModel';
 import SequelizeQuoteModel from '../models/SequelizeQuoteModel';
 
 export class MysqlQuotesRepository implements IQuotesRepository {
-  /**
-   * Obtiene todos los presupuestos con sus ítems.
-   * @returns {Promise<Quote[]>} - Devuelve una lista de presupuestos.
-   */
+
   async getAll(): Promise<Quote[]> {
     const quotesData = await SequelizeQuoteModel.findAll();
     const quotes = await Promise.all(
@@ -24,8 +21,11 @@ export class MysqlQuotesRepository implements IQuotesRepository {
           subtotal,
         } = quote.dataValues;
 
-        const quoteItemsData = await SequelizeQuoteItemModel.findAll({ where: { "quote_id": id } }); // Usamos 'id' directamente
-        const quoteItemsArray: QuoteItem[] = quoteItemsData.map((quoteItem) => {
+        const quoteItemsData = await SequelizeQuoteItemModel.findAll({ 
+          where: { "quote_id": id } 
+        }); 
+        const quoteItemsArray: QuoteItem[] = 
+        quoteItemsData.map((quoteItem) => {
           const {
             id,
             position,
@@ -33,23 +33,22 @@ export class MysqlQuotesRepository implements IQuotesRepository {
             item_id,
             description,
             quantity,
-            price,    // Incluimos price
+            price,
             subtotal,
-            tax,      // Incluimos tax
+            tax, 
             total,
           } = quoteItem.dataValues;
           return {
             id: id,
             position: position,
-            key: id, // Asumimos que 'id' puede servir como 'key' para listas de React
+            key: id,
             type: type,
             item_id: item_id,
-            // 'service_id' ya no está en la interfaz QuoteItem
             description: description,
             quantity: quantity,
-            price: parseFloat(price), // Convertimos DECIMAL a number
+            price: parseFloat(price),
             subtotal: parseFloat(subtotal),
-            tax: parseFloat(tax),     // Convertimos DECIMAL a number
+            tax: parseFloat(tax),
             total: parseFloat(total),
           };
         });

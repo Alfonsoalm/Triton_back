@@ -19,8 +19,12 @@ export class MysqlRentsRepository implements IRentsRepository {
 
           status,
           observations,
-
           payment_method,
+
+          daily_rental_price,
+          sale_price,
+          tax,
+
           subtotal,
           total,
         } = rent.dataValues;
@@ -28,8 +32,7 @@ export class MysqlRentsRepository implements IRentsRepository {
         const rentItemsData = await SequelizeRentItemModel.findAll({
           where: { rentId: rentId },
         });
-        const rentItemsArray: RentItem[] = [];
-        rentItemsData.map(async (rentItem) => {
+        const rentItemsArray: RentItem[] = rentItemsData.map((rentItem) => {
           const {
             id,
             rentItemId,
@@ -39,17 +42,22 @@ export class MysqlRentsRepository implements IRentsRepository {
             end_date,
             quantity,
             description,
+            subtotal,
+            total,
           } = rentItem.dataValues;
-          rentItemsArray.push({
+          return {
             id: id,
             itemId: itemId,
             begin_date: begin_date,
             end_date: end_date,
             quantity: quantity,
             description: description,
-            subtotal: subtotal,
-            total: total,
-          });
+            daily_rental_price: parseFloat(daily_rental_price),
+            sale_price: parseFloat(sale_price),
+            tax: parseFloat(tax),
+            subtotal: parseFloat(subtotal),
+            total: parseFloat(total),
+          };
         });
         return Rent.createExistingRent(
           rentId,
@@ -63,8 +71,6 @@ export class MysqlRentsRepository implements IRentsRepository {
           observations,
 
           payment_method,
-          subtotal,
-          total,
 
           rentItemsArray
         );
@@ -78,14 +84,15 @@ export class MysqlRentsRepository implements IRentsRepository {
     if (!rent) {
       throw new Error(`No se encontró un alquiler con el id ${rentId}`);
     }
-    const { 
-      name, 
-      id_contact, 
-      begin_date, 
-      end_date, 
-      status, 
-      observations } =
-      rent.dataValues;
+    const {
+      name,
+      id_contact,
+      begin_date,
+      end_date,
+      status,
+      observations,
+      payment_method,
+    } = rent.dataValues;
     const rentItemsData = await SequelizeRentItemModel.findAll({
       where: { rentId: rentId },
     });
@@ -97,17 +104,25 @@ export class MysqlRentsRepository implements IRentsRepository {
         rentId,
         itemId,
         quantity,
-        description,
         begin_date,
         end_date,
+        description,
+        daily_rental_price,
+        sale_price,
+        tax,
+        subtotal,
+        total,
       } = rentItem.dataValues;
       rentItemsArray.push({
         id: id,
         itemId: itemId,
         quantity: quantity,
-        description: description,
         begin_date: begin_date,
         end_date: end_date,
+        description: description,
+        daily_rental_price: daily_rental_price,
+        sale_price: sale_price,
+        tax: tax,
         subtotal: subtotal,
         total: total,
       });
@@ -124,6 +139,8 @@ export class MysqlRentsRepository implements IRentsRepository {
       status,
       observations,
 
+      payment_method,
+
       rentItemsArray
     );
   }
@@ -138,8 +155,15 @@ export class MysqlRentsRepository implements IRentsRepository {
     const rentWithoutItems = rentN.toJSON();
     const newRent = await SequelizeRentModel.create(rentWithoutItems as any);
     const rentData = newRent.get();
-    const { id, name, id_contact, begin_date, status, end_date, observations } =
-      rentData;
+    const { 
+      id, 
+      name, 
+      id_contact, 
+      begin_date, 
+      status, 
+      end_date,
+      observations,
+      payment_method, } = rentData;
     const rentId = id;
     const rentItems: RentItem[] = rentN.items;
     if (rentItems !== undefined)
@@ -167,6 +191,8 @@ export class MysqlRentsRepository implements IRentsRepository {
 
       status,
       observations,
+
+      payment_method,
 
       rentItems
     );

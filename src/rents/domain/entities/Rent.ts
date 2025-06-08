@@ -14,6 +14,9 @@ export interface RentItem {
   description: string;
   begin_date: Date;
   end_date: Date;
+  daily_rental_price: number;
+  sale_price: number;
+  tax: number;
   subtotal: number;
   total: number;
 }
@@ -22,85 +25,88 @@ export class Rent {
   private _id: string = "";
   private _name: string = "";
   private _id_contact: string = "";
-
   private _begin_date: Date;
   private _end_date: Date;
-
   private _status: RentStatus;
   private _observations: string = "";
-
   private _payment_method: string;
   private _subtotal: number;
   private _total: number;
-
   private _rent_items: RentItem[] = [];
+
+  private static calculateTotals(items: RentItem[] = []): { subtotal: number; total: number } {
+    if (!Array.isArray(items)) {
+      console.error("Error: 'items' no es un array válido", items);
+      return { subtotal: 0, total: 0 };
+    }
+
+    const subtotal = items.reduce(
+      (sum, item) =>
+        sum +
+        item.daily_rental_price *
+        item.quantity *
+        (item.end_date.getDay() - item.begin_date.getDay()),
+      0
+    );
+    const total = items.reduce(
+      (sum, item) => sum + subtotal * (1 + item.tax / 100),
+      0
+    );
+
+    return { subtotal, total };
+  }
 
   private constructor(
     id: string,
     name: string,
     id_contact: string,
-
     begin_date: Date,
     end_date: Date,
-
     status: RentStatus,
     observations: string,
-
     payment_method: string,
     subtotal: number,
     total: number,
-
-    items: RentItem[],
+    items: RentItem[]
   ) {
     this._id = id;
     this._name = name;
     this._id_contact = id_contact;
-
     this._begin_date = begin_date;
     this._end_date = end_date;
-
     this._observations = observations;
     this._status = status;
-
-    this._payment_method = payment_method,
-    this._subtotal = subtotal,
-    this._total = total,
-
-    this._rent_items = items;
+    (this._payment_method = payment_method),
+      (this._subtotal = subtotal),
+      (this._total = total),
+      (this._rent_items = items);
   }
 
   public static async createNewRent(
     idGenerator: IIdService,
     name: string,
     id_contact: string,
-
     begin_date: Date,
     end_date: Date,
-
     status: RentStatus,
     observations: string,
-
     payment_method: string,
-    subtotal: number,
-    total: number,
-    items: RentItem[],
+    items: RentItem[]
   ): Promise<Rent> {
     const id = idGenerator.generate();
+    const { subtotal, total } = this.calculateTotals(items);
     return new Rent(
       id,
       name,
       id_contact,
-
       begin_date,
       end_date,
-
       status,
       observations,
-
       payment_method,
       subtotal,
       total,
-      items,
+      items
     );
   }
 
@@ -108,35 +114,26 @@ export class Rent {
     id: string,
     name: string,
     id_contact: string,
-
     begin_date: Date,
     end_date: Date,
-
     status: RentStatus,
     observations: string,
-
     payment_method: string,
-    subtotal: number,
-    total: number,
-
-    items: RentItem[],
+    items: RentItem[]
   ): Rent {
+    const { subtotal, total } = this.calculateTotals(items);
     return new Rent(
       id,
       name,
       id_contact,
-
       begin_date,
       end_date,
-
       status,
       observations,
-
       payment_method,
       subtotal,
       total,
-
-      items,
+      items
     );
   }
 

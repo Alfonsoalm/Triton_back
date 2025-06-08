@@ -98,8 +98,8 @@ export class BillsService implements IBillsService{
         const billItemsPromises: Promise<BillItem>[] = rentItems.map(
             async (ri, index) => {
             const machine = await this._machinesRepo.getById(ri.itemId);
-            const itemSubtotal = ri.quantity * machine.price;
-            const itemTotal = itemSubtotal;
+            const itemSubtotal = ri.subtotal;
+            const itemTotal = ri.total;
 
             const description = `Alquiler de máquina ${machine.model} - ${machine.brand} ` +
                 `con SN ${machine.serial_number} del ${new Date(ri.begin_date).toLocaleDateString()} ` +
@@ -111,7 +111,7 @@ export class BillsService implements IBillsService{
                 position: index + 1,
                 description,
                 quantity: ri.quantity,
-                unit_price: machine.price,
+                unit_price: machine.daily_rental_price,
                 item_subtotal: itemSubtotal,
                 item_total: itemTotal,
                 monetary_units: '€',

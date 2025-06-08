@@ -37,17 +37,19 @@ export class RentsService implements IRentsService{
             status,
             rentItems,
             end_date,
-            observations
+            observations,
+            payment_method
         } = rentData;
         const newRent = await Rent.createNewRent(
             this._idService,
             name,
             id_contact,
             begin_date,
+            end_date, 
             status,
+            observations,
+            payment_method,
             rentItems,
-            end_date,
-            observations
         )
         return await this._repository.create(newRent);
     }

@@ -32,20 +32,26 @@ export class Quote {
   private _payment_method?: string;
   private _quote_items: QuoteItem[] = [];
 
-  private static calculateTotals(items: QuoteItem[] = []): { subtotal: number; total: number } {
+  private static calculateTotals(items: QuoteItem[] = []): {
+    subtotal: number;
+    total: number;
+  } {
     if (!Array.isArray(items)) {
       console.error("Error: 'items' no es un array válido", items);
       return { subtotal: 0, total: 0 };
     }
 
-    const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const subtotal = items.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
     const total = items.reduce(
       (sum, item) => sum + item.price * item.quantity * (1 + item.tax / 100),
       0
     );
 
     return { subtotal, total };
-}
+  }
 
   private constructor(
     id: string,
