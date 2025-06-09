@@ -39,13 +39,13 @@ export class Rent {
       console.error("Error: 'items' no es un array válido", items);
       return { subtotal: 0, total: 0 };
     }
-
     const subtotal = items.reduce(
       (sum, item) =>
         sum +
         item.daily_rental_price *
         item.quantity *
-        (item.end_date.getDay() - item.begin_date.getDay()),
+        Math.ceil(
+          (item.end_date.getTime() - item.begin_date.getTime()) / (1000 * 60 * 60 * 24)),
       0
     );
     const total = items.reduce(
