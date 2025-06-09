@@ -205,18 +205,63 @@ export class MysqlRentsRepository implements IRentsRepository {
   }
 
   async update(rentId: string, updates: Record<string, any>): Promise<any> {
-    await SequelizeRentModel.update(updates, {
-      where: { id: rentId },
-    });
+    const rentUpdates: Record<string, any> = {};
+    const rentItemsUpdates: RentItem[] = updates.quote_items;
+     for (const key in updates) {
+      if (key !== 'quote_items') {
+        rentUpdates[key] = updates[key];
+      }
+    }
 
-    if (updates.rentItems) {
-      const itemsToUpdate = Array.isArray(updates.rentItems)
-        ? updates.rentItems
-        : [updates.rentItems];
+    const rentEntity = Rent.createExistingRent(
+      rentId,
+      rentUpdates.name,
+      rentUpdates.id_contact,
+      rentUpdates.begin_date,
+      rentUpdates.end_date,
+      rentUpdates.status,
+      rentUpdates.observations,
+      rentUpdates.payment_method,
+      rentItemsUpdates,
+    );
+
+    const rentUpdatesWithTotal = {
+      'name': rentUpdates.name,
+      'id_contact': rentUpdates.id_contact,
+      'begin_date': rentUpdates.begin_date,
+      'end_date': rentUpdates.end_date,
+      'status': rentUpdates.status,
+      'payment_method': rentUpdates.payment_method,
+      'total': rentEntity.total,
+      'subtotal': rentEntity.subtotal
+    }
+
+    if (Object.keys(rentUpdates).length > 0) {
+      await SequelizeRentModel.update(rentUpdatesWithTotal, {
+        where: { id: rentId },
+      });
+    }
+
+     if (rentItemsUpdates) {
+      // Primero, eliminamos los ítems existentes para este presupuesto para manejar eliminaciones
+      await SequelizeRentItemModel.destroy({ where: { quote_id: rentId } });
+
+      // Luego, creamos/recreamos todos los ítems de la lista actualizada
       await Promise.all(
-        itemsToUpdate.map(async (rentItem: RentItem) => {
-          await SequelizeRentItemModel.update(rentItem, {
-            where: { id: rentItem.id },
+        rentItemsUpdates.map(async (rentItem: RentItem) => {
+          await SequelizeRentItemModel.create({
+            'id': rentItem.id,
+            'rentId': rentId,
+            'itemId': rentItem.itemId,
+            'description': rentItem.description,
+            'quantity': rentItem.quantity,
+            'begin_date': rentItem.begin_date,
+            'end_date': rentItem.end_date,
+            'daily_rental_price': rentItem.daily_rental_price,
+            'sale_price': rentItem.sale_price,
+            'subtotal': rentItem.subtotal,
+            'tax': rentItem.tax,
+            'total': rentItem.total,
           });
         })
       );

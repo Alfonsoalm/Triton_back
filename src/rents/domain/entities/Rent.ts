@@ -188,4 +188,12 @@ export class Rent {
   public set end_date(value: Date) {
     this._end_date = value;
   }
+
+  public get subtotal(): number {
+    return this._subtotal;
+  }
+
+  public get total(): number {
+    return this._total;
+  }
 }
