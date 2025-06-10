@@ -245,7 +245,7 @@ export class MysqlRentsRepository implements IRentsRepository {
 
      if (rentItemsUpdates) {
       // Primero, eliminamos los ítems existentes para este presupuesto para manejar eliminaciones
-      await SequelizeRentItemModel.destroy({ where: { quote_id: rentId } });
+      await SequelizeRentItemModel.destroy({ where: { rentId: rentId } });
 
       // Luego, creamos/recreamos todos los ítems de la lista actualizada
       await Promise.all(
