@@ -195,9 +195,9 @@ export class MysqlRentsRepository implements IRentsRepository {
 
   async update(rentId: string, updates: Record<string, any>): Promise<any> {
     const rentUpdates: Record<string, any> = {};
-    const rentItemsUpdates: RentItem[] = updates.quote_items;
+    const rentItemsUpdates: RentItem[] = updates.rentItems;
      for (const key in updates) {
-      if (key !== 'quote_items') {
+      if (key !== 'rentItems') {
         rentUpdates[key] = updates[key];
       }
     }
@@ -221,6 +221,7 @@ export class MysqlRentsRepository implements IRentsRepository {
       'end_date': rentUpdates.end_date,
       'status': rentUpdates.status,
       'payment_method': rentUpdates.payment_method,
+      'observations': rentUpdates.observations,
       'total': rentEntity.total,
       'subtotal': rentEntity.subtotal
     }
@@ -233,7 +234,7 @@ export class MysqlRentsRepository implements IRentsRepository {
 
      if (rentItemsUpdates) {
       // Primero, eliminamos los ítems existentes para este presupuesto para manejar eliminaciones
-      await SequelizeRentItemModel.destroy({ where: { quote_id: rentId } });
+      await SequelizeRentItemModel.destroy({ where: { rentId: rentId } });
 
       // Luego, creamos/recreamos todos los ítems de la lista actualizada
       await Promise.all(

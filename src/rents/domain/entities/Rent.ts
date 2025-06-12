@@ -42,15 +42,16 @@ export class Rent {
     }
     const subtotal = items.reduce(
       (sum, item) =>
-        sum +
-        item.daily_rental_price *
-        item.quantity *
-        Math.ceil(
-          (item.end_date.getTime() - item.begin_date.getTime()) / (1000 * 60 * 60 * 24)),
+        // sum +
+        // item.daily_rental_price *
+        // item.quantity *
+        // Math.ceil(
+        //   (item.end_date.getTime() - item.begin_date.getTime()) / (1000 * 60 * 60 * 24)),
+        sum + item.subtotal,
       0
     );
     const total = items.reduce(
-      (sum, item) => sum + subtotal * (1 + item.tax / 100),
+      (sum, item) => sum + item.total,
       0
     );
 

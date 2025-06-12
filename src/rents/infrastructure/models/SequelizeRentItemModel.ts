@@ -36,7 +36,7 @@ SequelizeRentItemModel.init(
     },
     serial_number: {
       type: DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: true,
       unique: true,
     },
     price: {
@@ -46,7 +46,7 @@ SequelizeRentItemModel.init(
     },
     tax: {
       type: DataTypes.DECIMAL(5, 2),
-      allowNull: false,
+      allowNull: true,
       defaultValue: 0.0,
     },
     subtotal: {
