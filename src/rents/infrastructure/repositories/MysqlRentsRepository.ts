@@ -13,20 +13,11 @@ export class MysqlRentsRepository implements IRentsRepository {
           id,
           name,
           id_contact,
-
           begin_date,
           end_date,
-
           status,
           observations,
           payment_method,
-
-          daily_rental_price,
-          sale_price,
-          tax,
-
-          subtotal,
-          total,
         } = rent.dataValues;
         const rentId = id;
         const rentItemsData = await SequelizeRentItemModel.findAll({
@@ -42,6 +33,10 @@ export class MysqlRentsRepository implements IRentsRepository {
             end_date,
             quantity,
             description,
+            serial_number,
+            daily_rental_price,
+            sale_price,
+            tax,
             subtotal,
             total,
           } = rentItem.dataValues;
@@ -52,6 +47,7 @@ export class MysqlRentsRepository implements IRentsRepository {
             end_date: end_date,
             quantity: quantity,
             description: description,
+            serial_number: serial_number,
             daily_rental_price: parseFloat(daily_rental_price),
             sale_price: parseFloat(sale_price),
             tax: parseFloat(tax),
@@ -63,15 +59,11 @@ export class MysqlRentsRepository implements IRentsRepository {
           rentId,
           name,
           id_contact,
-
           begin_date,
           end_date,
-
           status,
           observations,
-
           payment_method,
-
           rentItemsArray
         );
       })
@@ -106,6 +98,7 @@ export class MysqlRentsRepository implements IRentsRepository {
         quantity,
         begin_date,
         end_date,
+        serial_number,
         description,
         daily_rental_price,
         sale_price,
@@ -120,6 +113,7 @@ export class MysqlRentsRepository implements IRentsRepository {
         begin_date: begin_date,
         end_date: end_date,
         description: description,
+        serial_number: serial_number,
         daily_rental_price: daily_rental_price,
         sale_price: sale_price,
         tax: tax,
@@ -132,15 +126,11 @@ export class MysqlRentsRepository implements IRentsRepository {
       rentId,
       name,
       id_contact,
-
       begin_date,
       end_date,
-
       status,
       observations,
-
       payment_method,
-
       rentItemsArray
     );
   }
@@ -173,6 +163,9 @@ export class MysqlRentsRepository implements IRentsRepository {
           rentId: rentId,
           itemId: rentItem.itemId,
           quantity: rentItem.quantity,
+          serial_number: rentItem.serial_number,
+          daily_rental_price: rentItem.daily_rental_price,
+          sale_price: rentItem.sale_price,
           description: rentItem.description,
           begin_date: rentItem.begin_date,
           end_date: rentItem.end_date,
@@ -185,15 +178,11 @@ export class MysqlRentsRepository implements IRentsRepository {
       id,
       name,
       id_contact,
-
       begin_date,
       end_date,
-
       status,
       observations,
-
       payment_method,
-
       rentItems
     );
   }
@@ -255,6 +244,7 @@ export class MysqlRentsRepository implements IRentsRepository {
             'itemId': rentItem.itemId,
             'description': rentItem.description,
             'quantity': rentItem.quantity,
+            'serial_number': rentItem.serial_number,
             'begin_date': rentItem.begin_date,
             'end_date': rentItem.end_date,
             'daily_rental_price': rentItem.daily_rental_price,
