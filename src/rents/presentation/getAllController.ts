@@ -4,7 +4,9 @@ import { IRentsService } from "../domain";
 export const getAllController = (rentsService: IRentsService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
+            console.log("obteniendo rents")
             const rents = await rentsService.getAll();
+            console.log("rents ",rents)
     
             res.status(200).json({
                 message: "Rents retrieved successfully.",

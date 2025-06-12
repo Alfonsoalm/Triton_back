@@ -39,9 +39,14 @@ SequelizeRentItemModel.init(
       allowNull: true,
       unique: true,
     },
-    price: {
+    daily_rental_price: {
       type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
+      allowNull: true,
+      defaultValue: 0.0,
+    },
+    sale_price: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: true,
       defaultValue: 0.0,
     },
     tax: {
@@ -51,11 +56,11 @@ SequelizeRentItemModel.init(
     },
     subtotal: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     total: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
   },
   {

@@ -143,18 +143,14 @@ export class Rent {
     return {
       id: this._id,
       name: this._name,
-
       id_contact: this._id_contact,
       begin_date: this._begin_date,
       end_date: this._end_date,
-
       status: this._status,
       observations: this._observations,
-
       payment_method: this._payment_method,
       subtotal: this._subtotal,
       total: this._total,
-
       rentItems: this._rent_items,
     };
   }
