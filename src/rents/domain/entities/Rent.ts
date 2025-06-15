@@ -194,4 +194,8 @@ export class Rent {
   public get total(): number {
     return this._total;
   }
+
+  public get payment_method(): string {
+    return this._payment_method;
+  }
 }
