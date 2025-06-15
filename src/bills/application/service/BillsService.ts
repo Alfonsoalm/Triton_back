@@ -90,7 +90,7 @@ export class BillsService implements IBillsService{
     async createBillFromRent(rentData: RentDTO, creation_date: Date, due_date: Date, deposit: number): Promise<Bill> {
           const {
             id: rentId,
-            name: rentRef,
+            code: rentRef,
             id_contact,
             rentItems,
         } = rentData;
