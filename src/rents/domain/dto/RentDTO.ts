@@ -16,6 +16,7 @@ export interface RentDTO{
     
     subtotal: number;
     total: number;
-
+    deposit: number;
+    
     rentItems: RentItem[];
 }

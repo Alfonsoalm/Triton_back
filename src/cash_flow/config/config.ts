@@ -1,8 +1,10 @@
-import { CentersService } from "../application";
-import { ICentersRepository, ICentersService, IIdService } from "../domain";
-import { MysqlCentersRepository, UUIDService } from "../infrastructure";
+import { CashFlowsService } from "../application";
+import { ICashFlowsRepository, ICashFlowsService, IIdService } from "../domain";
+import { MysqlCashFlowsRepository, UUIDService } from "../infrastructure";
+import { quotesService } from "../../quotes";
+import { rentsService } from "../../rents";
 
-const centersRepository: ICentersRepository = new MysqlCentersRepository();
+const cashFlowsRepository: ICashFlowsRepository = new MysqlCashFlowsRepository();
 const idService: IIdService = new UUIDService();
 
-export const centersService: ICentersService = new CentersService(centersRepository, idService);
+export const cashFlowsService: ICashFlowsService = new CashFlowsService(cashFlowsRepository, idService, quotesService, rentsService, );

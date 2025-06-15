@@ -20,6 +20,7 @@ export interface RentItem {
   tax: number;
   subtotal: number;
   total: number;
+  deposit: number;
 }
 
 export class Rent {
@@ -33,12 +34,13 @@ export class Rent {
   private _payment_method: string;
   private _subtotal: number;
   private _total: number;
+  private _deposit: number;
   private _rent_items: RentItem[] = [];
 
-  private static calculateTotals(items: RentItem[] = []): { subtotal: number; total: number } {
+  private static calculateTotals(items: RentItem[] = []): { subtotal: number; total: number; deposit: number } {
     if (!Array.isArray(items)) {
       console.error("Error: 'items' no es un array válido", items);
-      return { subtotal: 0, total: 0 };
+      return { subtotal: 0, total: 0, deposit: 0 };
     }
     const subtotal = items.reduce(
       (sum, item) =>
@@ -47,15 +49,12 @@ export class Rent {
         // item.quantity *
         // Math.ceil(
         //   (item.end_date.getTime() - item.begin_date.getTime()) / (1000 * 60 * 60 * 24)),
-        sum + item.subtotal,
-      0
+        sum + item.subtotal, 0
     );
-    const total = items.reduce(
-      (sum, item) => sum + item.total,
-      0
-    );
+    const total = items.reduce((sum, item) => sum + item.total, 0);
+    const deposit = items.reduce((sum, item) => sum + item.deposit, 0);
 
-    return { subtotal, total };
+    return { subtotal, total, deposit };
   }
 
   private constructor(
@@ -69,6 +68,7 @@ export class Rent {
     payment_method: string,
     subtotal: number,
     total: number,
+    deposit: number,
     items: RentItem[]
   ) {
     this._id = id;
@@ -78,10 +78,11 @@ export class Rent {
     this._end_date = end_date;
     this._observations = observations;
     this._status = status;
-    (this._payment_method = payment_method),
-      (this._subtotal = subtotal),
-      (this._total = total),
-      (this._rent_items = items);
+    this._payment_method = payment_method,
+    this._subtotal = subtotal,
+    this._total = total,
+    this._rent_items = items,
+    this._deposit = deposit;
   }
 
   public static async createNewRent(
@@ -96,7 +97,7 @@ export class Rent {
     items: RentItem[]
   ): Promise<Rent> {
     const id = idGenerator.generate();
-    const { subtotal, total } = this.calculateTotals(items);
+    const { subtotal, total, deposit } = this.calculateTotals(items);
     return new Rent(
       id,
       name,
@@ -108,6 +109,7 @@ export class Rent {
       payment_method,
       subtotal,
       total,
+      deposit,
       items
     );
   }
@@ -123,7 +125,7 @@ export class Rent {
     payment_method: string,
     items: RentItem[]
   ): Rent {
-    const { subtotal, total } = this.calculateTotals(items);
+    const { subtotal, total, deposit } = this.calculateTotals(items);
     return new Rent(
       id,
       name,
@@ -135,6 +137,7 @@ export class Rent {
       payment_method,
       subtotal,
       total,
+      deposit,
       items
     );
   }
@@ -151,6 +154,7 @@ export class Rent {
       payment_method: this._payment_method,
       subtotal: this._subtotal,
       total: this._total,
+      deposit: this._deposit,
       rentItems: this._rent_items,
     };
   }
@@ -195,7 +199,15 @@ export class Rent {
     return this._total;
   }
 
+  public get deposit(): number {
+    return this._deposit;
+  }
+
   public get payment_method(): string {
     return this._payment_method;
+  }
+
+  public get name(): string {
+    return this._name;
   }
 }

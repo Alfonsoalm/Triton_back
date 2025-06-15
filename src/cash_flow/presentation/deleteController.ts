@@ -1,25 +1,24 @@
 import { Request, Response } from "express"
-import { ICentersService } from "../domain";
-import { IEmployeesService } from "../../employees";
+import { ICashFlowsService } from "../domain";
 
-export const deleteController = (centersService: ICentersService, employeesServices: IEmployeesService) => {
+export const deleteController = (cashFlowsService: ICashFlowsService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
-            const { centerId } = req.params;
+            const { cashFlowId } = req.params;
 
-            const employees = await employeesServices.getByCenter(centerId);
-            if (employees.length > 0) {
+            const cashFlows = await cashFlowsServices.getByCashFlow(cashFlowId);
+            if (cashFlows.length > 0) {
                 await Promise.all(
-                    employees.map((employee) => {
-                        const id = employee.getId();
-                        return employeesServices.update(id, { id_center: null });
+                    cashFlows.map((cashFlow) => {
+                        const id = cashFlow.getId();
+                        return cashFlowsServices.update(id, { id_cashFlow: null });
                     })
                 );
             }
 
-            const isDeleted = await centersService.delete(centerId);
+            const isDeleted = await cashFlowsService.delete(cashFlowId);
             res.status(200).json({
-                message: "Center deleted",
+                message: "CashFlow deleted",
                 data: isDeleted
             });
         } catch (error) {

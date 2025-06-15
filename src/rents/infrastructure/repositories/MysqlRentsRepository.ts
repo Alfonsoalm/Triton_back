@@ -223,7 +223,8 @@ export class MysqlRentsRepository implements IRentsRepository {
       'payment_method': rentUpdates.payment_method,
       'observations': rentUpdates.observations,
       'total': rentEntity.total,
-      'subtotal': rentEntity.subtotal
+      'subtotal': rentEntity.subtotal,
+      'deposit': rentEntity.deposit,
     }
 
     if (Object.keys(rentUpdates).length > 0) {
@@ -253,6 +254,7 @@ export class MysqlRentsRepository implements IRentsRepository {
             'subtotal': rentItem.subtotal,
             'tax': rentItem.tax,
             'total': rentItem.total,
+            'deposit': rentItem.deposit,
           });
         })
       );

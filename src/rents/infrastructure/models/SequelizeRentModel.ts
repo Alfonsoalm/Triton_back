@@ -39,13 +39,17 @@ SequelizeRentModel.init({
         allowNull: false,
     },
     subtotal: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(10, 2),
         defaultValue: 0,
     },
     total: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(10, 2),
         defaultValue: 0,
     },
+    deposit: {
+        type: DataTypes.DECIMAL(10, 2),
+        defaultValue: 0, 
+    }
 }, {
     sequelize,
     modelName: 'Rent',

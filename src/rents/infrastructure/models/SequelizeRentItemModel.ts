@@ -50,16 +50,20 @@ SequelizeRentItemModel.init(
       defaultValue: 0.0,
     },
     tax: {
-      type: DataTypes.DECIMAL(5, 2),
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: true,
       defaultValue: 0.0,
     },
     subtotal: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: true,
     },
     total: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: true,
+    },
+    deposit: {
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: true,
     },
   },
