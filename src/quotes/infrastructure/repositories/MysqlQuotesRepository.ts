@@ -1,18 +1,17 @@
 // contactsRepository.ts
-import { sequelize } from '../../../_config/connection';
+import { sequelize } from "../../../_config/connection";
 import { Quote, IQuotesRepository, QuoteItem } from "../../domain"; // Asegúrate de que QuoteItem esté correctamente importado del dominio
-import SequelizeQuoteItemModel from '../models/SequelizeQuoteItemModel';
-import SequelizeQuoteModel from '../models/SequelizeQuoteModel';
+import SequelizeQuoteItemModel from "../models/SequelizeQuoteItemModel";
+import SequelizeQuoteModel from "../models/SequelizeQuoteModel";
 
 export class MysqlQuotesRepository implements IQuotesRepository {
-
   async getAll(): Promise<Quote[]> {
     const quotesData = await SequelizeQuoteModel.findAll();
     const quotes = await Promise.all(
       quotesData.map(async (quote) => {
         const {
           id,
-          name,
+          code,
           id_contact,
           creation_date,
           payment_method,
@@ -21,11 +20,10 @@ export class MysqlQuotesRepository implements IQuotesRepository {
           subtotal,
         } = quote.dataValues;
 
-        const quoteItemsData = await SequelizeQuoteItemModel.findAll({ 
-          where: { "quote_id": id } 
-        }); 
-        const quoteItemsArray: QuoteItem[] = 
-        quoteItemsData.map((quoteItem) => {
+        const quoteItemsData = await SequelizeQuoteItemModel.findAll({
+          where: { quote_id: id },
+        });
+        const quoteItemsArray: QuoteItem[] = quoteItemsData.map((quoteItem) => {
           const {
             id,
             position,
@@ -35,7 +33,7 @@ export class MysqlQuotesRepository implements IQuotesRepository {
             quantity,
             price,
             subtotal,
-            tax, 
+            tax,
             total,
           } = quoteItem.dataValues;
           return {
@@ -55,12 +53,12 @@ export class MysqlQuotesRepository implements IQuotesRepository {
 
         return Quote.createExistingQuote(
           id,
-          name,
+          code,
           id_contact,
           creation_date,
           status,
           quoteItemsArray,
-          payment_method,
+          payment_method
         );
       })
     );
@@ -73,13 +71,13 @@ export class MysqlQuotesRepository implements IQuotesRepository {
    * @returns {Promise<Quote>} - Devuelve el presupuesto encontrado.
    */
   async getById(quoteId: string): Promise<Quote> {
-    const quote = await SequelizeQuoteModel.findOne({ where: { "id": quoteId } });
+    const quote = await SequelizeQuoteModel.findOne({ where: { id: quoteId } });
     if (!quote) {
       throw new Error(`No se encontró un presupuesto con el id ${quoteId}`);
     }
     const {
       id,
-      name,
+      code,
       id_contact,
       creation_date,
       total,
@@ -89,7 +87,9 @@ export class MysqlQuotesRepository implements IQuotesRepository {
     } = quote.dataValues;
 
     // Obtenemos los ítems del presupuesto correctamente usando el ID del presupuesto
-    const quoteItemsData = await SequelizeQuoteItemModel.findAll({ where: { "quote_id": id } });
+    const quoteItemsData = await SequelizeQuoteItemModel.findAll({
+      where: { quote_id: id },
+    });
     const quoteItemsArray: QuoteItem[] = quoteItemsData.map((quoteItem) => {
       const {
         id,
@@ -98,9 +98,9 @@ export class MysqlQuotesRepository implements IQuotesRepository {
         item_id,
         description,
         quantity,
-        price,    // Incluimos price
+        price, // Incluimos price
         subtotal,
-        tax,      // Incluimos tax
+        tax, // Incluimos tax
         total,
       } = quoteItem.dataValues;
       return {
@@ -114,14 +114,14 @@ export class MysqlQuotesRepository implements IQuotesRepository {
         quantity: quantity,
         price: parseFloat(price), // Convertimos DECIMAL a number
         subtotal: parseFloat(subtotal),
-        tax: parseFloat(tax),     // Convertimos DECIMAL a number
+        tax: parseFloat(tax), // Convertimos DECIMAL a number
         total: parseFloat(total),
       };
     });
 
     return Quote.createExistingQuote(
       id, // Usamos 'id' de quote.dataValues
-      name,
+      code,
       id_contact,
       creation_date,
       status,
@@ -149,52 +149,52 @@ export class MysqlQuotesRepository implements IQuotesRepository {
     // Es mejor pasar solo las propiedades de alto nivel del presupuesto a SequelizeQuoteModel.create
     // y luego manejar los ítems del presupuesto por separado.
     const newQuote = await SequelizeQuoteModel.create({
-        id: quoteN.id, // Accedemos a id a través del getter
-        name: quoteN.name, // Accedemos a name a través del getter
-        id_contact: quoteN.id_contact, // Accedemos a id_contact a través del getter
-        creation_date: quoteN.creation_date, // Accedemos a creation_date a través del getter
-        status: quoteN.status, // Accedemos a status a través del getter
-        payment_method: quoteN.payment_method, // Accedemos a payment_method a través del getter
+      id: quoteN.id, // Accedemos a id a través del getter
+      code: quoteN.code, // Accedemos a code a través del getter
+      id_contact: quoteN.id_contact, // Accedemos a id_contact a través del getter
+      creation_date: quoteN.creation_date, // Accedemos a creation_date a través del getter
+      status: quoteN.status, // Accedemos a status a través del getter
+      payment_method: quoteN.payment_method, // Accedemos a payment_method a través del getter
     } as any); // Hacemos un 'cast' a 'any' si el método create de Sequelize espera un objeto plano
 
     const quoteData = newQuote.get();
     const {
       id,
-      name,
+      code,
       id_contact,
       creation_date,
       total,
       subtotal,
       payment_method,
       status,
-    } = quoteData;  
+    } = quoteData;
 
     const quoteItems: QuoteItem[] = quoteN.quote_items;
     const quoteEntity = Quote.createExistingQuote(
       id,
-      name,
+      code,
       id_contact,
       creation_date,
       status,
       quoteItems,
-      payment_method,
+      payment_method
     );
-    
+
     if (quoteItems && quoteItems.length > 0) {
       await Promise.all(
         quoteItems.map(async (quoteItem: QuoteItem) => {
           await SequelizeQuoteItemModel.create({
-            'id': quoteItem.id,
-            'quote_id': id,
-            'position': quoteItem.position,
-            'type': quoteItem.type,
-            'item_id': quoteItem.item_id,
-            'description': quoteItem.description,
-            'quantity': quoteItem.quantity,
-            'price': quoteItem.price,
-            'tax': quoteItem.tax,
-            'total': quoteItem.total,
-            'subtotal': quoteItem.subtotal,
+            id: quoteItem.id,
+            quote_id: id,
+            position: quoteItem.position,
+            type: quoteItem.type,
+            item_id: quoteItem.item_id,
+            description: quoteItem.description,
+            quantity: quoteItem.quantity,
+            price: quoteItem.price,
+            tax: quoteItem.tax,
+            total: quoteItem.total,
+            subtotal: quoteItem.subtotal,
           });
         })
       );
@@ -210,7 +210,9 @@ export class MysqlQuotesRepository implements IQuotesRepository {
    */
   async delete(quoteId: string): Promise<boolean> {
     await SequelizeQuoteItemModel.destroy({ where: { quote_id: quoteId } }); // Eliminar ítems primero
-    const deletedRows = await SequelizeQuoteModel.destroy({ where: { id: quoteId } });
+    const deletedRows = await SequelizeQuoteModel.destroy({
+      where: { id: quoteId },
+    });
     return deletedRows > 0;
   }
 
@@ -225,29 +227,29 @@ export class MysqlQuotesRepository implements IQuotesRepository {
     const quoteItemsUpdates: QuoteItem[] = updates.quote_items;
 
     for (const key in updates) {
-      if (key !== 'quote_items') {
+      if (key !== "quote_items") {
         quoteUpdates[key] = updates[key];
       }
     }
     const quoteEntity = Quote.createExistingQuote(
       quoteId,
-      quoteUpdates.name,
+      quoteUpdates.code,
       quoteUpdates.id_contact,
       quoteUpdates.creation_date,
       quoteUpdates.status,
       quoteItemsUpdates,
-      quoteUpdates.payment_method,
+      quoteUpdates.payment_method
     );
 
     const quoteUpdatesWithTotal = {
-      'name': quoteUpdates.name,
-      'id_contact': quoteUpdates.id_contact,
-      'creation_date': quoteUpdates.creation_date,
-      'payment_method': quoteUpdates.payment_method,
-      'status': quoteUpdates.status,
-      'total': quoteEntity.total,
-      'subtotal': quoteEntity.subtotal
-    }
+      code: quoteUpdates.code,
+      id_contact: quoteUpdates.id_contact,
+      creation_date: quoteUpdates.creation_date,
+      payment_method: quoteUpdates.payment_method,
+      status: quoteUpdates.status,
+      total: quoteEntity.total,
+      subtotal: quoteEntity.subtotal,
+    };
 
     if (Object.keys(quoteUpdates).length > 0) {
       await SequelizeQuoteModel.update(quoteUpdatesWithTotal, {
@@ -263,17 +265,17 @@ export class MysqlQuotesRepository implements IQuotesRepository {
       await Promise.all(
         quoteItemsUpdates.map(async (quoteItem: QuoteItem) => {
           await SequelizeQuoteItemModel.create({
-            'id': quoteItem.id,
-            'quote_id': quoteId,
-            'position': quoteItem.position,
-            'type': quoteItem.type,
-            'item_id': quoteItem.item_id,
-            'description': quoteItem.description,
-            'quantity': quoteItem.quantity,
-            'price': quoteItem.price,
-            'subtotal': quoteItem.subtotal,
-            'tax': quoteItem.tax,
-            'total': quoteItem.total,
+            id: quoteItem.id,
+            quote_id: quoteId,
+            position: quoteItem.position,
+            type: quoteItem.type,
+            item_id: quoteItem.item_id,
+            description: quoteItem.description,
+            quantity: quoteItem.quantity,
+            price: quoteItem.price,
+            subtotal: quoteItem.subtotal,
+            tax: quoteItem.tax,
+            total: quoteItem.total,
           });
         })
       );

@@ -3,7 +3,7 @@ import { RentItem, RentStatus } from "../entities";
 
 export interface RentDTO{
     id: string;
-    name: string;
+    code: string;
     id_contact: string;
 
     begin_date: Date;

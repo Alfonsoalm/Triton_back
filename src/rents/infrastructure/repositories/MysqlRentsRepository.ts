@@ -11,7 +11,7 @@ export class MysqlRentsRepository implements IRentsRepository {
       rentsData.map(async (rent) => {
         const {
           id,
-          name,
+          code,
           id_contact,
           begin_date,
           end_date,
@@ -57,7 +57,7 @@ export class MysqlRentsRepository implements IRentsRepository {
         });
         return Rent.createExistingRent(
           rentId,
-          name,
+          code,
           id_contact,
           begin_date,
           end_date,
@@ -77,7 +77,7 @@ export class MysqlRentsRepository implements IRentsRepository {
       throw new Error(`No se encontró un alquiler con el id ${rentId}`);
     }
     const {
-      name,
+      code,
       id_contact,
       begin_date,
       end_date,
@@ -124,7 +124,7 @@ export class MysqlRentsRepository implements IRentsRepository {
 
     return Rent.createExistingRent(
       rentId,
-      name,
+      code,
       id_contact,
       begin_date,
       end_date,
@@ -147,7 +147,7 @@ export class MysqlRentsRepository implements IRentsRepository {
     const rentData = newRent.get();
     const { 
       id, 
-      name, 
+      code, 
       id_contact, 
       begin_date, 
       status, 
@@ -176,7 +176,7 @@ export class MysqlRentsRepository implements IRentsRepository {
 
     return Rent.createExistingRent(
       id,
-      name,
+      code,
       id_contact,
       begin_date,
       end_date,
@@ -204,7 +204,7 @@ export class MysqlRentsRepository implements IRentsRepository {
 
     const rentEntity = Rent.createExistingRent(
       rentId,
-      rentUpdates.name,
+      rentUpdates.code,
       rentUpdates.id_contact,
       rentUpdates.begin_date,
       rentUpdates.end_date,
@@ -215,7 +215,7 @@ export class MysqlRentsRepository implements IRentsRepository {
     );
 
     const rentUpdatesWithTotal = {
-      'name': rentUpdates.name,
+      'code': rentUpdates.code,
       'id_contact': rentUpdates.id_contact,
       'begin_date': rentUpdates.begin_date,
       'end_date': rentUpdates.end_date,

@@ -31,7 +31,7 @@ export class QuotesService implements IQuotesService{
 
     async create(quoteData: Omit<QuoteDTO, "id">): Promise<Quote> {
         const {
-            name,
+            code,
             id_contact, 
             creation_date, 
             status,
@@ -40,7 +40,7 @@ export class QuotesService implements IQuotesService{
         } = quoteData;
         const newQuote = await Quote.createNewQuote(
             this._idService,             
-            name,
+            code,
             id_contact, 
             creation_date, 
             status,

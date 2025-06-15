@@ -2,7 +2,7 @@ import { QuoteItem, QuoteStatus } from "../entities";
 
 export interface QuoteDTO {
     id: string;
-    name: string;
+    code: string;
     id_contact: string;
     creation_date: Date;
     status: QuoteStatus;

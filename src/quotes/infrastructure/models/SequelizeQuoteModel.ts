@@ -9,7 +9,7 @@ SequelizeQuoteModel.init({
     primaryKey: true,
     allowNull: false,
   },
-  name: {
+  code: {
     type: DataTypes.STRING(50),
     allowNull: false,
   },

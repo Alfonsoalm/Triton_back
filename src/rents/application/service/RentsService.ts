@@ -31,7 +31,7 @@ export class RentsService implements IRentsService{
 
     async create(rentData: Omit<RentDTO, "id">): Promise<Rent> {
         const {
-            name,
+            code,
             id_contact,
             begin_date,
             status,
@@ -42,7 +42,7 @@ export class RentsService implements IRentsService{
         } = rentData;
         const newRent = await Rent.createNewRent(
             this._idService,
-            name,
+            code,
             id_contact,
             begin_date,
             end_date, 

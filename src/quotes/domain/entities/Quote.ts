@@ -23,7 +23,7 @@ export interface QuoteItem {
 
 export class Quote {
   private _id: string = "";
-  private _name: string = "";
+  private _code: string = "";
   private _id_contact: string = "";
   private _creation_date: Date;
   private _status: QuoteStatus;
@@ -55,7 +55,7 @@ export class Quote {
 
   private constructor(
     id: string,
-    name: string,
+    code: string,
     id_contact: string,
     creation_date: Date,
     status: QuoteStatus,
@@ -65,7 +65,7 @@ export class Quote {
     payment_method?: string
   ) {
     this._id = id;
-    this._name = name;
+    this._code = code;
     this._id_contact = id_contact;
     this._creation_date = creation_date;
     this._status = status;
@@ -77,7 +77,7 @@ export class Quote {
 
   public static async createNewQuote(
     idGenerator: IIdService,
-    name: string,
+    code: string,
     id_contact: string,
     creation_date: Date,
     status: QuoteStatus,
@@ -88,7 +88,7 @@ export class Quote {
     const { subtotal, total } = this.calculateTotals(quote_items);
     return new Quote(
       id,
-      name,
+      code,
       id_contact,
       creation_date,
       status,
@@ -101,7 +101,7 @@ export class Quote {
 
   public static createExistingQuote(
     id: string,
-    name: string,
+    code: string,
     id_contact: string,
     creation_date: Date,
     status: QuoteStatus,
@@ -111,7 +111,7 @@ export class Quote {
     const { subtotal, total } = this.calculateTotals(quote_items);
     return new Quote(
       id,
-      name,
+      code,
       id_contact,
       creation_date,
       status,
@@ -125,7 +125,7 @@ export class Quote {
   public toJSON(): object {
     return {
       id: this._id,
-      name: this._name,
+      code: this._code,
       id_contact: this._id_contact,
       creation_date: this._creation_date,
       status: this._status,
@@ -141,8 +141,8 @@ export class Quote {
     return this._id;
   }
 
-  public get name(): string {
-    return this._name;
+  public get code(): string {
+    return this._code;
   }
 
   public get id_contact(): string {

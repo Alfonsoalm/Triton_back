@@ -24,7 +24,7 @@ export interface RentItem {
 
 export class Rent {
   private _id: string = "";
-  private _name: string = "";
+  private _code: string = "";
   private _id_contact: string = "";
   private _begin_date: Date;
   private _end_date: Date;
@@ -60,7 +60,7 @@ export class Rent {
 
   private constructor(
     id: string,
-    name: string,
+    code: string,
     id_contact: string,
     begin_date: Date,
     end_date: Date,
@@ -72,7 +72,7 @@ export class Rent {
     items: RentItem[]
   ) {
     this._id = id;
-    this._name = name;
+    this._code = code;
     this._id_contact = id_contact;
     this._begin_date = begin_date;
     this._end_date = end_date;
@@ -86,7 +86,7 @@ export class Rent {
 
   public static async createNewRent(
     idGenerator: IIdService,
-    name: string,
+    code: string,
     id_contact: string,
     begin_date: Date,
     end_date: Date,
@@ -99,7 +99,7 @@ export class Rent {
     const { subtotal, total } = this.calculateTotals(items);
     return new Rent(
       id,
-      name,
+      code,
       id_contact,
       begin_date,
       end_date,
@@ -114,7 +114,7 @@ export class Rent {
 
   public static createExistingRent(
     id: string,
-    name: string,
+    code: string,
     id_contact: string,
     begin_date: Date,
     end_date: Date,
@@ -126,7 +126,7 @@ export class Rent {
     const { subtotal, total } = this.calculateTotals(items);
     return new Rent(
       id,
-      name,
+      code,
       id_contact,
       begin_date,
       end_date,
@@ -142,7 +142,7 @@ export class Rent {
   public toJSON(): object {
     return {
       id: this._id,
-      name: this._name,
+      code: this._code,
       id_contact: this._id_contact,
       begin_date: this._begin_date,
       end_date: this._end_date,
