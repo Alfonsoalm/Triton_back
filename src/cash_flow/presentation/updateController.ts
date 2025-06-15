@@ -1,15 +1,15 @@
 import { Request, Response } from "express"
-import { ICentersService } from "../domain";
+import { ICashFlowsService } from "../domain";
 
-export const updateController = (centersService: ICentersService) => {
+export const updateController = (cashFlowsService: ICashFlowsService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
-            const { centerId } = req.params;
+            const { cashFlowId } = req.params;
             const { updates } = req.body;
-            const isUpdated = await centersService.update(centerId, updates);
+            const isUpdated = await cashFlowsService.update(cashFlowId, updates);
     
             res.status(200).json({
-                message: "Center updated",
+                message: "CashFlow updated",
                 data: isUpdated
             });
             

@@ -39,6 +39,7 @@ export class MysqlRentsRepository implements IRentsRepository {
             tax,
             subtotal,
             total,
+            deposit,
           } = rentItem.dataValues;
           return {
             id: id,
@@ -53,6 +54,7 @@ export class MysqlRentsRepository implements IRentsRepository {
             tax: parseFloat(tax),
             subtotal: parseFloat(subtotal),
             total: parseFloat(total),
+            deposit: parseFloat(deposit),
           };
         });
         return Rent.createExistingRent(
@@ -105,6 +107,7 @@ export class MysqlRentsRepository implements IRentsRepository {
         tax,
         subtotal,
         total,
+        deposit,
       } = rentItem.dataValues;
       rentItemsArray.push({
         id: id,
@@ -119,6 +122,7 @@ export class MysqlRentsRepository implements IRentsRepository {
         tax: tax,
         subtotal: subtotal,
         total: total,
+        deposit: deposit,
       });
     });
 
@@ -131,7 +135,7 @@ export class MysqlRentsRepository implements IRentsRepository {
       status,
       observations,
       payment_method,
-      rentItemsArray
+      rentItemsArray,
     );
   }
 
@@ -171,6 +175,7 @@ export class MysqlRentsRepository implements IRentsRepository {
           end_date: rentItem.end_date,
           subtotal: rentItem.subtotal,
           total: rentItem.total,
+          deposit: rentItem.deposit,
         });
       });
 

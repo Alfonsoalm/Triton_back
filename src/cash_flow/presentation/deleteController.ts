@@ -5,17 +5,6 @@ export const deleteController = (cashFlowsService: ICashFlowsService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
             const { cashFlowId } = req.params;
-
-            const cashFlows = await cashFlowsServices.getByCashFlow(cashFlowId);
-            if (cashFlows.length > 0) {
-                await Promise.all(
-                    cashFlows.map((cashFlow) => {
-                        const id = cashFlow.getId();
-                        return cashFlowsServices.update(id, { id_cashFlow: null });
-                    })
-                );
-            }
-
             const isDeleted = await cashFlowsService.delete(cashFlowId);
             res.status(200).json({
                 message: "CashFlow deleted",

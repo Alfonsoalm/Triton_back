@@ -1,17 +1,14 @@
 import { Request, Response } from "express"
-import { ICentersService } from "../domain";
+import { ICashFlowsService } from "../domain";
 
-export const createController = (centersService: ICentersService) => {
+export const payQuoteController = (cashFlowsService: ICashFlowsService) => {
 	return async(req: Request, res: Response):Promise<void> => {
 		try {
-			const centerData = req.body;
-			if (!centerData.name || !centerData.mail) {
-				throw new Error('Los campos "name" y "mail" son obligatorios.');
-			}
-			const center = await centersService.create(centerData);
+			const { quoteId } = req.params;
+			const cashFlow = await cashFlowsService.payQuote(quoteId);
 			res.status(200).json({
-				message: "Center created successfully.",
-				data: center ? center : []
+				message: "CashFlow created successfully.",
+				data: cashFlow ? cashFlow : []
 			});
 		} catch (error) {
 			if (error instanceof Error) {

@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { ICentersService } from "../domain";
+import { ICashFlowsService } from "../domain";
 
-export const getFieldsController = (centersService: ICentersService) => {
+export const getFieldsController = (cashFlowsService: ICashFlowsService) => {
   return async (req: Request, res: Response): Promise<void> => {
     try {
-      const fields = await centersService.getFields();
+      const fields = await cashFlowsService.getFields();
 
       res.status(200).json({
-        message: "Fields for centers found",
+        message: "Fields for cashFlows found",
         data: fields,
       });
 

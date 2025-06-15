@@ -1,14 +1,14 @@
 import { Request, Response } from "express"
-import { ICentersService } from "../domain";
+import { ICashFlowsService } from "../domain";
 
-export const getByIdController = (centersService: ICentersService) => {
+export const getByIdController = (cashFlowsService: ICashFlowsService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
             const { contactId } = req.params;
-            const center = await centersService.getById(contactId);
+            const cashFlow = await cashFlowsService.getById(contactId);
             res.status(200).json({
-                message: "Center retrieved successfully.",
-                data: center ? center: []
+                message: "CashFlow retrieved successfully.",
+                data: cashFlow ? cashFlow: []
             });
         } catch (error) {
             if (error instanceof Error) {

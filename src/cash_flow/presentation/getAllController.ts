@@ -1,13 +1,13 @@
 import { Request, Response } from "express"
-import { ICentersService } from "../domain";
+import { ICashFlowsService } from "../domain";
 
-export const getAllController = (centersService: ICentersService) => {
+export const getAllController = (cashFlowsService: ICashFlowsService) => {
     return async(req: Request, res: Response):Promise<void> => {
         try {
-            const centers = await centersService.getAll();
+            const cashFlows = await cashFlowsService.getAll();
             res.status(200).json({
-                message: "Centers retrieved successfully.",
-                data: centers ? centers.map(c => c.toJSON()) : []
+                message: "CashFlows retrieved successfully.",
+                data: cashFlows ? cashFlows.map(c => c.toJSON()) : []
             });
         } catch (error) {
             if (error instanceof Error) {
